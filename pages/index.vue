@@ -1,8 +1,10 @@
 <template lang="pug">
-.content
-  div(ref="draggableRef" class="draggable")
-  .canvasElement
-      canvas(ref="canvasRef")
+.main  
+  .content.container
+    .canvasElement
+        canvas(ref="canvasRef")
+  sidetools    
+
 
 </template>
 
@@ -70,10 +72,10 @@ if (process.client) {
 </script>
 <style lang="scss">
 .canvasElement {
-  background-color: #eceaea;
   position: relative;
   width: 100%;
-  height: 100vh;
+  height: 90vh;
+
   .canvas-container {
     position: absolute;
     top: 50%;

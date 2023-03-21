@@ -17,8 +17,8 @@ import AccordionTab from 'primevue/accordiontab';
 import Textarea from 'primevue/textarea';
 import ConfirmPopup from 'primevue/confirmpopup';
 import ConfirmationService from 'primevue/confirmationservice';
-
-
+import SplitButton from 'primevue/splitbutton';
+import OverlayPanel from 'primevue/overlaypanel';
 
 
 
@@ -45,6 +45,9 @@ export default defineNuxtPlugin((nuxtApp) => {
     nuxtApp.vueApp.component("Textarea", Textarea);
     nuxtApp.vueApp.component("ConfirmPopup", ConfirmPopup);
     nuxtApp.vueApp.component("ConfirmationService", ConfirmationService);
+    nuxtApp.vueApp.component("SplitButton", SplitButton);
+    nuxtApp.vueApp.component("OverlayPanel", OverlayPanel);
+
 
 
     //other components that you need

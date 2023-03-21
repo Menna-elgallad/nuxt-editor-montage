@@ -1,4 +1,6 @@
 <template lang="pug">
-.container 
-  slot
+.main
+  mynav
+  .mycontainer
+    slot
 </template>

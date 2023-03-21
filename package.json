@@ -14,7 +14,6 @@
     "nuxt-icon": "^0.3.3",
     "primeflex": "3.3.0",
     "primeicons": "6.0.1",
-    "primevue": "3.22.4",
     "pug": "^3.0.2",
     "pug-plain-loader": "^1.1.0",
     "sass": "^1.57.1",
@@ -24,6 +23,7 @@
     "chart.js": "^4.2.0",
     "fabric": "^5.0.0",
     "gsap": "^3.11.5",
-    "nuxt-graphql-client": "^0.2.25"
+    "nuxt-graphql-client": "^0.2.25",
+    "primevue": "^3.26.0"
   }
 }
