@@ -1,7 +1,14 @@
 @import url("https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/css/bootstrap-grid.min.css");
 @import url('https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;800&display=swap');
 @import "/assets/overrides.scss";
-* {
+*,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+span {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -70,4 +77,9 @@ ul {
 
 .side-leave-active {
     transition: all 0.2s ease-out;
+}
+
+.menuitem {
+    border-bottom: 2px solid #cccccc2d;
+    padding-bottom: 1rem;
 }

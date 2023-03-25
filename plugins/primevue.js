@@ -19,7 +19,7 @@ import ConfirmPopup from 'primevue/confirmpopup';
 import ConfirmationService from 'primevue/confirmationservice';
 import SplitButton from 'primevue/splitbutton';
 import OverlayPanel from 'primevue/overlaypanel';
-
+import FileUpload from 'primevue/fileupload';
 
 
 
@@ -47,6 +47,8 @@ export default defineNuxtPlugin((nuxtApp) => {
     nuxtApp.vueApp.component("ConfirmationService", ConfirmationService);
     nuxtApp.vueApp.component("SplitButton", SplitButton);
     nuxtApp.vueApp.component("OverlayPanel", OverlayPanel);
+    nuxtApp.vueApp.component("FileUpload", FileUpload);
+
 
 
 

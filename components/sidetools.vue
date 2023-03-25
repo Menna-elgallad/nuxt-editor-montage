@@ -7,17 +7,21 @@
         .close( class="flex justify-content-end"): span(@click="close()")
             Icon.text-2xl.text-blue-700(name="ion:chevron-back")    
         .toolcontent
-            span {{content}}
+            background(v-if="content==='backround'")
+            
+
         
 
 </template>
 
 <script setup>
 import gsap from "gsap";
+
 const tools = ref();
 const activeindex = ref(null);
 const show = ref(false);
 const content = ref();
+
 function toggle(item, index) {
   if (show.value === false && !content.value) {
     gsap.to(".toolItems", {
@@ -28,11 +32,11 @@ function toggle(item, index) {
 
   show.value = !show.value;
   content.value = item;
-  //   console.log(op.value.toggle(event), ">>", event);
+  activeindex.value = index;
 }
 function close() {
   gsap.to(".toolItems", {
-    left: -300,
+    left: -350,
     duration: 0.5,
   });
   show.value = false;
@@ -86,12 +90,12 @@ const names = [
   .toolItems {
     position: fixed;
     color: black;
-    left: -100%;
+    left: -350px;
     top: 50px;
     padding: 3rem;
     height: 100vh;
     background-color: white;
-    width: 300px;
+    width: 350px;
     border-radius: 1.2rem;
     // .toolcontent {
     //   margin-left: 2rem;

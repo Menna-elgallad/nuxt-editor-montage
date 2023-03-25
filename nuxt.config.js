@@ -1,11 +1,16 @@
 export default defineNuxtConfig({
-
+    app: {
+        head: {
+            script: [{ src: "https://cdn.lordicon.com/ritcuqlt.js" }],
+        }
+    },
     css: [
         "primevue/resources/themes/saga-blue/theme.css",
         "primevue/resources/primevue.css",
         "primeicons/primeicons.css",
         "primeflex/primeflex.css",
         "assets/global.scss",
+        "vue3-lottie/dist/style.css"
 
 
     ],
@@ -18,7 +23,7 @@ export default defineNuxtConfig({
             },
         },
     },
-    modules: ["nuxt-graphql-client", 'nuxt-icon'],
+    modules: ["nuxt-graphql-client", 'nuxt-icon', '@pinia/nuxt', ],
 
 
     build: {

@@ -24,7 +24,13 @@ const props = defineProps({
   display: flex;
   align-items: center;
   font-weight: 700;
-  letter-spacing: 0.1rem;
+  // letter-spacing: 0.08rem;
+  transition: all 0.3s ease;
+  &:hover {
+    // transform: scale(1.05);
+    cursor: pointer;
+    box-shadow: 0 0 2px 2px rgb(153 153 153 / 59%);
+  }
 }
 .spanborder {
   border-right: 1px solid #77777767;

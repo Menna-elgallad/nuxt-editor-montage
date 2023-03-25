@@ -3,26 +3,28 @@
     .nav.flex.justify-content-between.align-items-center
         ul.left-part.flex.gap-2.align-items-center 
             li
-                Icon(name="fluent:list-16-filled")
-                span.ml-2.text-lg Animator
+              .content
+                  Icon(name="fluent:list-16-filled" class="iconli")
+                  span.ml-2.text-lg Animator
             
-            li: Icon.text-3xl.myicon(name="bi:question-circle" )   
+            li: Icon.text-3xl.myicon(name="bi:question-circle" class="iconli" )   
             li
-                Icon.text-3xl.myicon(name="ooui:undo-ltr") 
-                Icon.text-3xl.myicon(name="ooui:undo-rtl" class="ml-2")
+                
+                Icon.text-3xl.myicon(name="ooui:undo-ltr" class="iconli") 
+                Icon.text-3xl.myicon(name="ooui:undo-rtl" class="ml-2 iconli")
             
             li.span.font-bold {{ name }}
         ul.right-part.flex.gap-2.align-items-center    
                 li: span.borderright.font-bold {{status}} 
-                li: Mybutton(name="lucide:crown" label="Upgrade"  classname="bg-pink-300" btnclass="left" )
+                li: Mybutton(name="lucide:crown" label="Upgrade"  classname="bg-pink-300" btnclass="left"  )
                 
                 li: span.iconss.mysurface-400.text-50
-                    i(class="pi pi-play")
+                    i(class="pi pi-play"  )
                 li: span.iconss.mysurface-400.text-50
-                    i(class="pi pi-video")
+                    i(class="pi pi-video" )
                 li: span.iconss.surface-0.text-500
-                    i(class="pi pi-share-alt")
-                li: Mybutton(name="iconoir:download" label="Download"  classname="surface-0 text-color" btnclass="right" )
+                    i(class="pi pi-share-alt"  )
+                li: Mybutton(name="iconoir:download" label="Download"  classname="surface-0 text-color" btnclass="right"    )
 
 </template>
 
@@ -68,5 +70,18 @@ const items = [
 .borderright {
   border-right: 1px solid #cccccc93;
   padding-right: 0.5rem;
+}
+ul {
+  li {
+    .myicon {
+      border-radius: 2px;
+      padding: 0.2rem;
+      transition: all 0.5s ease;
+      &:hover {
+        background-color: #cfcece46;
+        cursor: pointer;
+      }
+    }
+  }
 }
 </style>

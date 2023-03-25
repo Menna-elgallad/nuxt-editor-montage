@@ -3,7 +3,7 @@
   .content.container
     .canvasElement
         canvas(ref="canvasRef")
-  sidetools    
+  sidetools(@changeBackColor="changColor")    
 
 
 </template>
@@ -13,17 +13,59 @@ import gsap from "gsap";
 import { Draggable } from "gsap/Draggable";
 import { fabric } from "fabric";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import noskom from "../assets/jsons/nos kom.json";
+import { storeToRefs } from "pinia";
+import { useColorsStore } from "~~/stores/background";
+
+const colorstore = useColorsStore();
+const { color, backimage, removed } = storeToRefs(colorstore);
+const myimg = ref(null);
 const canvasRef = ref(null);
 const draggableRef = ref(null);
 let fabricCanvas, draggable, fabricElement;
+function imgclicked() {
+  console.log(myimg.value);
+}
+watch(color, (curr, pre) => {
+  fabricCanvas.backgroundColor = curr;
+  fabricCanvas.renderAll();
+});
+watch(backimage, (curr, pre) => {
+  const imgInstance = new fabric.Image(curr, {
+    // preserveAspectRatio: true,
+  });
+  // fabricCanvas.backgroundImage = imgInstance;
+  fabricCanvas.setBackgroundImage(imgInstance, function () {
+    let img = fabricCanvas.backgroundImage;
+    img.originX = "left";
+    img.originY = "top";
+    img.scaleX = fabricCanvas.getWidth() / img.width;
+    img.scaleY = fabricCanvas.getHeight() / img.height;
+
+    fabricCanvas.renderAll();
+  });
+
+  // fabricCanvas.renderAll();
+});
+watch(removed, (curr, pre) => {
+  fabricCanvas.setBackgroundImage(
+    null,
+    fabricCanvas.renderAll.bind(fabricCanvas)
+  );
+});
+console.log("myimg");
 onMounted(() => {
   gsap.registerPlugin(ScrollTrigger, Draggable);
+  const myimg = document.getElementById("img");
+
+  console.log(myimg);
   fabricCanvas = new fabric.Canvas(canvasRef.value, {
-    height: 500,
-    width: 500,
+    height: 411,
+    width: 640,
     backgroundColor: "white",
     backgroundColorAlpha: 0,
   });
+
   const circle = new fabric.Circle({
     radius: 50,
     fill: "red",
@@ -40,35 +82,8 @@ onMounted(() => {
   fabricCanvas.add(circle).setActiveObject(circle);
   fabricCanvas.add(circle2);
 
-  draggable = Draggable.create(draggableRef.value, {
-    onDrag: () => {
-      if (fabricElement) {
-        fabricElement.set({
-          left: draggable.x,
-          top: draggable.y,
-        });
-        fabricCanvas.renderAll();
-      }
-    },
-    // onDragEnd: () => {
-    //   fabricElement = new fabric.Rect({
-    //     left: draggable.x,
-    //     top: draggable.y,
-    //     width: draggableRef.value.offsetWidth,
-    //     height: draggableRef.value.offsetHeight,
-    //     fill: "red",
-    //   });
-    //   fabricCanvas.add(fabricElement);
-    // },
-  });
+  // fabricCanvas.add(imgInstance);
 });
-if (process.client) {
-  gsap.from(".mybuttn", {
-    autoAlpha: 0,
-    duration: 1.5,
-    y: -100,
-  });
-}
 </script>
 <style lang="scss">
 .canvasElement {
@@ -82,13 +97,5 @@ if (process.client) {
     left: 50%;
     transform: translate(-50%, -50%);
   }
-}
-.draggable {
-  width: 100px;
-  height: 100px;
-  background-color: green;
-  position: absolute;
-  top: 100px;
-  left: 100px;
 }
 </style>
