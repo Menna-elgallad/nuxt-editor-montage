@@ -1,13 +1,14 @@
 <template lang="pug">
 .tools
-    .mycontainer.bg-blue-700
-        ul.text-0
-            li.py-3(v-for="(item,index) in names" :key="index" @click="toggle(  item.name ,index ) " :class="{active : activeindex===index}" ): Icon.text-3xl.icontools.ml-2(:name="item.icon")
-    .toolItems( ref="tools") 
-        .close( class="flex justify-content-end"): span(@click="close()")
-            Icon.text-2xl.text-blue-700(name="ion:chevron-back")    
-        .toolcontent
-            background(v-if="content==='backround'")
+  .mycontainer.bg-blue-700
+    ul.text-0
+      li.py-3(v-for="(item,index) in names" :key="index" @click="toggle(  item.name ,index ) " :class="{active : activeindex===index}" ): Icon.text-3xl.icontools.ml-2(:name="item.icon")
+  .toolItems( ref="tools") 
+    .close( class="flex justify-content-end"): span(@click="close()")
+      Icon.text-2xl.text-blue-700(name="ion:chevron-back")    
+    .toolcontent
+      background(v-if="content==='backround'")
+      Text(v-if="content==='text'" @addAsset="addAssets" :selectedElement="selectedElement" :canvas="canvas")
             
 
         
@@ -16,11 +17,20 @@
 
 <script setup>
 import gsap from "gsap";
-
+const props = defineProps({
+  selectedElement : Object,
+  canvas: Object
+})
 const tools = ref();
 const activeindex = ref(null);
 const show = ref(false);
 const content = ref();
+
+const emit = defineEmits(['addAsset' , 'changeBackColor'])
+
+function addAssets(event){
+  emit('addAsset',event)
+}
 
 function toggle(item, index) {
   if (show.value === false && !content.value) {
@@ -29,7 +39,7 @@ function toggle(item, index) {
       duration: 0.5,
     });
   }
-
+  console.log(item)
   show.value = !show.value;
   content.value = item;
   activeindex.value = index;
@@ -65,18 +75,22 @@ const names = [
   width: 61px;
   padding: 0.5rem;
   border-radius: 0 1rem 1rem 0;
+
   ul {
     position: relative;
     z-index: 1;
+
     li {
       cursor: pointer;
       position: relative;
       z-index: 100;
       transition: all 0.5s ease;
       border-radius: 1.2rem;
+
       &.active {
         background-color: #cccccc3a;
       }
+
       &:hover {
         background-color: #cccccc3a;
       }
@@ -87,21 +101,48 @@ const names = [
     position: relative;
     z-index: 3;
   }
+
   .toolItems {
     position: fixed;
     color: black;
     left: -350px;
     top: 50px;
     padding: 3rem;
-    height: 100vh;
+    height: 95vh;
+    overflow-y: scroll;
     background-color: white;
     width: 350px;
     border-radius: 1.2rem;
+
+    /* width */
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    // /* Track */
+    &::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 50px;
+
+    }
+
+    // /* Handle */
+    &::-webkit-scrollbar-thumb {
+      background: #8888885b;
+      border-radius: 50px;
+    }
+
+    // /* Handle on hover */
+    // &::-webkit-scrollbar-thumb:hover {
+    //   background: #555;
+    // }
+
     // .toolcontent {
     //   margin-left: 2rem;
     // }
   }
 }
+
 .close {
   span {
     padding: 0.2rem;
@@ -109,5 +150,4 @@ const names = [
     border-radius: 50%;
     cursor: pointer;
   }
-}
-</style>
+}</style>
