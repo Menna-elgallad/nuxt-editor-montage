@@ -18,10 +18,11 @@ import { storeToRefs } from "pinia";
 import { useColorsStore } from "~~/stores/background";
 
 const colorstore = useColorsStore();
-const { color, backimage, removed } = storeToRefs(colorstore);
+const { color, backimage, removed, vidUploaded } = storeToRefs(colorstore);
 const myimg = ref(null);
 const canvasRef = ref(null);
 const draggableRef = ref(null);
+const imgInstance = ref();
 let fabricCanvas, draggable, fabricElement;
 function imgclicked() {
   console.log(myimg.value);
@@ -31,21 +32,87 @@ watch(color, (curr, pre) => {
   fabricCanvas.renderAll();
 });
 watch(backimage, (curr, pre) => {
-  const imgInstance = new fabric.Image(curr, {
-    // preserveAspectRatio: true,
-  });
-  // fabricCanvas.backgroundImage = imgInstance;
-  fabricCanvas.setBackgroundImage(imgInstance, function () {
+  if (typeof curr === "object") {
+    imgInstance.value = new fabric.Image(curr, {});
+  } else if (typeof curr === "string") {
+    imgInstance.value = curr;
+  }
+
+  fabricCanvas.backgroundImage = imgInstance.value;
+  fabricCanvas.setBackgroundImage(imgInstance.value, function () {
     let img = fabricCanvas.backgroundImage;
     img.originX = "left";
     img.originY = "top";
     img.scaleX = fabricCanvas.getWidth() / img.width;
     img.scaleY = fabricCanvas.getHeight() / img.height;
+    img.selectable = false;
+    img.hasBorders = false;
 
     fabricCanvas.renderAll();
   });
 
-  // fabricCanvas.renderAll();
+  fabricCanvas.renderAll();
+});
+
+watch(vidUploaded, (curr, prev) => {
+  // fabric.Image.fromURL(
+  //   curr,
+  //   function (videoImg) {
+  //     // Set the isVideo and evented properties
+  //     videoImg.set({
+  //       isVideo: true,
+  //       evented: false,
+  //     });
+
+  //     // Set the canvas background to the video image
+  //     fabricCanvas.setBackgroundImage(
+  //       videoImg,
+  //       fabricCanvas.renderAll.bind(fabricCanvas)
+  //     );
+  //   },
+  //   { crossOrigin: "anonymous" }
+  // );
+
+  function getVideoElement(url) {
+    var videoE = document.createElement("video");
+    videoE.width = fabricCanvas.getWidth();
+    videoE.height = fabricCanvas.getHeight();
+    videoE.muted = true;
+    videoE.selectable = false;
+    videoE.crossOrigin = "anonymous";
+    videoE.hasBorders = false;
+    var source = document.createElement("source");
+    source.src = url;
+    source.type = "video/mp4";
+    videoE.appendChild(source);
+    return videoE;
+  }
+
+  var url_mp4 = curr;
+
+  var videoE = getVideoElement(url_mp4);
+  console.log("myvidddd", getVideoElement(url_mp4));
+  var fab_video = new fabric.Image(videoE);
+  // fabricCanvas.add(fab_video);
+
+  fabricCanvas.sendToBack(fab_video);
+  fabricCanvas.backgroundImage = fab_video;
+  fabricCanvas.setBackgroundImage(fab_video, function () {
+    let img = fabricCanvas.backgroundImage;
+    img.originX = "left";
+    img.originY = "top";
+    // img.scaleX = fabricCanvas.getWidth() / img.width;
+    // img.scaleY = fabricCanvas.getHeight() / img.height;
+    img.selectable = false;
+    img.hasBorders = false;
+    fab_video.getElement().play();
+
+    fabricCanvas.renderAll();
+    fabric.util.requestAnimFrame(function render() {
+      fabricCanvas.renderAll();
+      fabric.util.requestAnimFrame(render);
+    });
+  });
 });
 watch(removed, (curr, pre) => {
   fabricCanvas.setBackgroundImage(

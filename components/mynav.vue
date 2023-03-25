@@ -54,6 +54,12 @@ const items = [
   height: 35px;
   display: grid;
   place-items: center;
+  transition: all 0.5s ease;
+
+  &:hover {
+    background-color: #cccccc60 !important;
+    cursor: pointer;
+  }
 }
 .mysurface-400 {
   background-color: #5251518c;
@@ -74,7 +80,7 @@ const items = [
 ul {
   li {
     .myicon {
-      border-radius: 2px;
+      border-radius: 5px;
       padding: 0.2rem;
       transition: all 0.5s ease;
       &:hover {
