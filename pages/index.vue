@@ -23,7 +23,8 @@ const myimg = ref(null);
 const canvasRef = ref(null);
 const draggableRef = ref(null);
 const imgInstance = ref();
-let fabricCanvas, draggable, fabricElement;
+const selectedElement = ref()
+let fabricCanvas:fabric.canvas, draggable, fabricElement;
 function imgclicked() {
   console.log(myimg.value);
 }
