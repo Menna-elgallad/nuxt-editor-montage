@@ -31,7 +31,7 @@
     .backgrounds.row.mt-3.menuitem 
         h4.m-0 Background image 
         .col-lg-6.imgback.mt-3(v-for="(item , index) in 6")
-            img(:src="`/_nuxt/assets/backgroundImgs/${item}.jpg`" @click="refimage(index)" ref="backimg")
+            img(:src="`/backgroundImgs/${item}.jpg`" @click="refimage(index)" ref="backimg")
         Button.mt-3.bg-pink-300.border-none(label="remove" @click="removeback()" )        
 </template>
 

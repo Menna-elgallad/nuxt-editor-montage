@@ -1,14 +1,16 @@
 <template lang="pug">
-.main  
-  .content.container
-    .canvasElement
-      canvas(ref="canvasRef")
+.main.flex.gap-2.justify-content-between  
+
+  .canvasElement
+
+    canvas(ref="canvasRef")
   sidetools(@changeBackColor="changColor" @addAsset="addAsset" :selectedElement="selectedElement" :canvas="fabricCanvas")    
+        
 
 
 </template>
 
-<script setup lang="ts" >
+<script setup lang="ts">
 import gsap from "gsap";
 import { Draggable } from "gsap/Draggable";
 import { fabric } from "fabric";
@@ -23,8 +25,8 @@ const myimg = ref(null);
 const canvasRef = ref(null);
 const draggableRef = ref(null);
 const imgInstance = ref();
-const selectedElement = ref()
-let fabricCanvas:fabric.canvas, draggable, fabricElement;
+const selectedElement = ref();
+let fabricCanvas: fabric.canvas, draggable, fabricElement;
 function imgclicked() {
   console.log(myimg.value);
 }
@@ -42,13 +44,23 @@ watch(backimage, (curr, pre) => {
   fabricCanvas.backgroundImage = imgInstance.value;
   fabricCanvas.setBackgroundImage(imgInstance.value, function () {
     let img = fabricCanvas.backgroundImage;
-    img.originX = "left";
-    img.originY = "top";
-    img.scaleX = fabricCanvas.getWidth() / img.width;
-    img.scaleY = fabricCanvas.getHeight() / img.height;
-    img.selectable = false;
-    img.hasBorders = false;
+    (img.left = fabricCanvas.width / 2),
+      (img.top = fabricCanvas.height / 2),
+      (img.originX = "center"),
+      (img.originY = "center");
+    // img.flipX = "true";
+    var widthScaleFactor = fabricCanvas.width / img.width;
+    var heightScaleFactor = fabricCanvas.height / img.height;
+    var scaleFactor = Math.max(widthScaleFactor, heightScaleFactor);
 
+    // Scale fabric image to fit canvas
+    img.scale(scaleFactor);
+
+    // Center fabric image in canvas
+    img.set({
+      left: fabricCanvas.width / 2,
+      top: fabricCanvas.height / 2,
+    });
     fabricCanvas.renderAll();
   });
 
@@ -79,9 +91,7 @@ watch(vidUploaded, (curr, prev) => {
     videoE.width = fabricCanvas.getWidth();
     videoE.height = fabricCanvas.getHeight();
     videoE.muted = true;
-    videoE.selectable = false;
     videoE.crossOrigin = "anonymous";
-    videoE.hasBorders = false;
     var source = document.createElement("source");
     source.src = url;
     source.type = "video/mp4";
@@ -133,16 +143,15 @@ onMounted(() => {
     backgroundColor: "white",
     // shadow:1,
     backgroundColorAlpha: 0,
-    borderColor: 'black',
-    strokeWidth: 5
+    borderColor: "black",
+    strokeWidth: 5,
   });
 
   // set the border properties
   fabricCanvas.set({
-    borderColor: 'black',
-    strokeWidth: 5
+    borderColor: "black",
+    strokeWidth: 5,
   });
-
 
   const circle = new fabric.Circle({
     radius: 50,
@@ -167,7 +176,6 @@ const calculateTextWidth = (text: string, font: string) => {
   ctx!.font = font;
   return ctx!.measureText(text).width + 20;
 };
-
 
 const addAsset = (event: AssetEvent) => {
   switch (event.type) {
@@ -209,7 +217,6 @@ const addAsset = (event: AssetEvent) => {
   }
 };
 
-
 const newTextbox = (
   fontSize: number,
   fontWeight: string | number | undefined,
@@ -239,7 +246,7 @@ const newTextbox = (
     inGroup: false,
     cursorDelay: 250,
     width: calculateTextWidth(text, `${fontWeight} ${fontSize}px Roboto`),
-    id: `text_${id}`
+    id: `text_${id}`,
   });
   fabricCanvas?.add(newText);
   fabricCanvas?.setActiveObject(newText);
@@ -247,9 +254,9 @@ const newTextbox = (
   // newText.enterEditing();
   // newText.selectAll();
   fabricCanvas?.renderAll();
-  newText.on('mousedown' ,(ele) => {
-    selectedElement.value = ele.target
-  })
+  newText.on("mousedown", (ele) => {
+    selectedElement.value = ele.target;
+  });
   //@ts-ignore
   fabricCanvas!.getActiveObject()!.set("fontFamily", font);
   fabricCanvas?.renderAll();
@@ -267,8 +274,8 @@ enum ASSET_TYPE {
   EMOJI = "EMOJI",
   SHAPE = "SHAPE",
   VIDEO = "VIDEO",
-  UPLOAD = "UPLOAD"
-};
+  UPLOAD = "UPLOAD",
+}
 
 interface AssetEvent {
   type: ASSET_TYPE;
@@ -286,10 +293,13 @@ interface AssetEvent {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-56%, -47%);
-    --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-    --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
-    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+    transform: translate(-50%, -50%);
+    --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
+      0 8px 10px -6px rgb(0 0 0 / 0.1);
+    --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color),
+      0 8px 10px -6px var(--tw-shadow-color);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+      var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
   }
 }
 </style>
