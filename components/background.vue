@@ -126,76 +126,7 @@ function uploadedbackvid(index: number) {
   clone.play();
   canasWrapper.value.appendChild(clone);
   console.log(">>>>>>>>");
-  // function getVideoElement(url: any) {
-  //   var videoE = document.createElement("video");
-  //   videoE.width = fabricCanvas.getWidth();
-  //   videoE.height = fabricCanvas.getHeight();
-  //   videoE.muted = true;
-  //   videoE.crossOrigin = "anonymous";
-  //   var source = document.createElement("source");
-  //   source.src = url;
-  //   source.type = "video/mp4";
-  //   videoE.appendChild(source);
-  //   return videoE;
-  // }
-
-  // var url_mp4 = srcsVid.value[index];
-
-  var videoE = video1El[index];
-  console.log("viddd", videoE);
-  // console.log("myvidddd", getVideoElement(url_mp4));
-
-  var fabricVideo = new fabric.Image(videoE, {
-    left: 0,
-    top: 0,
-    angle: 0,
-    scaleX: fabricCanvas.width,
-    scaleY: fabricCanvas.height,
-  });
-  fabricCanvas.add(fabricVideo);
   fabricCanvas.renderAll();
-
-  // fabricCanvas.add(videoE);
-  // video1.getElement().play();
-  // console.log(videoE);
-  // fabric.util.requestAnimFrame(function render() {
-  //   fabricCanvas.renderAll();
-  //   fabric.util.requestAnimFrame(render);
-  // });
-  // fabricCanvas.renderAll();
-  // fabricCanvas.add(fab_video);
-
-  // fabricCanvas.sendToBack(fab_video);
-  // fabricCanvas.backgroundImage = fab_video;
-  // fabricCanvas.setBackgroundImage(fab_video, function () {
-  //   let img = fabricCanvas.backgroundImage;
-  //   img.originX = "left";
-  //   img.originY = "top";
-  //   (img.left = fabricCanvas.width / 2),
-  //     (img.top = fabricCanvas.height / 2),
-  //     (img.originX = "center"),
-  //     (img.originY = "center");
-  //   // img.flipX = "true";
-  //   var widthScaleFactor = fabricCanvas.width / img.width;
-  //   var heightScaleFactor = fabricCanvas.height / img.height;
-  //   var scaleFactor = Math.max(widthScaleFactor, heightScaleFactor);
-
-  //   // Scale fabric image to fit canvas
-  //   img.scale(scaleFactor);
-  //   img.set({
-  //     left: fabricCanvas.width / 2,
-  //     top: fabricCanvas.height / 2,
-  //   });
-  //   img.selectable = false;
-  //   img.hasBorders = false;
-  //   fab_video.getElement().play();
-
-  //   fabricCanvas.renderAll();
-  //   fabric.util.requestAnimFrame(function render() {
-  //     fabricCanvas.renderAll();
-  //     fabric.util.requestAnimFrame(render);
-  //   });
-  // });
 }
 function removeback() {
   fabricCanvas.setBackgroundImage(
