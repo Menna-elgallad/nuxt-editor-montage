@@ -26,7 +26,7 @@
       .row        
         .col-lg-6.mt-3(v-for="(src , index) in srcsVid" :key="index" class="relative" )
           video( @click="uploadedbackvid(index)" ref="vidoeEle" class="video")
-              source(:src="src" type="video/mp4"  )
+              source(:src="src" type="video/mp4" controls )
           Icon(name="gridicons:cross-small" class="bg-red-300 border-circle absolute  " style="right : 15px ; top:5px ;cursor:pointer" @click="removeUplodedVid(index)")        
     .backgrounds.row.mt-3.menuitem 
         h4.m-0 Background image 
@@ -41,12 +41,10 @@ import { useCanvas } from "~~/stores/canvas";
 import { storeToRefs } from "pinia";
 import { fabric } from "fabric";
 const vidoeEle = ref([]);
-const colorstore = useColorsStore();
+
 const canvasStore = useCanvas();
-const { mycanvas } = storeToRefs(canvasStore);
+const { mycanvas, canasWrapper } = storeToRefs(canvasStore);
 const color = ref("white");
-const { changecolor, createImgElment, removeImgBack, createVidElment } =
-  colorstore;
 const backimg = ref([]);
 const imguploaded = ref();
 const VideoUploaded = ref();
@@ -56,6 +54,7 @@ const imgInstance = ref();
 let fabricCanvas: fabric.canvas;
 onMounted(() => {
   fabricCanvas = mycanvas.value;
+  console.log("wrapper", canasWrapper.value);
 });
 function onfilechange(event: any) {
   console.log("img", event.target.files[0]);
@@ -91,7 +90,7 @@ function uploadedbackAdd(index: number) {
   imgInstance.value = curr;
   addBackground(imgInstance.value);
 }
-function addBackground(img :any) {
+function addBackground(img: any) {
   fabricCanvas.backgroundImage = img;
   fabricCanvas.setBackgroundImage(img, function () {
     let img = fabricCanvas.backgroundImage;
@@ -116,8 +115,16 @@ function addBackground(img :any) {
   });
 }
 function uploadedbackvid(index: number) {
+  removeback();
   var video1El = document.querySelectorAll(".video");
-
+  const myvid = video1El[index];
+  const clone = myvid.cloneNode(true);
+  clone.style.zIndex = "-1";
+  clone.style.position = "absolute";
+  clone.style.top = "0";
+  fabricCanvas.backgroundColor = "rgba(0,0,0,0)";
+  clone.play();
+  canasWrapper.value.appendChild(clone);
   console.log(">>>>>>>>");
   // function getVideoElement(url: any) {
   //   var videoE = document.createElement("video");
@@ -142,8 +149,8 @@ function uploadedbackvid(index: number) {
     left: 0,
     top: 0,
     angle: 0,
-    scaleX: fabricCanvas.width ,
-    scaleY: fabricCanvas.height ,
+    scaleX: fabricCanvas.width,
+    scaleY: fabricCanvas.height,
   });
   fabricCanvas.add(fabricVideo);
   fabricCanvas.renderAll();
@@ -195,6 +202,13 @@ function removeback() {
     null,
     fabricCanvas.renderAll.bind(fabricCanvas)
   );
+  const videoElement = canasWrapper.value.querySelector("video");
+
+  // Check if the video element exists
+  if (videoElement) {
+    // Remove the video element
+    videoElement.parentNode.removeChild(videoElement);
+  }
 }
 watch(color, (curr, prev) => {
   fabricCanvas.backgroundColor = curr;

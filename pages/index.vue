@@ -19,7 +19,7 @@ import { storeToRefs } from "pinia";
 import { useCanvas } from "~~/stores/canvas";
 const canvasStore = useCanvas();
 
-const { canvasref } = canvasStore;
+const { canvasref, canvasWrapperRef } = canvasStore;
 
 const myimg = ref(null);
 const canvasRef = ref(null);
@@ -44,7 +44,7 @@ onMounted(() => {
   });
   canvasWrapper.style.width = fabricCanvas.width + "px";
   canvasWrapper.style.height = fabricCanvas.height + "px";
-
+  canvasWrapperRef(canvasWrapper);
   canvasref(fabricCanvas);
   // set the border properties
   fabricCanvas.set({
@@ -189,6 +189,7 @@ interface AssetEvent {
   justify-content: center;
   align-items: center;
   .canvasElement {
+    position: relative;
     .canvas-container {
       // transform: translate(-50%, -50%);
       --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
