@@ -27,5 +27,8 @@
         "nuxt-graphql-client": "^0.2.25",
         "primevue": "^3.26.0",
         "vue3-lottie": "^2.5.0"
+    },
+    "engines": {
+        "node": "^16 || ^18"
     }
 }
