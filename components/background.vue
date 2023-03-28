@@ -24,7 +24,7 @@
                 span Select
                 Icon(name="octicon:cloud-upload") 
       .row        
-        .col-lg-6.mt-3(v-for="(src , index) in srcsVid" :key="index" class="relative" )
+        .col-lg-6.mt-3(v-for="(src , index) in srcsVid" :key="index" class="relative" v-if="isVideo" )
           video( @click="uploadedbackvid(index)" ref="vidoeEle" class="video")
               source(:src="src" type="video/mp4" controls )
           Icon(name="gridicons:cross-small" class="bg-red-300 border-circle absolute  " style="right : 15px ; top:5px ;cursor:pointer" @click="removeUplodedVid(index)")        
@@ -43,6 +43,7 @@ import { fabric } from "fabric";
 const vidoeEle = ref([]);
 
 const canvasStore = useCanvas();
+const isVideo = ref(true);
 const { mycanvas, canasWrapper } = storeToRefs(canvasStore);
 const color = ref("white");
 const backimg = ref([]);
@@ -76,9 +77,11 @@ function removeUploded(index: number) {
   srcs.value.splice(index, 1);
 }
 function removeUplodedVid(indx: number) {
-  console.log("srcsvid", srcsVid.value, indx);
-  console.log(srcsVid.value.splice(indx, 1));
-  console.log("srcsafter", srcsVid.value, indx);
+  isVideo.value = false;
+  srcsVid.value.splice(indx, 1);
+  setTimeout(() => {
+    isVideo.value = true;
+  }, 10);
 }
 function refimage(index: number) {
   const curr = backimg.value[index];
