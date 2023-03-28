@@ -1,9 +1,8 @@
 <template lang="pug">
 .main.flex.gap-2.justify-content-between  
-
-  .canvasElement
-
-    canvas(ref="canvasRef")
+  .dashboard
+    .canvasElement
+      canvas(ref="canvasRef")
   sidetools(@changeBackColor="changColor" @addAsset="addAsset" :selectedElement="selectedElement" :canvas="fabricCanvas")    
         
 
@@ -17,124 +16,21 @@ import { fabric } from "fabric";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import noskom from "../assets/jsons/nos kom.json";
 import { storeToRefs } from "pinia";
-import { useColorsStore } from "~~/stores/background";
+import { useCanvas } from "~~/stores/canvas";
+const canvasStore = useCanvas();
 
-const colorstore = useColorsStore();
-const { color, backimage, removed, vidUploaded } = storeToRefs(colorstore);
+const { canvasref } = canvasStore;
+
 const myimg = ref(null);
 const canvasRef = ref(null);
-const draggableRef = ref(null);
-const imgInstance = ref();
+
 const selectedElement = ref();
 let fabricCanvas: fabric.canvas, draggable, fabricElement;
-function imgclicked() {
-  console.log(myimg.value);
-}
-watch(color, (curr, pre) => {
-  fabricCanvas.backgroundColor = curr;
-  fabricCanvas.renderAll();
-});
-watch(backimage, (curr, pre) => {
-  if (typeof curr === "object") {
-    imgInstance.value = new fabric.Image(curr, {});
-  } else if (typeof curr === "string") {
-    imgInstance.value = curr;
-  }
 
-  fabricCanvas.backgroundImage = imgInstance.value;
-  fabricCanvas.setBackgroundImage(imgInstance.value, function () {
-    let img = fabricCanvas.backgroundImage;
-    (img.left = fabricCanvas.width / 2),
-      (img.top = fabricCanvas.height / 2),
-      (img.originX = "center"),
-      (img.originY = "center");
-    // img.flipX = "true";
-    var widthScaleFactor = fabricCanvas.width / img.width;
-    var heightScaleFactor = fabricCanvas.height / img.height;
-    var scaleFactor = Math.max(widthScaleFactor, heightScaleFactor);
-
-    // Scale fabric image to fit canvas
-    img.scale(scaleFactor);
-
-    // Center fabric image in canvas
-    img.set({
-      left: fabricCanvas.width / 2,
-      top: fabricCanvas.height / 2,
-    });
-    fabricCanvas.renderAll();
-  });
-
-  fabricCanvas.renderAll();
-});
-
-watch(vidUploaded, (curr, prev) => {
-  // fabric.Image.fromURL(
-  //   curr,
-  //   function (videoImg) {
-  //     // Set the isVideo and evented properties
-  //     videoImg.set({
-  //       isVideo: true,
-  //       evented: false,
-  //     });
-
-  //     // Set the canvas background to the video image
-  //     fabricCanvas.setBackgroundImage(
-  //       videoImg,
-  //       fabricCanvas.renderAll.bind(fabricCanvas)
-  //     );
-  //   },
-  //   { crossOrigin: "anonymous" }
-  // );
-
-  function getVideoElement(url) {
-    var videoE = document.createElement("video");
-    videoE.width = fabricCanvas.getWidth();
-    videoE.height = fabricCanvas.getHeight();
-    videoE.muted = true;
-    videoE.crossOrigin = "anonymous";
-    var source = document.createElement("source");
-    source.src = url;
-    source.type = "video/mp4";
-    videoE.appendChild(source);
-    return videoE;
-  }
-
-  var url_mp4 = curr;
-
-  var videoE = getVideoElement(url_mp4);
-  console.log("myvidddd", getVideoElement(url_mp4));
-  var fab_video = new fabric.Image(videoE);
-  // fabricCanvas.add(fab_video);
-
-  fabricCanvas.sendToBack(fab_video);
-  fabricCanvas.backgroundImage = fab_video;
-  fabricCanvas.setBackgroundImage(fab_video, function () {
-    let img = fabricCanvas.backgroundImage;
-    img.originX = "left";
-    img.originY = "top";
-    // img.scaleX = fabricCanvas.getWidth() / img.width;
-    // img.scaleY = fabricCanvas.getHeight() / img.height;
-    img.selectable = false;
-    img.hasBorders = false;
-    fab_video.getElement().play();
-
-    fabricCanvas.renderAll();
-    fabric.util.requestAnimFrame(function render() {
-      fabricCanvas.renderAll();
-      fabric.util.requestAnimFrame(render);
-    });
-  });
-});
-watch(removed, (curr, pre) => {
-  fabricCanvas.setBackgroundImage(
-    null,
-    fabricCanvas.renderAll.bind(fabricCanvas)
-  );
-});
-console.log("myimg");
 onMounted(() => {
   gsap.registerPlugin(ScrollTrigger, Draggable);
   const myimg = document.getElementById("img");
+  const canvasWrapper = document.querySelector(".canvasElement");
 
   console.log(myimg);
   fabricCanvas = new fabric.Canvas(canvasRef.value, {
@@ -146,7 +42,10 @@ onMounted(() => {
     borderColor: "black",
     strokeWidth: 5,
   });
+  canvasWrapper.style.width = fabricCanvas.width + "px";
+  canvasWrapper.style.height = fabricCanvas.height + "px";
 
+  canvasref(fabricCanvas);
   // set the border properties
   fabricCanvas.set({
     borderColor: "black",
@@ -284,22 +183,21 @@ interface AssetEvent {
 }
 </script>
 <style lang="scss">
-.canvasElement {
-  position: relative;
-  width: 100%;
-  height: 90vh;
-
-  .canvas-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
-      0 8px 10px -6px rgb(0 0 0 / 0.1);
-    --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color),
-      0 8px 10px -6px var(--tw-shadow-color);
-    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
-      var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+.dashboard {
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .canvasElement {
+    .canvas-container {
+      // transform: translate(-50%, -50%);
+      --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
+        0 8px 10px -6px rgb(0 0 0 / 0.1);
+      --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color),
+        0 8px 10px -6px var(--tw-shadow-color);
+      box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+        var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+    }
   }
 }
 </style>

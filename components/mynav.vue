@@ -5,7 +5,7 @@
             li
               .content
                   Icon(name="fluent:list-16-filled" class="iconli")
-                  span.ml-2.text-lg Animator
+                  span.ml-2.text-lg Animaider
             
             li: Icon.text-3xl.myicon(name="bi:question-circle" class="iconli" )   
             li

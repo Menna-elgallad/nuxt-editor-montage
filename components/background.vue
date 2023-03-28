@@ -25,7 +25,7 @@
                 Icon(name="octicon:cloud-upload") 
       .row        
         .col-lg-6.mt-3(v-for="(src , index) in srcsVid" :key="index" class="relative" )
-          video( @click="uploadedbackvid(index)" )
+          video( @click="uploadedbackvid(index)" ref="vidoeEle" class="video")
               source(:src="src" type="video/mp4"  )
           Icon(name="gridicons:cross-small" class="bg-red-300 border-circle absolute  " style="right : 15px ; top:5px ;cursor:pointer" @click="removeUplodedVid(index)")        
     .backgrounds.row.mt-3.menuitem 
@@ -37,18 +37,26 @@
 
 <script setup lang="ts">
 import { useColorsStore } from "~~/stores/background";
+import { useCanvas } from "~~/stores/canvas";
 import { storeToRefs } from "pinia";
-
+import { fabric } from "fabric";
+const vidoeEle = ref([]);
 const colorstore = useColorsStore();
+const canvasStore = useCanvas();
+const { mycanvas } = storeToRefs(canvasStore);
 const color = ref("white");
 const { changecolor, createImgElment, removeImgBack, createVidElment } =
   colorstore;
 const backimg = ref([]);
 const imguploaded = ref();
 const VideoUploaded = ref();
-const srcs = ref([]);
-const srcsVid = ref([]);
-
+const srcs = ref<string[]>([]);
+const srcsVid = ref<string[]>([]);
+const imgInstance = ref();
+let fabricCanvas: fabric.canvas;
+onMounted(() => {
+  fabricCanvas = mycanvas.value;
+});
 function onfilechange(event: any) {
   console.log("img", event.target.files[0]);
   imguploaded.value = event.target.files[0];
@@ -63,34 +71,134 @@ watch(imguploaded, (curr, prev) => {
 });
 watch(VideoUploaded, (curr, prev) => {
   srcsVid.value.push(URL.createObjectURL(curr));
+  // console.log("srcs.val", srcsVid.value);
 });
-function removeUploded(index) {
-  console.log("srcs", srcs.value, index);
+function removeUploded(index: number) {
   srcs.value.splice(index, 1);
-  console.log("srcs", srcs.value, index);
 }
-function removeUplodedVid(indx) {
+function removeUplodedVid(indx: number) {
   console.log("srcsvid", srcsVid.value, indx);
   console.log(srcsVid.value.splice(indx, 1));
   console.log("srcsafter", srcsVid.value, indx);
 }
 function refimage(index: number) {
-  console.log(typeof backimg.value[index]);
-  createImgElment(backimg.value[index]);
+  const curr = backimg.value[index];
+  imgInstance.value = new fabric.Image(curr, {});
+  addBackground(imgInstance.value);
 }
 function uploadedbackAdd(index: number) {
-  createImgElment(srcs.value[index]);
+  const curr = srcs.value[index];
+  imgInstance.value = curr;
+  addBackground(imgInstance.value);
 }
-function uploadedbackvid(index) {
+function addBackground(img :any) {
+  fabricCanvas.backgroundImage = img;
+  fabricCanvas.setBackgroundImage(img, function () {
+    let img = fabricCanvas.backgroundImage;
+    (img.left = fabricCanvas.width / 2),
+      (img.top = fabricCanvas.height / 2),
+      (img.originX = "center"),
+      (img.originY = "center");
+    // img.flipX = "true";
+    var widthScaleFactor = fabricCanvas.width / img.width;
+    var heightScaleFactor = fabricCanvas.height / img.height;
+    var scaleFactor = Math.max(widthScaleFactor, heightScaleFactor);
+
+    // Scale fabric image to fit canvas
+    img.scale(scaleFactor);
+
+    // Center fabric image in canvas
+    img.set({
+      left: fabricCanvas.width / 2,
+      top: fabricCanvas.height / 2,
+    });
+    fabricCanvas.renderAll();
+  });
+}
+function uploadedbackvid(index: number) {
+  var video1El = document.querySelectorAll(".video");
+
   console.log(">>>>>>>>");
-  createVidElment(srcsVid.value[index]);
+  // function getVideoElement(url: any) {
+  //   var videoE = document.createElement("video");
+  //   videoE.width = fabricCanvas.getWidth();
+  //   videoE.height = fabricCanvas.getHeight();
+  //   videoE.muted = true;
+  //   videoE.crossOrigin = "anonymous";
+  //   var source = document.createElement("source");
+  //   source.src = url;
+  //   source.type = "video/mp4";
+  //   videoE.appendChild(source);
+  //   return videoE;
+  // }
+
+  // var url_mp4 = srcsVid.value[index];
+
+  var videoE = video1El[index];
+  console.log("viddd", videoE);
+  // console.log("myvidddd", getVideoElement(url_mp4));
+
+  var fabricVideo = new fabric.Image(videoE, {
+    left: 0,
+    top: 0,
+    angle: 0,
+    scaleX: fabricCanvas.width ,
+    scaleY: fabricCanvas.height ,
+  });
+  fabricCanvas.add(fabricVideo);
+  fabricCanvas.renderAll();
+
+  // fabricCanvas.add(videoE);
+  // video1.getElement().play();
+  // console.log(videoE);
+  // fabric.util.requestAnimFrame(function render() {
+  //   fabricCanvas.renderAll();
+  //   fabric.util.requestAnimFrame(render);
+  // });
+  // fabricCanvas.renderAll();
+  // fabricCanvas.add(fab_video);
+
+  // fabricCanvas.sendToBack(fab_video);
+  // fabricCanvas.backgroundImage = fab_video;
+  // fabricCanvas.setBackgroundImage(fab_video, function () {
+  //   let img = fabricCanvas.backgroundImage;
+  //   img.originX = "left";
+  //   img.originY = "top";
+  //   (img.left = fabricCanvas.width / 2),
+  //     (img.top = fabricCanvas.height / 2),
+  //     (img.originX = "center"),
+  //     (img.originY = "center");
+  //   // img.flipX = "true";
+  //   var widthScaleFactor = fabricCanvas.width / img.width;
+  //   var heightScaleFactor = fabricCanvas.height / img.height;
+  //   var scaleFactor = Math.max(widthScaleFactor, heightScaleFactor);
+
+  //   // Scale fabric image to fit canvas
+  //   img.scale(scaleFactor);
+  //   img.set({
+  //     left: fabricCanvas.width / 2,
+  //     top: fabricCanvas.height / 2,
+  //   });
+  //   img.selectable = false;
+  //   img.hasBorders = false;
+  //   fab_video.getElement().play();
+
+  //   fabricCanvas.renderAll();
+  //   fabric.util.requestAnimFrame(function render() {
+  //     fabricCanvas.renderAll();
+  //     fabric.util.requestAnimFrame(render);
+  //   });
+  // });
 }
 function removeback() {
-  removeImgBack(Math.random());
+  fabricCanvas.setBackgroundImage(
+    null,
+    fabricCanvas.renderAll.bind(fabricCanvas)
+  );
 }
 watch(color, (curr, prev) => {
-  changecolor(curr);
-  console.log(curr);
+  fabricCanvas.backgroundColor = curr;
+  fabricCanvas.renderAll();
 });
 </script>
 
