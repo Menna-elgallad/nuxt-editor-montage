@@ -1,10 +1,14 @@
 <template lang="pug">
-.main.flex.gap-2.justify-content-between  
-  .dashboard
-    .canvasElement
-      canvas(ref="canvasRef")
-  sidetools(@changeBackColor="changColor" @addAsset="addAsset" :selectedElement="selectedElement" :canvas="fabricCanvas")    
-        
+.contents  
+  menubackground.showMenuBack
+  .main.flex.gap-2.justify-content-between  
+    
+    .dashboard(@click="releaseControls()")
+      .canvasElement(@click="focus")
+
+        canvas(ref="canvasRef" )
+    sidetools(@addAsset="addAsset" :selectedElement="selectedElement" :canvas="fabricCanvas")    
+          
 
 
 </template>
@@ -14,23 +18,21 @@ import gsap from "gsap";
 import { Draggable } from "gsap/Draggable";
 import { fabric } from "fabric";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import noskom from "../assets/jsons/nos kom.json";
+
 import { storeToRefs } from "pinia";
 import { useCanvas } from "~~/stores/canvas";
 const canvasStore = useCanvas();
 
-const { canvasref, canvasWrapperRef } = canvasStore;
-
 const myimg = ref(null);
 const canvasRef = ref(null);
-
+const showMenuBack = ref(false);
 const selectedElement = ref();
 let fabricCanvas: fabric.canvas, draggable, fabricElement;
 
 onMounted(() => {
   gsap.registerPlugin(ScrollTrigger, Draggable);
   const myimg = document.getElementById("img");
-  const canvasWrapper = document.querySelector(".canvasElement");
+  const canvasWrapper = document.querySelector<any>(".canvasElement");
 
   console.log(myimg);
   fabricCanvas = new fabric.Canvas(canvasRef.value, {
@@ -42,11 +44,14 @@ onMounted(() => {
     borderColor: "black",
     strokeWidth: 5,
   });
-  canvasWrapper.style.width = fabricCanvas.width + "px";
-  canvasWrapper.style.height = fabricCanvas.height + "px";
-  canvasWrapperRef(canvasWrapper);
-  canvasref(fabricCanvas);
-  // set the border properties
+
+  if (canvasWrapper) {
+    canvasWrapper.style.width = fabricCanvas.width + "px";
+    canvasWrapper.style.height = fabricCanvas.height + "px";
+  }
+  canvasStore.$patch({ canasWrapper: canvasWrapper });
+  canvasStore.$patch({ mycanvas: fabricCanvas });
+
   fabricCanvas.set({
     borderColor: "black",
     strokeWidth: 5,
@@ -58,18 +63,34 @@ onMounted(() => {
     left: 100,
     top: 100,
   });
-  const circle2 = new fabric.Circle({
-    radius: 30,
-    fill: "green",
-    left: 20,
-    top: 20,
-  });
+
   console.log(circle);
   fabricCanvas.add(circle).setActiveObject(circle);
-  fabricCanvas.add(circle2);
+
   // fabricCanvas.add(imgInstance);
 });
+function focus(event) {
+  event.stopPropagation();
+  const canvasWrapper = document.querySelector<any>(".canvasElement");
 
+  showMenuBack.value = true;
+  gsap.to(".showMenuBack", {
+    y: 50,
+    duration: 0.5,
+  });
+  canvasWrapper.style.outline = "2px solid #125386";
+}
+function releaseControls() {
+  const canvasWrapper = document.querySelector<any>(".canvasElement");
+  if (showMenuBack.value) {
+    canvasWrapper.style.outline = "none";
+    console.log("release");
+  }
+  gsap.to(".showMenuBack", {
+    y: -50,
+    duration: 1,
+  });
+}
 const calculateTextWidth = (text: string, font: string) => {
   const ctx = fabricCanvas?.getContext();
   ctx!.font = font;
@@ -183,13 +204,37 @@ interface AssetEvent {
 }
 </script>
 <style lang="scss">
+.setting {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 10;
+
+  background-color: #ccccccbb;
+  padding: 0.5rem;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  &:hover {
+    box-shadow: 0 0 8px 2px #cccccc70;
+  }
+}
+
 .dashboard {
   width: 80%;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+
   .canvasElement {
     position: relative;
+
+    &:hover {
+      outline: 2px solid #125386;
+    }
     .canvas-container {
       // transform: translate(-50%, -50%);
       --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),

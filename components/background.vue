@@ -36,16 +36,19 @@
 </template>
 
 <script setup lang="ts">
-import { useColorsStore } from "~~/stores/background";
 import { useCanvas } from "~~/stores/canvas";
 import { storeToRefs } from "pinia";
 import { fabric } from "fabric";
-const vidoeEle = ref([]);
+import { useLocalStorageStore } from "~~/stores/assets";
 
+const vidoeEle = ref([]);
+const assetsStore = useLocalStorageStore();
+const { getsrcsImages, getsrcsVideos, setsrcsImages, setsrcsVideos } =
+  assetsStore;
 const canvasStore = useCanvas();
 const isVideo = ref(true);
-const { mycanvas, canasWrapper } = storeToRefs(canvasStore);
-const color = ref("white");
+const { mycanvas, canasWrapper, color } = storeToRefs(canvasStore);
+
 const backimg = ref([]);
 const imguploaded = ref();
 const VideoUploaded = ref();
@@ -53,25 +56,33 @@ const srcs = ref<string[]>([]);
 const srcsVid = ref<string[]>([]);
 const imgInstance = ref();
 let fabricCanvas: fabric.canvas;
+let canvaswrapper: any;
 onMounted(() => {
   fabricCanvas = mycanvas.value;
-  console.log("wrapper", canasWrapper.value);
+  canvaswrapper = canasWrapper.value;
+  console.log("ff", fabricCanvas);
+  console.log("cc", canvaswrapper);
 });
+
+if (srcsVid.value.length === 0) {
+  srcsVid.value = getsrcsVideos;
+}
+if (srcs.value.length === 0) {
+  srcs.value = getsrcsImages;
+}
 function onfilechange(event: any) {
-  console.log("img", event.target.files[0]);
   imguploaded.value = event.target.files[0];
 }
 function onfilechangeVid(event: any) {
-  console.log("vid", event.target.files[0]);
   VideoUploaded.value = event.target.files[0];
 }
 watch(imguploaded, (curr, prev) => {
   srcs.value.push(URL.createObjectURL(curr));
-  console.log("srcs.val", srcs.value);
+  setsrcsImages(srcs.value);
 });
 watch(VideoUploaded, (curr, prev) => {
   srcsVid.value.push(URL.createObjectURL(curr));
-  // console.log("srcs.val", srcsVid.value);
+  setsrcsVideos(srcsVid.value);
 });
 function removeUploded(index: number) {
   srcs.value.splice(index, 1);
@@ -121,13 +132,13 @@ function uploadedbackvid(index: number) {
   removeback();
   var video1El = document.querySelectorAll(".video");
   const myvid = video1El[index];
-  const clone = myvid.cloneNode(true);
+  const clone: any = myvid.cloneNode(true);
   clone.style.zIndex = "-1";
   clone.style.position = "absolute";
   clone.style.top = "0";
   fabricCanvas.backgroundColor = "rgba(0,0,0,0)";
   clone.play();
-  canasWrapper.value.appendChild(clone);
+  canvaswrapper.appendChild(clone);
   console.log(">>>>>>>>");
   fabricCanvas.renderAll();
 }
@@ -136,7 +147,7 @@ function removeback() {
     null,
     fabricCanvas.renderAll.bind(fabricCanvas)
   );
-  const videoElement = canasWrapper.value.querySelector("video");
+  const videoElement: any = canvaswrapper.querySelector("video");
 
   // Check if the video element exists
   if (videoElement) {
@@ -146,6 +157,7 @@ function removeback() {
 }
 watch(color, (curr, prev) => {
   fabricCanvas.backgroundColor = curr;
+  canvasStore.$patch({ color: curr });
   fabricCanvas.renderAll();
 });
 </script>

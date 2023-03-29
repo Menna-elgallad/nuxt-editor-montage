@@ -1,8 +1,8 @@
 <template lang="pug">
 .tools.flex.flex-row-reverse
-  .mycontainer.bg-blue-700
+  .mycontainer.bg-blue-900.border-round-2xl
     ul.text-0
-      li.py-3(v-for="(item,index) in names" :key="index" @click="toggle(  item.name ,index ) " :class="{active : activeindex===index}" ): Icon.text-3xl.icontools.ml-2(:name="item.icon")
+      li.mt-2.py-3(v-for="(item,index) in names" :key="index" @click="toggle(  item.name ,index ) " :class="{active : activeindex===index}" ): Icon.text-3xl.icontools(:name="item.icon")
   .toolItems( ref="tools") 
     .close( class="flex "): span(@click="close()" style="pointer:cursor")
       Icon.text-2xl.text-blue-700(name="ion:chevron-forward")    
@@ -64,20 +64,17 @@ const names = [
 
 <style lang="scss" scoped>
 .mycontainer {
-  // position: fixed;
-  // left: 0;
-  // top: 50%;
-  // transform: translatey(-50%);
   width: 61px;
-  padding: 0.5rem;
-  // border-radius: 0 1rem 1rem 0;
+
+  transform: translateY(-25px);
   z-index: 5;
 
   ul {
     position: relative;
-    // z-index: 100;
 
     li {
+      display: grid;
+      place-content: center;
       cursor: pointer;
       position: relative;
       z-index: 100;
@@ -85,11 +82,13 @@ const names = [
       border-radius: 1.2rem;
 
       &.active {
-        background-color: #cccccc3a;
+        background-color: rgb(255 255 255);
+        color: var(--blue-900);
       }
 
       &:hover {
-        background-color: #cccccc3a;
+        background-color: rgba(255, 255, 255, 0.623);
+        color: var(--blue-900);
       }
     }
   }
@@ -105,12 +104,12 @@ const names = [
     z-index: 1;
     transform: translateX(100%);
     padding: 2rem;
-    height: 95vh;
+    height: 100%;
     overflow-y: scroll;
     background-color: white;
     width: 350px;
     border-radius: 1.2rem;
-
+    height: 90vh;
     /* width */
     &::-webkit-scrollbar {
       width: 4px;

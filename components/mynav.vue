@@ -1,5 +1,5 @@
 <template lang="pug">
-.mycontainer-fluid.bg-blue-700
+.mycontainer-fluid.bg-blue-900
     .nav.flex.justify-content-between.align-items-center
         ul.left-part.flex.gap-2.align-items-center 
             li
@@ -47,6 +47,8 @@ const items = [
 .mycontainer-fluid {
   padding: 0.3rem 1rem;
   color: white;
+  position: relative;
+  z-index: 100;
 }
 .iconss {
   border-radius: 0.5rem;
