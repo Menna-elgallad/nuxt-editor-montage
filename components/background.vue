@@ -139,7 +139,7 @@ function uploadedbackvid(index: number) {
   fabricCanvas.backgroundColor = "rgba(0,0,0,0)";
   clone.play();
   canvaswrapper.appendChild(clone);
-  console.log(">>>>>>>>");
+
   fabricCanvas.renderAll();
 }
 function removeback() {

@@ -26,8 +26,7 @@ const flipy = ref(true);
 watch(mycanvas, (curr, prev) => {
   fabricCanvas = mycanvas.value;
   canvaswrapper = canasWrapper.value;
-  console.log("ff", fabricCanvas);
-  console.log("cc", canvaswrapper);
+
 });
 
 function flip(type: string) {

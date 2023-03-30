@@ -21,7 +21,7 @@ const props = defineProps({
 const tools = ref();
 const activeindex = ref(null);
 const show = ref(false);
-const content = ref();
+const content = ref("backround");
 
 const emit = defineEmits(["addAsset", "changeBackColor"]);
 
@@ -32,7 +32,7 @@ function addAssets(event) {
 function toggle(item, index) {
   if (show.value === false && !content.value) {
     gsap.to(".toolItems", {
-      xPercent: -100,
+      xPercent: -1,
     });
   }
   console.log(item);
@@ -42,7 +42,7 @@ function toggle(item, index) {
 }
 function close() {
   gsap.to(".toolItems", {
-    xPercent: -1,
+    xPercent: 100,
     duration: 1,
   });
   show.value = false;
@@ -102,7 +102,7 @@ const names = [
     color: black;
     position: relative;
     z-index: 1;
-    transform: translateX(100%);
+    // transform: translateX(100%);
     padding: 2rem;
     height: 100%;
     overflow-y: scroll;

@@ -84,7 +84,7 @@ function releaseControls() {
   const canvasWrapper = document.querySelector<any>(".canvasElement");
   if (showMenuBack.value) {
     canvasWrapper.style.outline = "none";
-    console.log("release");
+  
   }
   gsap.to(".showMenuBack", {
     y: -50,
