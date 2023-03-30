@@ -6,8 +6,8 @@
     .dashboard(@click="releaseControls()")
       .canvasElement(@click="focus")
 
-        canvas(ref="canvasRef" )
-    sidetools(@addAsset="addAsset" :selectedElement="selectedElement" :canvas="fabricCanvas")    
+        canvas#mycanvas(ref="canvasRef" )
+    sidetools    
           
 
 
@@ -18,39 +18,32 @@ import gsap from "gsap";
 import { Draggable } from "gsap/Draggable";
 import { fabric } from "fabric";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-
+import lottie from "lottie-web";
 import { storeToRefs } from "pinia";
 import { useCanvas } from "~~/stores/canvas";
 const canvasStore = useCanvas();
 
 const myimg = ref(null);
-const canvasRef = ref(null);
+const canvasRef = ref();
 const showMenuBack = ref(false);
 const selectedElement = ref();
-let fabricCanvas: fabric.canvas, draggable, fabricElement;
-
+let fabricCanvas, draggable, fabricElement;
 onMounted(() => {
   gsap.registerPlugin(ScrollTrigger, Draggable);
   const myimg = document.getElementById("img");
   const canvasWrapper = document.querySelector<any>(".canvasElement");
-
-  console.log(myimg);
-  fabricCanvas = new fabric.Canvas(canvasRef.value, {
-    height: 500,
-    width: 750,
-    backgroundColor: "white",
-    // shadow:1,
-    backgroundColorAlpha: 0,
-    borderColor: "black",
-    strokeWidth: 5
-  });
-
+  const animtion = ref();
+  // console.log(canvasRef.value);
+  canvasStore.setCanvasElement(canvasRef.value);
+  fabricCanvas = canvasStore.mycanvas;
+  console.log("fabcompo", fabricCanvas);
   if (canvasWrapper) {
     canvasWrapper.style.width = fabricCanvas.width + "px";
     canvasWrapper.style.height = fabricCanvas.height + "px";
   }
   canvasStore.$patch({ canasWrapper: canvasWrapper });
   canvasStore.$patch({ mycanvas: fabricCanvas });
+  canvasStore.$patch({ canvasref: canvasRef.value });
 
   fabricCanvas.set({
     borderColor: "black",
@@ -64,7 +57,6 @@ onMounted(() => {
     top: 100
   });
 
-  console.log(circle);
   fabricCanvas.add(circle).setActiveObject(circle);
 
   // fabricCanvas.add(imgInstance);
@@ -84,123 +76,11 @@ function releaseControls() {
   const canvasWrapper = document.querySelector<any>(".canvasElement");
   if (showMenuBack.value) {
     canvasWrapper.style.outline = "none";
-    console.log("release");
   }
   gsap.to(".showMenuBack", {
     y: -50,
     duration: 1
   });
-}
-const calculateTextWidth = (text: string, font: string) => {
-  const ctx = fabricCanvas?.getContext();
-  ctx!.font = font;
-  return ctx!.measureText(text).width + 20;
-};
-
-const addAsset = (event: AssetEvent) => {
-  switch (event.type) {
-    // case ASSET_TYPE.EMOJI:
-    //   newSvg(`/emojis/${event.value}.svg`);
-    //   break;
-    // case ASSET_TYPE.SHAPE:
-    //   newSvg(`/shapes/${event.value}.svg`);
-    //   break;
-    // case ASSET_TYPE.IMAGE:
-    //   newImage(`/images/${event.value}.jpg`);
-    //   break;
-    // case ASSET_TYPE.UPLOAD:
-    //   if (event.file) {
-    //     switch (getFileExtension(event.file.name)) {
-    //       case "png":
-    //       case "jpg":
-    //         newImage(event.file);
-    //         break;
-    //     }
-    //   }
-    //   break;
-    case ASSET_TYPE.TEXT:
-      switch (event.value) {
-        case "heading":
-          newTextbox(50, 700, "Heading", "Roboto");
-          break;
-        case "subheading":
-          newTextbox(22, 500, "Subheading", "Roboto");
-          break;
-        case "body":
-          newTextbox(18, 400, "Body", "Roboto");
-          break;
-        default:
-          newTextbox(18, 400, "Text", event.value);
-          break;
-      }
-      break;
-  }
-};
-
-const newTextbox = (
-  fontSize: number,
-  fontWeight: string | number | undefined,
-  text: string,
-  font: string
-) => {
-  const id = String(Math.floor(100000 + Math.random() * 900000));
-  const newText = new fabric.Textbox(text, {
-    left: fabricCanvas.getWidth() / 2,
-    top: fabricCanvas.getHeight() / 2,
-    originX: "center",
-    originY: "center",
-    fontFamily: "Roboto",
-    fill: "#111",
-    fontSize,
-    fontWeight,
-    textAlign: "center",
-    cursorWidth: 1,
-    stroke: "#000",
-    strokeWidth: 0,
-    cursorDuration: 1,
-    paintFirst: "stroke",
-    objectCaching: false,
-    absolutePositioned: true,
-    strokeUniform: true,
-    //@ts-ignore
-    inGroup: false,
-    cursorDelay: 250,
-    width: calculateTextWidth(text, `${fontWeight} ${fontSize}px Roboto`),
-    id: `text_${id}`
-  });
-  fabricCanvas?.add(newText);
-  fabricCanvas?.setActiveObject(newText);
-  fabricCanvas?.bringToFront(newText);
-  // newText.enterEditing();
-  // newText.selectAll();
-  fabricCanvas?.renderAll();
-  newText.on("mousedown", ele => {
-    selectedElement.value = ele.target;
-  });
-  //@ts-ignore
-  fabricCanvas!.getActiveObject()!.set("fontFamily", font);
-  fabricCanvas?.renderAll();
-  // state.layers.push({
-  //   id: `text_${id}`,
-  //   object: newText,
-  //   type: ASSET_TYPE.TEXT,
-  //   color: randomColorHex()
-  // });
-};
-
-enum ASSET_TYPE {
-  IMAGE = "IMAGE",
-  TEXT = "TEXT",
-  EMOJI = "EMOJI",
-  SHAPE = "SHAPE",
-  VIDEO = "VIDEO",
-  UPLOAD = "UPLOAD"
-}
-
-interface AssetEvent {
-  type: ASSET_TYPE;
-  value: string;
-  file?: File;
 }
 </script>
 <style lang="scss">

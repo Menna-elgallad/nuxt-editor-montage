@@ -1,7 +1,8 @@
 export default defineNuxtConfig({
+    ssr: false,
     app: {
         head: {
-            script: [{ src: "https://cdn.lordicon.com/ritcuqlt.js" }],
+            // script: [{ src: "https://cdn.lordicon.com/ritcuqlt.js" }],
         }
     },
     css: [

@@ -55,13 +55,16 @@ const VideoUploaded = ref();
 const srcs = ref<string[]>([]);
 const srcsVid = ref<string[]>([]);
 const imgInstance = ref();
-let fabricCanvas: fabric.canvas;
+let fabricCanvas: any
 let canvaswrapper: any;
+
+watch(mycanvas, (curr, prev) => {
+  fabricCanvas = mycanvas.value;
+  canvaswrapper = canasWrapper.value;
+});
 onMounted(() => {
   fabricCanvas = mycanvas.value;
   canvaswrapper = canasWrapper.value;
-  console.log("ff", fabricCanvas);
-  console.log("cc", canvaswrapper);
 });
 
 if (srcsVid.value.length === 0) {
@@ -139,7 +142,7 @@ function uploadedbackvid(index: number) {
   fabricCanvas.backgroundColor = "rgba(0,0,0,0)";
   clone.play();
   canvaswrapper.appendChild(clone);
-  console.log(">>>>>>>>");
+
   fabricCanvas.renderAll();
 }
 function removeback() {
@@ -164,6 +167,7 @@ watch(color, (curr, prev) => {
 
 <style scoped lang="scss">
 input[type="color"] {
+  appearance:none;
   -webkit-appearance: none;
   border: none;
   width: 32px;
