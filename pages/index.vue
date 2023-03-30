@@ -36,13 +36,13 @@ onMounted(() => {
 
   console.log(myimg);
   fabricCanvas = new fabric.Canvas(canvasRef.value, {
-    height: 720,
-    width: 1140,
+    height: 500,
+    width: 750,
     backgroundColor: "white",
     // shadow:1,
     backgroundColorAlpha: 0,
     borderColor: "black",
-    strokeWidth: 5,
+    strokeWidth: 5
   });
 
   if (canvasWrapper) {
@@ -54,14 +54,14 @@ onMounted(() => {
 
   fabricCanvas.set({
     borderColor: "black",
-    strokeWidth: 5,
+    strokeWidth: 5
   });
 
   const circle = new fabric.Circle({
     radius: 50,
     fill: "red",
     left: 100,
-    top: 100,
+    top: 100
   });
 
   console.log(circle);
@@ -76,7 +76,7 @@ function focus(event) {
   showMenuBack.value = true;
   gsap.to(".showMenuBack", {
     y: 50,
-    duration: 0.5,
+    duration: 0.5
   });
   canvasWrapper.style.outline = "2px solid #125386";
 }
@@ -88,7 +88,7 @@ function releaseControls() {
   }
   gsap.to(".showMenuBack", {
     y: -50,
-    duration: 1,
+    duration: 1
   });
 }
 const calculateTextWidth = (text: string, font: string) => {
@@ -166,7 +166,7 @@ const newTextbox = (
     inGroup: false,
     cursorDelay: 250,
     width: calculateTextWidth(text, `${fontWeight} ${fontSize}px Roboto`),
-    id: `text_${id}`,
+    id: `text_${id}`
   });
   fabricCanvas?.add(newText);
   fabricCanvas?.setActiveObject(newText);
@@ -174,7 +174,7 @@ const newTextbox = (
   // newText.enterEditing();
   // newText.selectAll();
   fabricCanvas?.renderAll();
-  newText.on("mousedown", (ele) => {
+  newText.on("mousedown", ele => {
     selectedElement.value = ele.target;
   });
   //@ts-ignore
@@ -194,7 +194,7 @@ enum ASSET_TYPE {
   EMOJI = "EMOJI",
   SHAPE = "SHAPE",
   VIDEO = "VIDEO",
-  UPLOAD = "UPLOAD",
+  UPLOAD = "UPLOAD"
 }
 
 interface AssetEvent {
