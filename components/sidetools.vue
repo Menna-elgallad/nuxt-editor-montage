@@ -9,7 +9,7 @@
     .toolcontent
       background(v-if="content==='backround'")
       Text(v-if="content==='text'" @addAsset="addAssets" :selectedElement="selectedElement" :canvas="canvas")
-            
+      animated(v-if="content==='animation'")      
 </template>
 
 <script setup>

@@ -57,11 +57,14 @@ const srcsVid = ref<string[]>([]);
 const imgInstance = ref();
 let fabricCanvas: fabric.canvas;
 let canvaswrapper: any;
+
+watch(mycanvas, (curr, prev) => {
+  fabricCanvas = mycanvas.value;
+  canvaswrapper = canasWrapper.value;
+});
 onMounted(() => {
   fabricCanvas = mycanvas.value;
   canvaswrapper = canasWrapper.value;
-  console.log("ff", fabricCanvas);
-  console.log("cc", canvaswrapper);
 });
 
 if (srcsVid.value.length === 0) {
