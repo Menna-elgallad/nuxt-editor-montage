@@ -9,6 +9,7 @@
     .toolcontent
       background(v-if="content==='backround'")
       Text(v-if="content==='text'")
+      animated(v-if="content==='animation'")
             
 </template>
 

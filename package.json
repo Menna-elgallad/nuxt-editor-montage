@@ -11,6 +11,8 @@
     "devDependencies": {
         "@nuxt/kit": "^3.3.1",
         "@types/fabric": "^5.3.0",
+        "@vueuse/core": "^9.13.0",
+        "@vueuse/nuxt": "^9.13.0",
         "nuxt": "^3.3.1",
         "nuxt-icon": "^0.3.3",
         "primeflex": "3.3.0",

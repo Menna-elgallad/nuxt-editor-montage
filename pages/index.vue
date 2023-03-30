@@ -6,7 +6,7 @@
     .dashboard(@click="releaseControls()")
       .canvasElement(@click="focus")
 
-        canvas(ref="canvasRef" )
+        canvas#mycanvas(ref="canvasRef" )
     sidetools    
           
 
@@ -24,28 +24,19 @@ import { useCanvas } from "~~/stores/canvas";
 const canvasStore = useCanvas();
 
 const myimg = ref(null);
-const canvasRef = ref(null);
+const canvasRef = ref();
 const showMenuBack = ref(false);
 const selectedElement = ref();
-let fabricCanvas: any, draggable, fabricElement;
+let fabricCanvas, draggable, fabricElement;
 onMounted(() => {
   gsap.registerPlugin(ScrollTrigger, Draggable);
   const myimg = document.getElementById("img");
   const canvasWrapper = document.querySelector<any>(".canvasElement");
   const animtion = ref();
-  console.log(myimg);
-  fabricCanvas = new fabric.Canvas(canvasRef.value, {
-    height: 500,
-    width: 750,
-    backgroundColor: "white",
-    // shadow:1,
-    //@ts-ignore
-    backgroundColorAlpha: 0,
-    borderColor: "black",
-    strokeWidth: 5,
-    hasControls: true,
-  });
-
+  // console.log(canvasRef.value);
+  canvasStore.setCanvasElement(canvasRef.value);
+  fabricCanvas = canvasStore.mycanvas
+  console.log("fabcompo", fabricCanvas);
   if (canvasWrapper) {
     canvasWrapper.style.width = fabricCanvas.width + "px";
     canvasWrapper.style.height = fabricCanvas.height + "px";

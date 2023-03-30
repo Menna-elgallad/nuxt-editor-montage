@@ -19,6 +19,8 @@ let fabricCanvas: fabric.canvas;
 let canvaswrapper: any;
 
 onMounted(() => {
+  console.log('playing')
+
   fabricCanvas = mycanvas.value;
   canvaswrapper = canasWrapper.value;
   console.log("fabcompo", fabricCanvas);
