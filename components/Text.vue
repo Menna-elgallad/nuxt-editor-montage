@@ -1,39 +1,41 @@
 <template lang="pug">
 .containerr.mt-4
-    h4 Tools
-    .tools.flex.justify-content-center.flex-column.mt-3
-        .color.flex.justify-content-space-between.align-items-center.ml-5
-            input(type="color" v-model ="color" :style="{backgroundColor : color}")
-            img.icon(:class="[textData.underline ? 'selected' : '']" @click="(changeElement('underline' , true))" src="~/assets/underline.png")
-            img.icon(:class="[textData.overline ? 'selected' : '']" @click="(changeElement('overline' , true))" src="~/assets/overline.png")
-            img.icon(:class="[textData.linethrough ? 'selected' : '']" @click="(changeElement('linethrough' , true))" src="~/assets/strikethrough.png")
-    h4.text-headers Basic Text
-    button#heading-text.btn(@click="(emit('addAsset' , {type: ASSET_TYPE.TEXT,value: 'heading'}))") Add heading
-    button#subheading-text.btn(@click="(emit('addAsset' , {type: ASSET_TYPE.TEXT,value: 'subheading'}))") Add subheading
-    button#body-text.btn(@click="(emit('addAsset' , {type: ASSET_TYPE.TEXT,value: 'body'}))") Add body text
-    h4.text-headers Sans Serif
-    button#item-text.btn(v-for="f in TEXT_ITEMS?.sansSerif" :key="f" :style="{fontFamily: `${f}, sans-serif`}" @click="(emit('addAsset' , {type: ASSET_TYPE.TEXT,value: f}))") {{ f }}
-    h4.text-headers Serif
-    button#item-text.btn(v-for="f in TEXT_ITEMS.serif" :key="f" :style="{fontFamily: `${f}`}" @click="(emit('addAsset' , {type: ASSET_TYPE.TEXT,value: f}))") {{ f }}
-    h4.text-headers Monospace
-    button#item-text.btn(v-for="f in TEXT_ITEMS.monospace" :key="f" :style="{fontFamily: `${f}`}" @click="(emit('addAsset' , {type: ASSET_TYPE.TEXT,value: f}))") {{ f }}
-    h4.text-headers Handwriting
-    button#item-text.btn(v-for="f in TEXT_ITEMS.handwriting" :key="f" :style="{fontFamily: `${f}`}" @click="(emit('addAsset' , {type: ASSET_TYPE.TEXT,value: f}))") {{ f }}
-    h4.text-headers Display
-    button#item-text.btn(v-for="f in TEXT_ITEMS.display" :key="f" :style="{fontFamily: `${f}`}" @click="(emit('addAsset' , {type: ASSET_TYPE.TEXT,value: f}))") {{ f }}
+  h4 Tools
+  .tools.flex.justify-content-center.flex-column.mt-3
+    .color.flex.justify-content-space-between.align-items-center.ml-5
+      input(type="color" v-model ="color" :style="{backgroundColor : color}")
+      img.icon(:class="[textData?.underline ? 'selected' : '']" @click="(changeElement('underline' , true))" src="~/assets/underline.png")
+      img.icon(:class="[textData?.overline ? 'selected' : '']" @click="(changeElement('overline' , true))" src="~/assets/overline.png")
+      img.icon(:class="[textData?.linethrough ? 'selected' : '']" @click="(changeElement('linethrough' , true))" src="~/assets/strikethrough.png")
+  h4.text-headers Basic Text
+  button#heading-text.btn(@click="addText('heading')") Add heading
+  button#subheading-text.btn(@click="addText('subheading')") Add subheading
+  button#body-text.btn(@click="addText('body')") Add body text
+  h4.text-headers Sans Serif
+  button#item-text.btn(v-for="f in TEXT_ITEMS?.sansSerif" :key="f" :style="{fontFamily: `${f}, sans-serif`}" @click="addText(f)") {{ f }}
+  h4.text-headers Serif
+  button#item-text.btn(v-for="f in TEXT_ITEMS.serif" :key="f" :style="{fontFamily: `${f}`}" @click="addText(f)") {{ f }}
+  h4.text-headers Monospace
+  button#item-text.btn(v-for="f in TEXT_ITEMS.monospace" :key="f" :style="{fontFamily: `${f}`}" @click="addText(f)") {{ f }}
+  h4.text-headers Handwriting
+  button#item-text.btn(v-for="f in TEXT_ITEMS.handwriting" :key="f" :style="{fontFamily: `${f}`}" @click="addText(f)") {{ f }}
+  h4.text-headers Display
+  button#item-text.btn(v-for="f in TEXT_ITEMS.display" :key="f" :style="{fontFamily: `${f}`}" @click="addText(f)") {{ f }}
 </template>
 
 <script setup lang="ts">
-const props = defineProps({
-  selectedElement: Object,
-  canvas: Object,
-});
+import { storeToRefs } from 'pinia';
+import { useCanvas } from '~~/stores/canvas';
+import { fabric } from "fabric";
+
+const canvasStore = useCanvas();
+const { mycanvas, canasWrapper, selectedElement } = storeToRefs(canvasStore);
+const fabricCanvas = mycanvas.value
 const textData = ref({
   underline: false,
   overline: false,
   linethrough: false,
 });
-const emit = defineEmits(["addAsset"]);
 const color = ref("black");
 enum ASSET_TYPE {
   IMAGE = "IMAGE",
@@ -45,9 +47,12 @@ enum ASSET_TYPE {
 }
 
 function changeElement(prop: any, data: any) {
-  const item = props.selectedElement?.get(prop);
-  props.selectedElement?.set(prop, typeof data === "boolean" ? !item : data);
-  props.canvas?.renderAll();
+  const item = selectedElement.value?.get(prop);
+  const selectedItem: fabric.Textbox = selectedElement.value
+  if (prop === 'fill') { selectedItem.setSelectionStyles({ fill: `${data}` }); return }
+  selectedItem.set(prop, typeof data === "boolean" ? !item : data);
+  fabricCanvas?.renderAll();
+  //@ts-ignore
   if (typeof data === "boolean") textData.value[`${prop}`] = !item;
 }
 
@@ -58,6 +63,86 @@ const TEXT_ITEMS = {
   handwriting: ["Dancing Script", "Pacifico", "Indie Flower"],
   display: ["Lobster", "Bebas Neue", "Titan One"],
 };
+
+const calculateTextWidth = (text: string, font: string) => {
+  const ctx = fabricCanvas?.getContext();
+  ctx!.font = font;
+  return ctx!.measureText(text).width + 20;
+};
+
+function addText(data: string) {
+  switch (data) {
+    case "heading":
+      newTextbox(50, 700, "Heading", "Roboto");
+      break;
+    case "subheading":
+      newTextbox(22, 500, "Subheading", "Roboto");
+      break;
+    case "body":
+      newTextbox(18, 400, "Body", "Roboto");
+      break;
+    default:
+      newTextbox(18, 400, "Text", data);
+      break;
+  }
+}
+
+function newTextbox(
+  fontSize: number,
+  fontWeight: string | number | undefined,
+  text: string,
+  font: string
+) {
+  const id = String(Math.floor(100000 + Math.random() * 900000));
+  const newText = new fabric.Textbox(text, {
+    left: fabricCanvas.getWidth() / 2,
+    top: fabricCanvas.getHeight() / 2,
+    originX: "center",
+    originY: "center",
+    fontFamily: "Roboto",
+    fill: "#111",
+    fontSize,
+    fontWeight,
+    textAlign: "center",
+    cursorWidth: 1,
+    stroke: "#000",
+    strokeWidth: 0,
+    cursorDuration: 1,
+    paintFirst: "stroke",
+    objectCaching: false,
+    absolutePositioned: true,
+    strokeUniform: true,
+    //@ts-ignore
+    inGroup: false,
+    cursorDelay: 250,
+    width: calculateTextWidth(text, `${fontWeight} ${fontSize}px Roboto`),
+    id: `text_${id}`
+  });
+  fabricCanvas?.add(newText);
+  fabricCanvas?.setActiveObject(newText);
+  fabricCanvas?.bringToFront(newText);
+  newText.enterEditing();
+  newText.selectAll();
+  fabricCanvas?.renderAll();
+  newText.on("mousedown", (ele: any) => {
+    canvasStore.$patch({ selectedElement: ele.target })
+  });
+
+  newText.on("mousedblclick", (ele: any) => {
+    ele.target.enterEditing();
+  })
+  //@ts-ignore
+  fabricCanvas!.getActiveObject()!.set("fontFamily", font);
+  fabricCanvas?.renderAll();
+  // state.layers.push({
+  //   id: `text_${id}`,
+  //   object: newText,
+  //   type: ASSET_TYPE.TEXT,
+  //   color: randomColorHex()
+  // });
+};
+
+
 
 watch(color, () => {
   changeElement("fill", color.value);
@@ -107,6 +192,7 @@ watch(color, () => {
 }
 
 .icon {
+  appearance: none;
   -webkit-appearance: none;
   border: none;
   width: 27px;
@@ -120,6 +206,7 @@ watch(color, () => {
 }
 
 input[type="color"] {
+  appearance: none;
   -webkit-appearance: none;
   border: none;
   width: 32px;

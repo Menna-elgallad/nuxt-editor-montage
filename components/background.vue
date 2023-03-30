@@ -55,7 +55,7 @@ const VideoUploaded = ref();
 const srcs = ref<string[]>([]);
 const srcsVid = ref<string[]>([]);
 const imgInstance = ref();
-let fabricCanvas: fabric.canvas;
+let fabricCanvas: any
 let canvaswrapper: any;
 
 watch(mycanvas, (curr, prev) => {
@@ -167,6 +167,7 @@ watch(color, (curr, prev) => {
 
 <style scoped lang="scss">
 input[type="color"] {
+  appearance:none;
   -webkit-appearance: none;
   border: none;
   width: 32px;

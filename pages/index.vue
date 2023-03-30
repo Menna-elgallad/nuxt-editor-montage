@@ -7,7 +7,7 @@
       .canvasElement(@click="focus")
 
         canvas(ref="canvasRef" )
-    sidetools(@addAsset="addAsset" :selectedElement="selectedElement" :canvas="fabricCanvas")    
+    sidetools    
           
 
 
@@ -27,8 +27,7 @@ const myimg = ref(null);
 const canvasRef = ref(null);
 const showMenuBack = ref(false);
 const selectedElement = ref();
-let fabricCanvas: fabric.canvas, draggable, fabricElement;
-
+let fabricCanvas: any, draggable, fabricElement;
 onMounted(() => {
   gsap.registerPlugin(ScrollTrigger, Draggable);
   const myimg = document.getElementById("img");
@@ -40,6 +39,7 @@ onMounted(() => {
     width: 750,
     backgroundColor: "white",
     // shadow:1,
+    //@ts-ignore
     backgroundColorAlpha: 0,
     borderColor: "black",
     strokeWidth: 5,
@@ -66,12 +66,11 @@ onMounted(() => {
     top: 100,
   });
 
-  console.log(circle);
   fabricCanvas.add(circle).setActiveObject(circle);
 
   // fabricCanvas.add(imgInstance);
 });
-function focus(event) {
+function focus(event:any) {
   event.stopPropagation();
   const canvasWrapper = document.querySelector<any>(".canvasElement");
 
@@ -91,117 +90,6 @@ function releaseControls() {
     y: -50,
     duration: 1,
   });
-}
-const calculateTextWidth = (text: string, font: string) => {
-  const ctx = fabricCanvas?.getContext();
-  ctx!.font = font;
-  return ctx!.measureText(text).width + 20;
-};
-
-const addAsset = (event: AssetEvent) => {
-  switch (event.type) {
-    // case ASSET_TYPE.EMOJI:
-    //   newSvg(`/emojis/${event.value}.svg`);
-    //   break;
-    // case ASSET_TYPE.SHAPE:
-    //   newSvg(`/shapes/${event.value}.svg`);
-    //   break;
-    // case ASSET_TYPE.IMAGE:
-    //   newImage(`/images/${event.value}.jpg`);
-    //   break;
-    // case ASSET_TYPE.UPLOAD:
-    //   if (event.file) {
-    //     switch (getFileExtension(event.file.name)) {
-    //       case "png":
-    //       case "jpg":
-    //         newImage(event.file);
-    //         break;
-    //     }
-    //   }
-    //   break;
-    case ASSET_TYPE.TEXT:
-      switch (event.value) {
-        case "heading":
-          newTextbox(50, 700, "Heading", "Roboto");
-          break;
-        case "subheading":
-          newTextbox(22, 500, "Subheading", "Roboto");
-          break;
-        case "body":
-          newTextbox(18, 400, "Body", "Roboto");
-          break;
-        default:
-          newTextbox(18, 400, "Text", event.value);
-          break;
-      }
-      break;
-  }
-};
-
-const newTextbox = (
-  fontSize: number,
-  fontWeight: string | number | undefined,
-  text: string,
-  font: string
-) => {
-  const id = String(Math.floor(100000 + Math.random() * 900000));
-  const newText = new fabric.Textbox(text, {
-    left: fabricCanvas.getWidth() / 2,
-    top: fabricCanvas.getHeight() / 2,
-    originX: "center",
-    originY: "center",
-    fontFamily: "Roboto",
-    fill: "#111",
-    fontSize,
-    fontWeight,
-    textAlign: "center",
-    cursorWidth: 1,
-    stroke: "#000",
-    strokeWidth: 0,
-    cursorDuration: 1,
-    paintFirst: "stroke",
-    objectCaching: false,
-    absolutePositioned: true,
-    strokeUniform: true,
-    //@ts-ignore
-    inGroup: false,
-    cursorDelay: 250,
-    width: calculateTextWidth(text, `${fontWeight} ${fontSize}px Roboto`),
-    id: `text_${id}`,
-  });
-  fabricCanvas?.add(newText);
-  fabricCanvas?.setActiveObject(newText);
-  fabricCanvas?.bringToFront(newText);
-  // newText.enterEditing();
-  // newText.selectAll();
-  fabricCanvas?.renderAll();
-  newText.on("mousedown", (ele) => {
-    selectedElement.value = ele.target;
-  });
-  //@ts-ignore
-  fabricCanvas!.getActiveObject()!.set("fontFamily", font);
-  fabricCanvas?.renderAll();
-  // state.layers.push({
-  //   id: `text_${id}`,
-  //   object: newText,
-  //   type: ASSET_TYPE.TEXT,
-  //   color: randomColorHex()
-  // });
-};
-
-enum ASSET_TYPE {
-  IMAGE = "IMAGE",
-  TEXT = "TEXT",
-  EMOJI = "EMOJI",
-  SHAPE = "SHAPE",
-  VIDEO = "VIDEO",
-  UPLOAD = "UPLOAD",
-}
-
-interface AssetEvent {
-  type: ASSET_TYPE;
-  value: string;
-  file?: File;
 }
 </script>
 <style lang="scss">
