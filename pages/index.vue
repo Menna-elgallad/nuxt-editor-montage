@@ -69,7 +69,7 @@ onMounted(() => {
 
   // fabricCanvas.add(imgInstance);
 });
-function focus(event) {
+function focus(event: any) {
   event.stopPropagation();
   const canvasWrapper = document.querySelector<any>(".canvasElement");
 
@@ -233,7 +233,7 @@ interface AssetEvent {
     position: relative;
 
     &:hover {
-      outline: 2px solid #125386;
+      outline: 2px solid #125386 !important;
     }
     .canvas-container {
       // transform: translate(-50%, -50%);
