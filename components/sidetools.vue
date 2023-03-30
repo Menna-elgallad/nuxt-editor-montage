@@ -8,7 +8,7 @@
       Icon.text-2xl.text-blue-700(name="ion:chevron-forward")    
     .toolcontent
       background(v-if="content==='backround'")
-      Text(v-if="content==='text'" @addAsset="addAssets" :selectedElement="selectedElement" :canvas="canvas")
+      Text(v-if="content==='text'")
             
 </template>
 
@@ -23,11 +23,7 @@ const activeindex = ref(null);
 const show = ref(false);
 const content = ref();
 
-const emit = defineEmits(["addAsset", "changeBackColor"]);
-
-function addAssets(event) {
-  emit("addAsset", event);
-}
+const emit = defineEmits(["changeBackColor"]);
 
 function toggle(item, index) {
   if (show.value === false && !content.value) {
