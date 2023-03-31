@@ -13,21 +13,15 @@ import { fabric } from "fabric";
 import lottie from "lottie-web";
 
 const canvasStore = useCanvas();
-const { mycanvas, canasWrapper, color } = storeToRefs(canvasStore);
+const {canasWrapper, color } = storeToRefs(canvasStore);
 
-let fabricCanvas: fabric.canvas;
+let fabricCanvas: fabric.Canvas;
 let canvaswrapper: any;
 
 onMounted(() => {
-  function convertProxyObjectToPojo(proxyObj) {
-    return _.cloneDeep(proxyObj);
-  }
 
-  console.log("playing");
-
-  fabricCanvas = mycanvas.value;
+  fabricCanvas = document.getElementById('mycanvas').fabric;
   canvaswrapper = canasWrapper.value;
-  console.log("fabcompo", convertProxyObjectToPojo(fabricCanvas));
 
   //@ts-ignore
   fabric.Lottie = fabric.util.createClass(fabric.Image, {

@@ -27,12 +27,11 @@
 import { storeToRefs } from "pinia";
 import { useCanvas } from "~~/stores/canvas";
 import { fabric } from "fabric";
-const selectedElement = ref();
 const canvasStore = useCanvas();
-const { mycanvas, canasWrapper } = storeToRefs(canvasStore);
+const {canasWrapper , selectedElement } = storeToRefs(canvasStore);
 let fabricCanvas: fabric.Canvas;
 onMounted(() => {
-  fabricCanvas = mycanvas.value;
+  fabricCanvas = document.getElementById('mycanvas').fabric;
 });
 const textData = ref({
   underline: false,

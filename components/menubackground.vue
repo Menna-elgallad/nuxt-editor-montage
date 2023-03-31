@@ -16,18 +16,18 @@ import { storeToRefs } from "pinia";
 import { useCanvas } from "~~/stores/canvas";
 import { fabric } from "fabric";
 const canvasStore = useCanvas();
-const { mycanvas, canasWrapper, color } = storeToRefs(canvasStore);
+const { canasWrapper, color } = storeToRefs(canvasStore);
 
-let fabricCanvas: fabric.canvas;
+let fabricCanvas: fabric.Canvas;
 let canvaswrapper: any;
 const flipx = ref(true);
 const flipy = ref(true);
 
-watch(mycanvas, (curr, prev) => {
-  fabricCanvas = mycanvas.value;
-  canvaswrapper = canasWrapper.value;
-
-});
+onMounted(() => {
+      //@ts-ignore
+      fabricCanvas = document.getElementById('mycanvas').fabric
+      canvaswrapper = canasWrapper.value;
+}),
 
 function flip(type: string) {
   if (fabricCanvas.backgroundImage) {

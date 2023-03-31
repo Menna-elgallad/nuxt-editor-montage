@@ -47,25 +47,28 @@ const { getsrcsImages, getsrcsVideos, setsrcsImages, setsrcsVideos } =
   assetsStore;
 const canvasStore = useCanvas();
 const isVideo = ref(true);
-const { mycanvas, canasWrapper, color } = storeToRefs(canvasStore);
-
+const {canasWrapper, color } = storeToRefs(canvasStore);
 const backimg = ref([]);
 const imguploaded = ref();
-const VideoUploaded = ref();
-const srcs = ref<string[]>([]);
-const srcsVid = ref<string[]>([]);
-const imgInstance = ref();
-let fabricCanvas: any
-let canvaswrapper: any;
+  const VideoUploaded = ref();
+  const srcs = ref<string[]>([]);
+  const srcsVid = ref<string[]>([]);
+  const imgInstance = ref();
+  let fabricCanvas: any
+  let canvaswrapper: any;
+  onMounted(() => {
+    //@ts-ignore
+  const mycanvas = document.getElementById('mycanvas').fabric
+  console.log(document.getElementById('mycanvas'));
+  
+  fabricCanvas = mycanvas;
+  console.log(fabricCanvas);
+  canvaswrapper = canasWrapper.value;
+});
 
-watch(mycanvas, (curr, prev) => {
-  fabricCanvas = mycanvas.value;
-  canvaswrapper = canasWrapper.value;
-});
-onMounted(() => {
-  fabricCanvas = mycanvas.value;
-  canvaswrapper = canasWrapper.value;
-});
+onActivated(() => {
+  console.log('>>>>>>>>',document.getElementById('mycanvas'))
+})
 
 if (srcsVid.value.length === 0) {
   srcsVid.value = getsrcsVideos;

@@ -1,13 +1,13 @@
 <template lang="pug">
 .contents  
-  menubackground.showMenuBack
+  menubackground.showMenuBack(v-if="didMounted")
   .main.flex.gap-2.justify-content-between  
     
     .dashboard(@click="releaseControls()")
       .canvasElement(@click="focus")
 
         canvas#mycanvas(ref="canvasRef" )
-    sidetools    
+    sidetools(v-if="didMounted")  
           
 
 
@@ -18,8 +18,6 @@ import gsap from "gsap";
 import { Draggable } from "gsap/Draggable";
 import { fabric } from "fabric";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import lottie from "lottie-web";
-import { storeToRefs } from "pinia";
 import { useCanvas } from "~~/stores/canvas";
 const canvasStore = useCanvas();
 
@@ -27,13 +25,9 @@ const myimg = ref(null);
 const canvasRef = ref();
 const showMenuBack = ref(false);
 const selectedElement = ref();
+const didMounted = ref(false);
 let fabricCanvas: fabric.Canvas, draggable, fabricElement;
 onMounted(() => {
-  gsap.registerPlugin(ScrollTrigger, Draggable);
-  const myimg = document.getElementById("img");
-  const canvasWrapper = document.querySelector<any>(".canvasElement");
-  const animtion = ref();
-  // console.log(canvasRef.value);
   fabricCanvas = new fabric.Canvas(canvasRef.value, {
     height: 500,
     width: 750,
@@ -45,13 +39,20 @@ onMounted(() => {
     strokeWidth: 5,
     hasControls: true
   });
-  console.log("fabcompo", fabricCanvas);
+  //@ts-ignore
+  document.getElementById('mycanvas').fabric = fabricCanvas;
+  console.log(document.getElementById('mycanvas').fabric)
+  didMounted.value = true; //Note: this is to make sure that the canvas is mounted before the sidetools component is mounted
+  gsap.registerPlugin(ScrollTrigger, Draggable);
+  const myimg = document.getElementById("img");
+  const canvasWrapper = document.querySelector<any>(".canvasElement");
+  const animtion = ref();
+  // console.log(canvasRef.value);
   if (canvasWrapper) {
     canvasWrapper.style.width = fabricCanvas.width + "px";
     canvasWrapper.style.height = fabricCanvas.height + "px";
   }
   canvasStore.$patch({ canasWrapper: canvasWrapper });
-  canvasStore.$patch({ mycanvas: fabricCanvas });
   canvasStore.$patch({ canvasref: canvasRef.value });
 
   fabricCanvas.set({

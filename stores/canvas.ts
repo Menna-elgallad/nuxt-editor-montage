@@ -3,10 +3,10 @@ import { fabric } from "fabric";
 import { useLocalStorage } from '@vueuse/core'
 
 // let mycanvas: fabric.Canvas;
-// let selectedElement: Ref<any>;
+let selectedElement: Ref<any>;
 
 export const useCanvas = defineStore("canvas", {
-  state: () => ({mycanvas : "", canasWrapper: "", color: "", canvasref: "" }),
+  state: () => ({canasWrapper: "", color: "", canvasref: "" , selectedElement}),
 
   // actions: {
   //   setCanvasElement(canvas: HTMLCanvasElement) {
