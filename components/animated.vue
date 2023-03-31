@@ -19,11 +19,15 @@ let fabricCanvas: fabric.canvas;
 let canvaswrapper: any;
 
 onMounted(() => {
-  console.log('playing')
+  function convertProxyObjectToPojo(proxyObj) {
+    return _.cloneDeep(proxyObj);
+  }
+
+  console.log("playing");
 
   fabricCanvas = mycanvas.value;
   canvaswrapper = canasWrapper.value;
-  console.log("fabcompo", fabricCanvas);
+  console.log("fabcompo", convertProxyObjectToPojo(fabricCanvas));
 
   //@ts-ignore
   fabric.Lottie = fabric.util.createClass(fabric.Image, {
@@ -35,7 +39,7 @@ onMounted(() => {
     hasSkewControl: true,
     srcFromAttribute: false,
 
-    initialize: function (path, options) {
+    initialize: function(path, options) {
       if (!options.width) options.width = 300;
       if (!options.height) options.height = 300;
 
@@ -53,61 +57,56 @@ onMounted(() => {
         rendererSettings: {
           context: this.tmpCanvasEl.getContext("2d"),
           preserveAspectRatio: "xMidYMid meet",
-          willReadFrequently: true,
-        },
+          willReadFrequently: true
+        }
       });
 
       // this.lottieItem.addEventListener('DOMLoaded', () => {
       //   console.log('DOMLoaded')
       // })
 
-      this.lottieItem.addEventListener("enterFrame", (e) => {
+      this.lottieItem.addEventListener("enterFrame", e => {
         this.canvas?.requestRenderAll();
       });
 
       this.callSuper("initialize", this.tmpCanvasEl, options);
     },
 
-    play: function () {
+    play: function() {
       this.lottieItem.play();
     },
-    stop: function () {
+    stop: function() {
       this.lottieItem.stop();
     },
-    getSrc: function () {
+    getSrc: function() {
       return this.path;
-    },
+    }
   });
   //@ts-ignore
-  fabric.Lottie.fromObject = function (_object, callback) {
+  fabric.Lottie.fromObject = function(_object, callback) {
     const object = fabric.util.object.clone(_object);
-    fabric.Image.prototype._initFilters.call(
-      object,
-      object.filters,
-      function (filters) {
-        object.filters = filters || [];
-        fabric.Image.prototype._initFilters.call(
-          object,
-          [object.resizeFilter],
-          function (resizeFilters) {
-            object.resizeFilter = resizeFilters[0];
-            fabric.util.enlivenObjects(
-              [object.clipPath],
-              function (enlivedProps) {
-                object.clipPath = enlivedProps[0];
-                const fabricLottie = new fabric.Lottie(object.src, object);
-                callback(fabricLottie, false);
-              }
-            );
-          }
-        );
-      }
-    );
+    fabric.Image.prototype._initFilters.call(object, object.filters, function(
+      filters
+    ) {
+      object.filters = filters || [];
+      fabric.Image.prototype._initFilters.call(
+        object,
+        [object.resizeFilter],
+        function(resizeFilters) {
+          object.resizeFilter = resizeFilters[0];
+          fabric.util.enlivenObjects([object.clipPath], function(enlivedProps) {
+            object.clipPath = enlivedProps[0];
+            const fabricLottie = new fabric.Lottie(object.src, object);
+            callback(fabricLottie, false);
+          });
+        }
+      );
+    });
   };
 
   const fabricImage = new fabric.Lottie(undefined, {
     // scaleX: 0.5,
-    animationData: anima,
+    animationData: anima
   });
 
   fabricImage.play();

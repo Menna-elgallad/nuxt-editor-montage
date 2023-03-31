@@ -24,17 +24,20 @@
 </template>
 
 <script setup lang="ts">
-import { storeToRefs } from 'pinia';
-import { useCanvas } from '~~/stores/canvas';
+import { storeToRefs } from "pinia";
+import { useCanvas } from "~~/stores/canvas";
 import { fabric } from "fabric";
-
+const selectedElement = ref();
 const canvasStore = useCanvas();
-const { mycanvas, canasWrapper, selectedElement } = storeToRefs(canvasStore);
-const fabricCanvas = mycanvas.value
+const { mycanvas, canasWrapper } = storeToRefs(canvasStore);
+let fabricCanvas: fabric.Canvas;
+onMounted(() => {
+  fabricCanvas = mycanvas.value;
+});
 const textData = ref({
   underline: false,
   overline: false,
-  linethrough: false,
+  linethrough: false
 });
 const color = ref("black");
 enum ASSET_TYPE {
@@ -43,13 +46,16 @@ enum ASSET_TYPE {
   EMOJI = "EMOJI",
   SHAPE = "SHAPE",
   VIDEO = "VIDEO",
-  UPLOAD = "UPLOAD",
+  UPLOAD = "UPLOAD"
 }
 
 function changeElement(prop: any, data: any) {
   const item = selectedElement.value?.get(prop);
-  const selectedItem: fabric.Textbox = selectedElement.value
-  if (prop === 'fill') { selectedItem.setSelectionStyles({ fill: `${data}` }); return }
+  const selectedItem: fabric.Textbox = selectedElement.value;
+  if (prop === "fill") {
+    selectedItem.setSelectionStyles({ fill: `${data}` });
+    return;
+  }
   selectedItem.set(prop, typeof data === "boolean" ? !item : data);
   fabricCanvas?.renderAll();
   //@ts-ignore
@@ -61,7 +67,7 @@ const TEXT_ITEMS = {
   serif: ["Playfair Display", "Merriweather", "IBM Plex Serif"],
   monospace: ["Roboto Mono", "Inconsolata", "Source Code Pro"],
   handwriting: ["Dancing Script", "Pacifico", "Indie Flower"],
-  display: ["Lobster", "Bebas Neue", "Titan One"],
+  display: ["Lobster", "Bebas Neue", "Titan One"]
 };
 
 const calculateTextWidth = (text: string, font: string) => {
@@ -125,12 +131,12 @@ function newTextbox(
   newText.selectAll();
   fabricCanvas?.renderAll();
   newText.on("mousedown", (ele: any) => {
-    canvasStore.$patch({ selectedElement: ele.target })
+    canvasStore.$patch({ selectedElement: ele.target });
   });
 
   newText.on("mousedblclick", (ele: any) => {
     ele.target.enterEditing();
-  })
+  });
   //@ts-ignore
   fabricCanvas!.getActiveObject()!.set("fontFamily", font);
   fabricCanvas?.renderAll();
@@ -140,9 +146,7 @@ function newTextbox(
   //   type: ASSET_TYPE.TEXT,
   //   color: randomColorHex()
   // });
-};
-
-
+}
 
 watch(color, () => {
   changeElement("fill", color.value);

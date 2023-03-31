@@ -27,15 +27,24 @@ const myimg = ref(null);
 const canvasRef = ref();
 const showMenuBack = ref(false);
 const selectedElement = ref();
-let fabricCanvas, draggable, fabricElement;
+let fabricCanvas: fabric.Canvas, draggable, fabricElement;
 onMounted(() => {
   gsap.registerPlugin(ScrollTrigger, Draggable);
   const myimg = document.getElementById("img");
   const canvasWrapper = document.querySelector<any>(".canvasElement");
   const animtion = ref();
   // console.log(canvasRef.value);
-  canvasStore.setCanvasElement(canvasRef.value);
-  fabricCanvas = canvasStore.mycanvas;
+  fabricCanvas = new fabric.Canvas(canvasRef.value, {
+    height: 500,
+    width: 750,
+    backgroundColor: "white",
+    // shadow:1,
+    //@ts-ignore
+    backgroundColorAlpha: 0,
+    borderColor: "black",
+    strokeWidth: 5,
+    hasControls: true
+  });
   console.log("fabcompo", fabricCanvas);
   if (canvasWrapper) {
     canvasWrapper.style.width = fabricCanvas.width + "px";

@@ -1,34 +1,30 @@
 export default defineNuxtConfig({
-    ssr: false,
-    app: {
-        head: {
-            // script: [{ src: "https://cdn.lordicon.com/ritcuqlt.js" }],
-        }
+  ssr: false,
+  app: {
+    head: {
+      // script: [{ src: "https://cdn.lordicon.com/ritcuqlt.js" }],
     },
-    css: [
-        "primevue/resources/themes/saga-blue/theme.css",
-        "primevue/resources/primevue.css",
-        "primeicons/primeicons.css",
-        "primeflex/primeflex.css",
-        "assets/global.scss",
-        "vue3-lottie/dist/style.css"
-
-
-    ],
-    vite: {
-        css: {
-            preprocessorOptions: {
-                scss: {
-                    additionalData: `@use "@/assets/variables.scss" as *;`,
-                },
-            },
+  },
+  css: [
+    "primevue/resources/themes/saga-blue/theme.css",
+    "primevue/resources/primevue.css",
+    "primeicons/primeicons.css",
+    "primeflex/primeflex.css",
+    "assets/global.scss",
+  ],
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: `@use "@/assets/variables.scss" as *;`,
         },
+      },
     },
-    modules: ["nuxt-graphql-client", 'nuxt-icon', '@pinia/nuxt', ],
+  },
+  modules: ["nuxt-graphql-client", "nuxt-icon", "@pinia/nuxt"],
 
-
-    build: {
-        transpile: ["primevue"],
-    },
-    // ssr: false,
+  build: {
+    transpile: ["primevue"],
+  },
+  //   ssr: false,
 });
