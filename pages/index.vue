@@ -2,12 +2,14 @@
 .contents  
   menubackground.showMenuBack(v-if="didMounted")
   .main.flex.gap-2.justify-content-between  
-    
-    .dashboard(@click="releaseControls()")
+    slides(@click="releaseControls()")
+    .dashboard.px-5(@click="releaseControls()")
+  
       .canvasElement(@click="focus")
 
         canvas#mycanvas(ref="canvasRef" )
-    sidetools(v-if="didMounted")  
+    sidetools(v-if="didMounted" @click="releaseControls()")  
+    
           
 
 
@@ -37,11 +39,12 @@ onMounted(() => {
     backgroundColorAlpha: 0,
     borderColor: "black",
     strokeWidth: 5,
-    hasControls: true
+    hasControls: true,
   });
+
   //@ts-ignore
-  document.getElementById('mycanvas').fabric = fabricCanvas;
-  console.log(document.getElementById('mycanvas').fabric)
+  document.getElementById("mycanvas").fabric = fabricCanvas;
+  console.log(document.getElementById("mycanvas").fabric);
   didMounted.value = true; //Note: this is to make sure that the canvas is mounted before the sidetools component is mounted
   gsap.registerPlugin(ScrollTrigger, Draggable);
   const myimg = document.getElementById("img");
@@ -57,14 +60,14 @@ onMounted(() => {
 
   fabricCanvas.set({
     borderColor: "black",
-    strokeWidth: 5
+    strokeWidth: 5,
   });
 
   const circle = new fabric.Circle({
     radius: 50,
     fill: "red",
     left: 100,
-    top: 100
+    top: 100,
   });
 
   fabricCanvas.add(circle).setActiveObject(circle);
@@ -78,7 +81,7 @@ function focus(event: any) {
   showMenuBack.value = true;
   gsap.to(".showMenuBack", {
     y: 50,
-    duration: 0.5
+    duration: 0.5,
   });
   canvasWrapper.style.outline = "2px solid #125386";
 }
@@ -89,7 +92,7 @@ function releaseControls() {
   }
   gsap.to(".showMenuBack", {
     y: -50,
-    duration: 1
+    duration: 1,
   });
 }
 </script>
@@ -113,7 +116,6 @@ function releaseControls() {
 }
 
 .dashboard {
-  width: 80%;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -1,26 +1,28 @@
 <template lang="pug">
 .container
     h1 lottie    
-    lottie-player(autoplay loop style="width:200px" src="https://assets7.lottiefiles.com/packages/lf20_1mA0i9a3PH.json" speed="1" @click="addjson()" )
+    .row
+      .col-lg-6: lottie-player(autoplay loop style="width:200px" :src="anima" @click="addjson(anima)" )
+      .col-lg-6: lottie-player(autoplay loop style="width:200px" :src="anima2" @click="addjson(anima2)" )
 
 </template>
 
 <script setup lang="ts">
 import anima from "../assets/json/emoji 2/Emoji_06.json";
+import anima2 from "../assets/json/emoji 1/Emoji_05.json";
 import { useCanvas } from "~~/stores/canvas";
 import { storeToRefs } from "pinia";
 import { fabric } from "fabric";
 import lottie from "lottie-web";
 
 const canvasStore = useCanvas();
-const {canasWrapper, color } = storeToRefs(canvasStore);
+const { canasWrapper, color } = storeToRefs(canvasStore);
 
 let fabricCanvas: fabric.Canvas;
 let canvaswrapper: any;
 
 onMounted(() => {
-
-  fabricCanvas = document.getElementById('mycanvas').fabric;
+  fabricCanvas = document.getElementById("mycanvas").fabric;
   canvaswrapper = canasWrapper.value;
 
   //@ts-ignore
@@ -32,10 +34,10 @@ onMounted(() => {
     hasRotatingPoint: true,
     hasSkewControl: true,
     srcFromAttribute: false,
-
-    initialize: function(path, options) {
-      if (!options.width) options.width = 300;
-      if (!options.height) options.height = 300;
+    enableRetinaScaling: true,
+    initialize: function (path, options) {
+      if (!options.width) options.width = 1000;
+      if (!options.height) options.height = 1000;
 
       this.path = path;
       this.tmpCanvasEl = fabric.util.createCanvasElement();
@@ -51,65 +53,68 @@ onMounted(() => {
         rendererSettings: {
           context: this.tmpCanvasEl.getContext("2d"),
           preserveAspectRatio: "xMidYMid meet",
-          willReadFrequently: true
-        }
+        },
       });
 
       // this.lottieItem.addEventListener('DOMLoaded', () => {
       //   console.log('DOMLoaded')
       // })
 
-      this.lottieItem.addEventListener("enterFrame", e => {
+      this.lottieItem.addEventListener("enterFrame", (e) => {
         this.canvas?.requestRenderAll();
       });
 
       this.callSuper("initialize", this.tmpCanvasEl, options);
     },
 
-    play: function() {
+    play: function () {
       this.lottieItem.play();
     },
-    stop: function() {
+    stop: function () {
       this.lottieItem.stop();
     },
-    getSrc: function() {
+    getSrc: function () {
       return this.path;
-    }
+    },
   });
   //@ts-ignore
-  fabric.Lottie.fromObject = function(_object, callback) {
+  fabric.Lottie.fromObject = function (_object, callback) {
     const object = fabric.util.object.clone(_object);
-    fabric.Image.prototype._initFilters.call(object, object.filters, function(
-      filters
-    ) {
-      object.filters = filters || [];
-      fabric.Image.prototype._initFilters.call(
-        object,
-        [object.resizeFilter],
-        function(resizeFilters) {
-          object.resizeFilter = resizeFilters[0];
-          fabric.util.enlivenObjects([object.clipPath], function(enlivedProps) {
-            object.clipPath = enlivedProps[0];
-            const fabricLottie = new fabric.Lottie(object.src, object);
-            callback(fabricLottie, false);
-          });
-        }
-      );
-    });
+    fabric.Image.prototype._initFilters.call(
+      object,
+      object.filters,
+      function (filters) {
+        object.filters = filters || [];
+        fabric.Image.prototype._initFilters.call(
+          object,
+          [object.resizeFilter],
+          function (resizeFilters) {
+            object.resizeFilter = resizeFilters[0];
+            fabric.util.enlivenObjects(
+              [object.clipPath],
+              function (enlivedProps) {
+                object.clipPath = enlivedProps[0];
+                const fabricLottie = new fabric.Lottie(object.src, object);
+                callback(fabricLottie, false);
+              }
+            );
+          }
+        );
+      }
+    );
   };
+});
 
+function addjson(animation) {
   const fabricImage = new fabric.Lottie(undefined, {
-    // scaleX: 0.5,
-    animationData: anima
+    scaleX: 0.4,
+    scaleY: 0.4,
+    animationData: animation,
   });
 
   fabricImage.play();
   fabricCanvas.add(fabricImage);
   fabricCanvas.renderAll();
-});
-
-function addjson() {
-  console.log("json json hehe");
 }
 </script>
 

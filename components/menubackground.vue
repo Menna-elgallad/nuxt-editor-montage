@@ -1,6 +1,6 @@
 <template lang="pug">
 .menuNav    
-    ul.flex.justify-content-center.surface-300
+    ul.flex.justify-content-center.surface-200
         li.color: span
              Icon(name="bx:bxs-color-fill" )
              input(type="color" v-model ="color" )
