@@ -16,36 +16,41 @@ import { storeToRefs } from "pinia";
 import { useCanvas } from "~~/stores/canvas";
 import { fabric } from "fabric";
 const canvasStore = useCanvas();
-const { canasWrapper, color } = storeToRefs(canvasStore);
+const { canasWrapper, color, mycanvas } = storeToRefs(canvasStore);
 
-let fabricCanvas: fabric.Canvas;
+const fabricCanvas = ref();
 let canvaswrapper: any;
 const flipx = ref(true);
 const flipy = ref(true);
 
 onMounted(() => {
-      //@ts-ignore
-      fabricCanvas = document.getElementById('mycanvas').fabric
-      canvaswrapper = canasWrapper.value;
+  //@ts-ignore
+  fabricCanvas.value = document.getElementById("mycanvas").fabric;
+
+  canvaswrapper = canasWrapper.value;
 }),
+  watch(fabricCanvas.value, (curr, prev) => {
+    fabricCanvas.value = curr;
+    console.log(fabricCanvas.value);
+  });
 
 function flip(type: string) {
-  if (fabricCanvas.backgroundImage) {
+  if (fabricCanvas.value.backgroundImage) {
     if (type === "v") {
-      fabricCanvas.backgroundImage.flipX = flipx.value;
+      fabricCanvas.value.backgroundImage.flipX = flipx.value;
       flipx.value = !flipx.value;
     }
     if (type === "h") {
-      fabricCanvas.backgroundImage.flipY = flipy.value;
+      fabricCanvas.value.backgroundImage.flipY = flipy.value;
       flipy.value = !flipy.value;
     }
-    fabricCanvas.renderAll();
+    fabricCanvas.value.renderAll();
   }
 }
 function removeback() {
-  fabricCanvas.setBackgroundImage(
+  fabricCanvas.value.setBackgroundImage(
     null,
-    fabricCanvas.renderAll.bind(mycanvas.value)
+    fabricCanvas.value.renderAll.bind(fabricCanvas.value)
   );
   const videoElement: any = canvaswrapper.querySelector("video");
 
@@ -56,8 +61,8 @@ function removeback() {
   }
 }
 watch(color, (curr, prev) => {
-  fabricCanvas.backgroundColor = curr;
-  fabricCanvas.renderAll();
+  fabricCanvas.value.backgroundColor = curr;
+  fabricCanvas.value.renderAll();
 });
 </script>
 
