@@ -31,7 +31,6 @@ onMounted(() => {
 }),
   watch(fabricCanvas.value, (curr, prev) => {
     fabricCanvas.value = curr;
-    console.log(fabricCanvas.value);
   });
 
 function flip(type: string) {
