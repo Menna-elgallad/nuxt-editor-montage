@@ -1,6 +1,7 @@
 <template lang="pug">
 .contents  
-  menubackground.showMenuBack(v-if="didMounted")
+  //- animationBack.showMenuProp
+  menubackground.showMenuBack(v-if="didMounted" :tools="topTools" :key="topTools")
   .main.flex.gap-2.justify-content-between  
     slides(@click="releaseControls()")
     .dashboard.px-5(@click="releaseControls()")
@@ -21,6 +22,8 @@ import { Draggable } from "gsap/Draggable";
 import { fabric } from "fabric";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useCanvas } from "~~/stores/canvas";
+import { storeToRefs } from "pinia";
+
 const canvasStore = useCanvas();
 
 const myimg = ref(null);
@@ -29,6 +32,25 @@ const showMenuBack = ref(false);
 const selectedElement = ref();
 const didMounted = ref(false);
 let fabricCanvas: fabric.Canvas, draggable, fabricElement;
+const { selectedProp, selectedID } = storeToRefs(canvasStore);
+const topTools = ref("back");
+const allowfocus = ref(true);
+watch(
+  selectedID,
+  () => {
+    console.log("selectedProp", selectedProp);
+    selectedPropA();
+  },
+  { deep: true }
+);
+
+function selectedPropA() {
+  allowfocus.value = false;
+  topTools.value = "props";
+  setTimeout(() => {
+    allowfocus.value = true;
+  }, 100);
+}
 onMounted(() => {
   fabricCanvas = new fabric.Canvas(canvasRef.value, {
     height: 500,
@@ -75,12 +97,17 @@ onMounted(() => {
   // fabricCanvas.add(imgInstance);
 });
 function focus(event: any) {
+  if (!allowfocus.value) {
+    return;
+  }
   event.stopPropagation();
+  console.log("background");
   const canvasWrapper = document.querySelector<any>(".canvasElement");
+  topTools.value = "back";
 
   showMenuBack.value = true;
   gsap.to(".showMenuBack", {
-    y: 50,
+    y: 1,
     duration: 0.5,
   });
   canvasWrapper.style.outline = "2px solid #125386";
@@ -90,10 +117,6 @@ function releaseControls() {
   if (showMenuBack.value) {
     canvasWrapper.style.outline = "none";
   }
-  gsap.to(".showMenuBack", {
-    y: -50,
-    duration: 1,
-  });
 }
 </script>
 <style lang="scss">
@@ -138,4 +161,8 @@ function releaseControls() {
     }
   }
 }
+// .showMenuBack {
+//   position: absolute;
+//   width: 100%;
+// }
 </style>

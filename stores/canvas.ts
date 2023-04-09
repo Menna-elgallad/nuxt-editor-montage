@@ -6,7 +6,9 @@ import { useLocalStorage } from '@vueuse/core'
 let selectedElement: Ref<any>;
 
 export const useCanvas = defineStore("canvas", {
-  state: () => ({canasWrapper: "", color: "", canvasref: "" , selectedElement}),
+  state: () => (
+    {canasWrapper: "", color: "", canvasref: "" , 
+  selectedElement , selectedProp :"" , selectedPropColor : "" , selectedID :""}),
 
   // actions: {
   //   setCanvasElement(canvas: HTMLCanvasElement) {

@@ -9,7 +9,7 @@
     .toolcontent
       background(v-if="content==='backround'")
       Text(v-if="content==='text'")
-      animated(v-if="content==='animation'")
+      animated(v-if="content==='animation'" @select-props="selectprops()")
             
 </template>
 
@@ -24,7 +24,7 @@ const activeindex = ref(null);
 const show = ref(false);
 const content = ref("backround");
 
-const emit = defineEmits(["changeBackColor"]);
+const emit = defineEmits(["selectProps"]);
 
 function toggle(item, index) {
   if (show.value === false && !content.value) {
@@ -44,6 +44,10 @@ function close() {
   });
   show.value = false;
   content.value = "";
+}
+
+function selectprops(){
+  emit('selectProps')
 }
 
 const names = [
