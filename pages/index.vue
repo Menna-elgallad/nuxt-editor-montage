@@ -3,12 +3,13 @@
   menubackground.showMenuBack(v-if="didMounted")
   .main.flex.gap-2.justify-content-between  
     slides(@click="releaseControls()")
-    .dashboard.px-5(@click="releaseControls()")
+    .dashboard(@click="releaseControls()")
   
       .canvasElement(@click="focus")
 
         canvas#mycanvas(ref="canvasRef" )
-    sidetools(v-if="didMounted" @click="releaseControls()")  
+      timeline 
+    sidetools(v-if="didMounted" @click="releaseControls()")   
     
           
 
@@ -117,8 +118,12 @@ function releaseControls() {
 
 .dashboard {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
+  width: 100%;
+  max-width: 50vw;
+  padding-top: 3rem;
   position: relative;
 
   .canvasElement {

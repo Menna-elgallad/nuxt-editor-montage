@@ -14,8 +14,10 @@ import { useCanvas } from "~~/stores/canvas";
 import { storeToRefs } from "pinia";
 import { fabric } from "fabric";
 import lottie from "lottie-web";
+import { useLayer } from "~~/stores/layer";
 
 const canvasStore = useCanvas();
+const layerStore = useLayer();
 const { canasWrapper, color } = storeToRefs(canvasStore);
 
 let fabricCanvas: fabric.Canvas;
@@ -115,6 +117,21 @@ function addjson(animation) {
   fabricImage.play();
   fabricCanvas.add(fabricImage);
   fabricCanvas.renderAll();
+  layerStore.$patch({
+    layers: [
+      ...layerStore.layers,
+      {
+        element: animation,
+        hidden: false,
+        name: "charcter",
+        opacity: 1,
+        type: "charcter",
+        locked: false,
+        timeToHide: 0,
+        timeToShow: 0,
+      },
+    ],
+  });
 }
 </script>
 

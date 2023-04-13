@@ -26,17 +26,19 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
 import { useCanvas } from "~~/stores/canvas";
+import { useLayer } from "~~/stores/layer";
 import { fabric } from "fabric";
 const canvasStore = useCanvas();
-const {canasWrapper , selectedElement } = storeToRefs(canvasStore);
+const layerStore = useLayer();
+const { canasWrapper, selectedElement } = storeToRefs(canvasStore);
 let fabricCanvas: fabric.Canvas;
 onMounted(() => {
-  fabricCanvas = document.getElementById('mycanvas').fabric;
+  fabricCanvas = document.getElementById("mycanvas").fabric;
 });
 const textData = ref({
   underline: false,
   overline: false,
-  linethrough: false
+  linethrough: false,
 });
 const color = ref("black");
 enum ASSET_TYPE {
@@ -45,7 +47,7 @@ enum ASSET_TYPE {
   EMOJI = "EMOJI",
   SHAPE = "SHAPE",
   VIDEO = "VIDEO",
-  UPLOAD = "UPLOAD"
+  UPLOAD = "UPLOAD",
 }
 
 function changeElement(prop: any, data: any) {
@@ -66,7 +68,7 @@ const TEXT_ITEMS = {
   serif: ["Playfair Display", "Merriweather", "IBM Plex Serif"],
   monospace: ["Roboto Mono", "Inconsolata", "Source Code Pro"],
   handwriting: ["Dancing Script", "Pacifico", "Indie Flower"],
-  display: ["Lobster", "Bebas Neue", "Titan One"]
+  display: ["Lobster", "Bebas Neue", "Titan One"],
 };
 
 const calculateTextWidth = (text: string, font: string) => {
@@ -121,7 +123,7 @@ function newTextbox(
     inGroup: false,
     cursorDelay: 250,
     width: calculateTextWidth(text, `${fontWeight} ${fontSize}px Roboto`),
-    id: `text_${id}`
+    id: `text_${id}`,
   });
   fabricCanvas?.add(newText);
   fabricCanvas?.setActiveObject(newText);
@@ -139,6 +141,22 @@ function newTextbox(
   //@ts-ignore
   fabricCanvas!.getActiveObject()!.set("fontFamily", font);
   fabricCanvas?.renderAll();
+  layerStore.$patch({
+    layers: [
+      ...layerStore.layers,
+      {
+        element: newText,
+        hidden: false,
+        name: "text",
+        opacity: 1,
+        type: "text",
+        locked: false,
+        timeToHide: 0,
+        timeToShow: 0,
+      },
+    ],
+  });
+  console.log(layerStore.layers);
   // state.layers.push({
   //   id: `text_${id}`,
   //   object: newText,
