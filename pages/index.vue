@@ -50,7 +50,7 @@ function selectedPropA() {
   topTools.value = "props";
   setTimeout(() => {
     allowfocus.value = true;
-  }, 100);
+  }, 1000);
 }
 onMounted(() => {
   fabricCanvas = new fabric.Canvas(canvasRef.value, {
@@ -62,7 +62,7 @@ onMounted(() => {
     backgroundColorAlpha: 0,
     borderColor: "black",
     strokeWidth: 5,
-    hasControls: true,
+    hasControls: true
   });
 
   //@ts-ignore
@@ -83,14 +83,14 @@ onMounted(() => {
 
   fabricCanvas.set({
     borderColor: "black",
-    strokeWidth: 5,
+    strokeWidth: 5
   });
 
   const circle = new fabric.Circle({
     radius: 50,
     fill: "red",
     left: 100,
-    top: 100,
+    top: 100
   });
 
   fabricCanvas.add(circle).setActiveObject(circle);
@@ -109,7 +109,7 @@ function focus(event: any) {
   showMenuBack.value = true;
   gsap.to(".showMenuBack", {
     y: 1,
-    duration: 0.5,
+    duration: 0.5
   });
   canvasWrapper.style.outline = "2px solid #125386";
 }
