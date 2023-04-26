@@ -3,13 +3,14 @@
   //- animationBack.showMenuProp
   menubackground.showMenuBack(v-if="didMounted" :tools="topTools" :key="topTools")
   .main.flex.gap-2.justify-content-between  
-    slides(@click="releaseControls()")
-    .dashboard.px-5(@click="releaseControls()")
+    slides(@click="releaseControls()" v-if="didMounted")
+    .dashboard(@click="releaseControls()")
   
       .canvasElement(@click="focus")
 
         canvas#mycanvas(ref="canvasRef" )
-    sidetools(v-if="didMounted" @click="releaseControls()")  
+      timeline 
+    sidetools(v-if="didMounted" @click="releaseControls()")   
     
           
 
@@ -23,9 +24,9 @@ import { fabric } from "fabric";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useCanvas } from "~~/stores/canvas";
 import { storeToRefs } from "pinia";
-
+import { useSlide } from "~~/stores/slide";
 const canvasStore = useCanvas();
-
+const slideStore = useSlide();
 const myimg = ref(null);
 const canvasRef = ref();
 const showMenuBack = ref(false);
@@ -49,10 +50,11 @@ function selectedPropA() {
   topTools.value = "props";
   setTimeout(() => {
     allowfocus.value = true;
-  }, 100);
+  }, 1000);
 }
 onMounted(() => {
   fabricCanvas = new fabric.Canvas(canvasRef.value, {
+    id: Date.now(),
     height: 500,
     width: 750,
     backgroundColor: "white",
@@ -95,6 +97,10 @@ onMounted(() => {
   fabricCanvas.add(circle).setActiveObject(circle);
 
   // fabricCanvas.add(imgInstance);
+  slideStore.canvasSlides.push({
+    fabric: fabricCanvas,
+    slideNumber: 0,
+  });
 });
 function focus(event: any) {
   if (!allowfocus.value) {
@@ -111,6 +117,7 @@ function focus(event: any) {
     duration: 0.5,
   });
   canvasWrapper.style.outline = "2px solid #125386";
+  slideStore.slideChange = Math.random();
 }
 function releaseControls() {
   const canvasWrapper = document.querySelector<any>(".canvasElement");
@@ -140,8 +147,12 @@ function releaseControls() {
 
 .dashboard {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
+  width: 100%;
+  max-width: 50vw;
+  padding-top: 3rem;
   position: relative;
 
   .canvasElement {

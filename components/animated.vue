@@ -21,10 +21,13 @@ import { useCanvas } from "~~/stores/canvas";
 import { storeToRefs } from "pinia";
 import { fabric } from "fabric";
 import lottie from "lottie-web";
+import { useLayer } from "~~/stores/layer";
+
 import useLotte from "~~/composables/useLottie";
 import { emit } from "process";
 const mycolors = ["red", "green", "blue"];
 const canvasStore = useCanvas();
+const layerStore = useLayer();
 const { canasWrapper, color } = storeToRefs(canvasStore);
 const emit = defineEmits(["selectProps"]);
 
@@ -65,6 +68,21 @@ function addjson(animation) {
     // Change the color of a shape in the animation data object
   });
   fabricCanvas.renderAll();
+  layerStore.$patch({
+    layers: [
+      ...layerStore.layers,
+      {
+        element: animation,
+        hidden: false,
+        name: "charcter",
+        opacity: 1,
+        type: "charcter",
+        locked: false,
+        timeToHide: 0,
+        timeToShow: 0,
+      },
+    ],
+  });
   fabricImage.play();
 }
 function rgbaToHex(rgba) {
