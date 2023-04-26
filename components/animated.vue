@@ -5,8 +5,8 @@
       .row
         .col-lg-6: lottie-player(autoplay loop style="width:200px" :src="anima1" @click="addjson(anima1)" disableShadowDom)
         .col-lg-6: lottie-player(autoplay loop style="width:200px" :src="anima2" @click="addjson(anima2)" disableShadowDom )
-        .col-lg-6: lottie-player(autoplay loop style="width:200px" :src="anima3" @click="addjson(anima3)" disableShadowDom )
-        .col-lg-6: lottie-player(autoplay loop style="width:200px" :src="anima5" @click="addjson(anima5)" disableShadowDom )
+        .col-lg-6: lottie-player(autoplay loop style="width:500px" :src="anima3" @click="addjson(anima3)" disableShadowDom )
+        .col-lg-6: lottie-player(autoplay loop style="width:1300px" :src="anima5" @click="addjson(anima5)" disableShadowDom )
     
 
 </template>
@@ -14,8 +14,8 @@
 <script setup lang="ts">
 import anima1 from "../assets/json/jason edit files/emoji/Emoji_05.json";
 import anima2 from "../assets/json/jason edit files/emoji/Emoji_06.json";
-import anima3 from "../assets/json/jason edit files/emoji/Emoji_07.json";
-import anima5 from "../assets/json/jason edit files/emoji/Emoji_10.json";
+import anima3 from "../assets/Characters jason/character.json";
+import anima5 from "../assets/Characters jason/character 2.json";
 
 import { useCanvas } from "~~/stores/canvas";
 import { storeToRefs } from "pinia";
