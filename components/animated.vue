@@ -1,12 +1,18 @@
 <template lang="pug">
-.container
-    h1 lottie    
+.container.mt-3
+    .BasicRepo.row(@click="showbasics =!showbasics" class=" myborder pb-2 relative") 
+            .col-lg-12.relative
+                img(src="../assets/folders/emoji.png")
+                span(class=" bg-white border-round p-2 absolute down-up ")
+                    Icon(name="material-symbols:arrow-drop-down" class=" text-xl" style="transform : rotate(-52deg);" v-if="!showbasics")
+                    Icon(name="material-symbols:arrow-drop-up" class=" text-xl" style="transform : rotate(-52deg);" v-else)
+            h5(class=" text-black-alpha-50 mt-2 text-center") Emojis
     ClientOnly
-      .row
+      .row(v-if="showbasics") 
         .col-lg-6: lottie-player(autoplay loop style="width:200px" :src="anima1" @click="addjson(anima1)" disableShadowDom)
         .col-lg-6: lottie-player(autoplay loop style="width:200px" :src="anima2" @click="addjson(anima2)" disableShadowDom )
-        .col-lg-6: lottie-player(autoplay loop style="width:500px" :src="anima3" @click="addjson(anima3)" disableShadowDom )
-        .col-lg-6: lottie-player(autoplay loop style="width:1300px" :src="anima5" @click="addjson(anima5)" disableShadowDom )
+      
+      
     
 
 </template>
@@ -14,8 +20,6 @@
 <script setup lang="ts">
 import anima1 from "../assets/json/jason edit files/emoji/Emoji_05.json";
 import anima2 from "../assets/json/jason edit files/emoji/Emoji_06.json";
-import anima3 from "../assets/Characters jason/character.json";
-import anima5 from "../assets/Characters jason/character 2.json";
 
 import { useCanvas } from "~~/stores/canvas";
 import { storeToRefs } from "pinia";
@@ -24,6 +28,7 @@ import lottie from "lottie-web";
 import { useLayer } from "~~/stores/layer";
 
 import useLotte from "~~/composables/useLottie";
+const showbasics = ref(false);
 import { emit } from "process";
 const mycolors = ["red", "green", "blue"];
 const canvasStore = useCanvas();

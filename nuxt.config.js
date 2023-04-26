@@ -1,10 +1,14 @@
 export default defineNuxtConfig({
-  ssr: false,
-  app: {
-    head: {
-      // script: [{ src: "https://cdn.lordicon.com/ritcuqlt.js" }],
-    },
+  head: {
+    link: [
+      {
+        rel: 'stylesheet',
+        href: '/node_modules/vue3-colorpicker/style.css',
+      },
+    ],
   },
+  ssr: false,
+
   css: [
     "primevue/resources/themes/saga-blue/theme.css",
     "primevue/resources/primevue.css",

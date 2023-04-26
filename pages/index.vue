@@ -87,14 +87,7 @@ onMounted(() => {
     strokeWidth: 5,
   });
 
-  const circle = new fabric.Circle({
-    radius: 50,
-    fill: "red",
-    left: 100,
-    top: 100,
-  });
-
-  fabricCanvas.add(circle).setActiveObject(circle);
+  
 
   // fabricCanvas.add(imgInstance);
   slideStore.canvasSlides.push({
