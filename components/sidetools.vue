@@ -14,6 +14,7 @@
       animated(v-if="content==='Animation'" @select-props="selectprops()")
       images(v-if="content==='Images'" )
       shapes(v-if="content==='Shapes'" )
+      videos(v-if="content==='Videos'" )
             
 </template>
 
@@ -26,7 +27,7 @@ const props = defineProps({
 const tools = ref();
 const activeindex = ref(null);
 const show = ref(false);
-const content = ref("backround");
+const content = ref("Backround");
 
 const emit = defineEmits(["selectProps"]);
 
