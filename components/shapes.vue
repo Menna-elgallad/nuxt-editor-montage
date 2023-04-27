@@ -18,6 +18,8 @@
 import { useCanvas } from "~~/stores/canvas";
 import { fabric } from "fabric";
 
+const canvasStore = useCanvas();
+
 const showbasics = ref(false);
 const shapes = [
   { icon: "mdi-light:shape-square", type: "square" },
@@ -26,7 +28,7 @@ const shapes = [
   { icon: "mdi-light:shape-octagon", type: "polygon" },
   { icon: "fluent-mdl2:ellipse", type: "ellipse" },
   { icon: "material-symbols:star-outline", type: "star" },
-  { icon: "material-symbols:favorite-outline", type: "heart" },
+  { icon: "material-symbols:favorite-outline", type: "heart" }
 ];
 let fabricCanvas: any;
 
@@ -43,18 +45,18 @@ function addshape(type: any) {
     case "circle":
       shape = new fabric.Circle({
         radius: 50,
-        fill: "gray",
+        fill: "#ccc",
         left: 100,
-        top: 100,
+        top: 100
       });
       break;
     case "square":
       shape = new fabric.Rect({
         width: 100,
         height: 100,
-        fill: "gray",
+        fill: "#ccc",
         left: 100,
-        top: 100,
+        top: 100
       });
       break;
 
@@ -68,12 +70,12 @@ function addshape(type: any) {
           { x: 100, y: 150 },
           { x: 50, y: 150 },
           { x: 0, y: 100 },
-          { x: 0, y: 50 },
+          { x: 0, y: 50 }
         ],
         {
-          fill: "gray",
+          fill: "#ccc",
           left: 100,
-          top: 100,
+          top: 100
         }
       );
       break;
@@ -81,18 +83,18 @@ function addshape(type: any) {
       shape = new fabric.Ellipse({
         rx: 70,
         ry: 50,
-        fill: "gray",
+        fill: "#ccc",
         left: 100,
-        top: 100,
+        top: 100
       });
       break;
     case "triangle":
       shape = new fabric.Triangle({
         width: 100,
         height: 100,
-        fill: "gray",
+        fill: "#ccc",
         left: 100,
-        top: 100,
+        top: 100
       });
       break;
     case "star":
@@ -107,14 +109,14 @@ function addshape(type: any) {
           { x: 276.9, y: 301 },
           { x: 303, y: 215 },
           { x: 231, y: 161 },
-          { x: 321, y: 161 },
+          { x: 321, y: 161 }
         ],
         {
-          fill: "gray",
+          fill: "#ccc",
           scaleX: 0.5,
           scaleY: 0.5,
           left: 100,
-          top: 100,
+          top: 100
         }
       );
 
@@ -132,7 +134,13 @@ function addshape(type: any) {
     z "
       );
       var scale = 100 / shape.width;
-      shape.set({ left: 20, top: 0, scaleX: scale, scaleY: scale, fill: "gray" });
+      shape.set({
+        left: 20,
+        top: 0,
+        scaleX: scale,
+        scaleY: scale,
+        fill: "#ccc"
+      });
 
       break;
     default:
@@ -141,6 +149,15 @@ function addshape(type: any) {
 
   fabricCanvas.add(shape);
   fabricCanvas.renderAll();
+  shape.on("mousedown", (ele: any) => {
+    canvasStore.$patch({ selectedProp: ele.target });
+    canvasStore.$patch({ selectedID: Math.random() });
+
+    console.log(shape.fill);
+
+    canvasStore.$patch({ selectedPropColor: shape.fill });
+    // Change the color of a shape in the animation data object
+  });
 }
 </script>
 

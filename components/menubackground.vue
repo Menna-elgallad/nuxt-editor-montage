@@ -10,8 +10,7 @@
             span( @click="flip('v')"): Icon(name="tabler:flip-vertical")
             span.ml-5(@click="flip('h')"): Icon(name="icon-park-outline:flip-vertically") 
         li: span(@click="removeback()"): Icon(name="material-symbols:delete")
-        li
-          color-picker(v-model="selectedColor")
+       
   Transition
     ul.flex.justify-content-center.surface-200(v-if="tools === 'props'")
       li.coloranimat
@@ -23,14 +22,15 @@
 import { storeToRefs } from "pinia";
 import { useCanvas } from "~~/stores/canvas";
 import { fabric } from "fabric";
-import ColorPicker from "vue3-colorpicker";
-console.log("ColorPicker", ColorPicker);
 
 const selectedColor = ref("#000000");
+let fabricCanvas: any;
 const canvasStore = useCanvas();
-const { canasWrapper, color, selectedPropColor, selectedProp } = storeToRefs(canvasStore);
+const { canasWrapper, color, selectedPropColor, selectedProp } = storeToRefs(
+  canvasStore
+);
 const selected = ref();
-const fabricCanvas = ref();
+
 let canvaswrapper: any;
 const flipx = ref(true);
 const flipy = ref(true);
@@ -48,72 +48,81 @@ function hexToRgba(hex) {
 watch(selectedPropColor, () => {
   selected.value = selectedProp.value;
   console.log("colorr", selectedPropColor.value);
-  const animationData = selected.value.animationData;
-  let idx;
-  for (let i = 0; i < animationData.layers.length; i++) {
-    if (animationData.layers[i].cl === "yellow") {
-      idx = i;
-    }
-  }
-  animationData.layers[idx].shapes[0].it[1].c.k = hexToRgba(selectedPropColor.value); // Set fill color to red
-  selected.value.updateAnimationData(animationData);
-  // fabricCanvas.remove(fabricCanvas.getActiveObject());
-  // Update the animation data of the Lottie animation object
-  selected.value.set("animationData", animationData);
-  console.log("sec", selected.value);
 
-  fabricCanvas.value.renderAll();
-  selected.value.play();
+  const animationData = selected.value.animationData;
+  if (animationData) {
+    let idx;
+    for (let i = 0; i < animationData.layers.length; i++) {
+      if (animationData.layers[i].cl === "yellow") {
+        idx = i;
+      }
+    }
+    animationData.layers[idx].shapes[0].it[1].c.k = hexToRgba(
+      selectedPropColor.value
+    ); // Set fill color to red
+    selected.value.updateAnimationData(animationData);
+    // fabricCanvas.remove(fabricCanvas.getActiveObject());
+    // Update the animation data of the Lottie animation object
+    selected.value.set("animationData", animationData);
+    console.log("sec", selected.value);
+
+    fabricCanvas.renderAll();
+    selected.value.play();
+  } else {
+    console.log("selected", selected.value);
+    var activeObject = fabricCanvas.getActiveObject();
+    activeObject.set("fill", selectedPropColor.value);
+    fabricCanvas.renderAll();
+  }
 });
-
-function watchColor() {
-  selected.value = selectedProp.value;
-  console.log("colorr", selectedPropColor.value);
-  const animationData = selected.value.animationData;
-  let idx;
-  for (let i = 0; i < animationData.layers.length; i++) {
-    if (animationData.layers[i].cl === "yellow") {
-      idx = i;
-    }
-  }
-  animationData.layers[idx].shapes[0].it[1].c.k = hexToRgba(selectedPropColor.value); // Set fill color to red
-  selected.value.updateAnimationData(animationData);
-  // fabricCanvas.remove(fabricCanvas.getActiveObject());
-  // Update the animation data of the Lottie animation object
-  selected.value.set("animationData", animationData);
-  console.log("sec", selected.value);
-
-  fabricCanvas.value.renderAll();
-  selected.value.play();
-}
 
 onMounted(() => {
   //@ts-ignore
-  fabricCanvas.value = document.getElementById("mycanvas").fabric;
+  const mycanvas = document.getElementById("mycanvas").fabric;
+  fabricCanvas = mycanvas;
 
   canvaswrapper = canasWrapper.value;
 }),
-  watch(fabricCanvas.value, (curr, prev) => {
-    fabricCanvas.value = curr;
+  watch(fabricCanvas, (curr, prev) => {
+    fabricCanvas = curr;
   });
 
 function flip(type: string) {
-  if (fabricCanvas.value.backgroundImage) {
+  var activeObject = fabricCanvas.getActiveObject();
+  if (activeObject) {
+    console.log("activeeee");
     if (type === "v") {
-      fabricCanvas.value.backgroundImage.flipX = flipx.value;
+      activeObject.flipX = flipx.value;
       flipx.value = !flipx.value;
     }
     if (type === "h") {
-      fabricCanvas.value.backgroundImage.flipY = flipy.value;
+      activeObject.flipY = flipy.value;
       flipy.value = !flipy.value;
     }
-    fabricCanvas.value.renderAll();
+    fabricCanvas.renderAll();
+    return;
+  }
+  if (fabricCanvas.backgroundImage) {
+    if (type === "v") {
+      fabricCanvas.backgroundImage.flipX = flipx.value;
+      flipx.value = !flipx.value;
+    }
+    if (type === "h") {
+      fabricCanvas.backgroundImage.flipY = flipy.value;
+      flipy.value = !flipy.value;
+    }
+    fabricCanvas.renderAll();
   }
 }
 function removeback() {
-  fabricCanvas.value.setBackgroundImage(
+  var activeObject = fabricCanvas.getActiveObject();
+  if (activeObject) {
+    fabricCanvas.remove(activeObject);
+    return;
+  }
+  fabricCanvas.setBackgroundImage(
     null,
-    fabricCanvas.value.renderAll.bind(fabricCanvas.value)
+    fabricCanvas.renderAll.bind(fabricCanvas)
   );
   const videoElement: any = canvaswrapper.querySelector("video");
 
@@ -124,11 +133,11 @@ function removeback() {
   }
 }
 watch(color, (curr, prev) => {
-  fabricCanvas.value.backgroundColor = curr;
-  fabricCanvas.value.renderAll();
+  fabricCanvas.backgroundColor = curr;
+  fabricCanvas.renderAll();
 });
 function removeProp() {
-  fabricCanvas.value.remove(fabricCanvas.value.getActiveObject());
+  fabricCanvas.remove(fabricCanvas.getActiveObject());
 }
 </script>
 

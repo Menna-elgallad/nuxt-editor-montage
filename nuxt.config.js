@@ -1,12 +1,4 @@
 export default defineNuxtConfig({
-  head: {
-    link: [
-      {
-        rel: 'stylesheet',
-        href: '/node_modules/vue3-colorpicker/style.css',
-      },
-    ],
-  },
   ssr: false,
 
   css: [

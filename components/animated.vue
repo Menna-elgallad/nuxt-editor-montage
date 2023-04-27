@@ -11,6 +11,7 @@
       .row(v-if="showbasics") 
         .col-lg-6: lottie-player(autoplay loop style="width:200px" :src="anima1" @click="addjson(anima1)" disableShadowDom)
         .col-lg-6: lottie-player(autoplay loop style="width:200px" :src="anima2" @click="addjson(anima2)" disableShadowDom )
+       
       
       
     
@@ -21,13 +22,13 @@
 import anima1 from "../assets/json/jason edit files/emoji/Emoji_05.json";
 import anima2 from "../assets/json/jason edit files/emoji/Emoji_06.json";
 
-import { useCanvas } from "~~/stores/canvas";
+import useLotte from "~~/composables/useLottie";
 import { storeToRefs } from "pinia";
+import { useCanvas } from "~~/stores/canvas";
+import { useLayer } from "~~/stores/layer";
 import { fabric } from "fabric";
 import lottie from "lottie-web";
-import { useLayer } from "~~/stores/layer";
 
-import useLotte from "~~/composables/useLottie";
 const showbasics = ref(false);
 import { emit } from "process";
 const mycolors = ["red", "green", "blue"];
@@ -47,7 +48,7 @@ function addjson(animation) {
     scaleX: 0.4,
     scaleY: 0.4,
     animationData: animation,
-    id: Math.random(),
+    id: Math.random()
   });
 
   // console.log("color", fabricImage.animationData.layers[9].shapes[0].it[1].c.k);
@@ -84,14 +85,14 @@ function addjson(animation) {
         type: "charcter",
         locked: false,
         timeToHide: 0,
-        timeToShow: 0,
-      },
-    ],
+        timeToShow: 0
+      }
+    ]
   });
   fabricImage.play();
 }
 function rgbaToHex(rgba) {
-  const [r, g, b] = rgba.slice(0, 3).map((value) => Math.round(value * 255));
+  const [r, g, b] = rgba.slice(0, 3).map(value => Math.round(value * 255));
   return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
 }
 </script>

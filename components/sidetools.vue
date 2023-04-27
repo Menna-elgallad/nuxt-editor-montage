@@ -21,7 +21,7 @@
 import gsap from "gsap";
 const props = defineProps({
   selectedElement: Object,
-  canvas: Object,
+  canvas: Object
 });
 const tools = ref();
 const activeindex = ref(null);
@@ -33,7 +33,7 @@ const emit = defineEmits(["selectProps"]);
 function toggle(item, index) {
   if (show.value === false && !content.value) {
     gsap.to(".toolItems", {
-      xPercent: -1,
+      xPercent: -1
     });
   }
   console.log(item);
@@ -44,7 +44,7 @@ function toggle(item, index) {
 function close() {
   gsap.to(".toolItems", {
     xPercent: 100,
-    duration: 1,
+    duration: 1
   });
   show.value = false;
   content.value = "";
@@ -63,7 +63,7 @@ const names = [
   { name: "Animation", icon: "ic:sharp-animation" },
   { name: "Videos", icon: "fluent:video-32-filled" },
   { name: "Images", icon: "ion:images" },
-  { name: "Music", icon: "pepicons-pop:music-note-double" },
+  { name: "Music", icon: "pepicons-pop:music-note-double" }
 ];
 </script>
 
@@ -168,7 +168,7 @@ const names = [
     border-width: 10px 15px 10px 10px;
     border-color: transparent transparent transparent #646464;
     position: absolute;
-    right: -23px;
+    right: -22px;
     top: 10px;
   }
 }
