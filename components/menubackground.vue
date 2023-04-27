@@ -10,10 +10,12 @@
             span( @click="flip('v')"): Icon(name="tabler:flip-vertical")
             span.ml-5(@click="flip('h')"): Icon(name="icon-park-outline:flip-vertically") 
         li: span(@click="removeback()"): Icon(name="material-symbols:delete")
+        li
+          color-picker(v-model="selectedColor")
   Transition
     ul.flex.justify-content-center.surface-200(v-if="tools === 'props'")
       li.coloranimat
-          input(type="color" v-model ="selectedPropColor" :style="{backgroundColor : selectedPropColor}")
+          input(type="color" v-model ="selectedPropColor" :style="{backgroundColor : selectedPropColor}" @mouseup = "watchColor")
       li: span(@click="removeProp()"): Icon(name="material-symbols:delete")    
 </template>
 
@@ -21,9 +23,12 @@
 import { storeToRefs } from "pinia";
 import { useCanvas } from "~~/stores/canvas";
 import { fabric } from "fabric";
+import ColorPicker from "vue3-colorpicker";
+console.log("ColorPicker", ColorPicker);
+
+const selectedColor = ref("#000000");
 const canvasStore = useCanvas();
-const { canasWrapper, color, selectedPropColor, selectedProp } =
-  storeToRefs(canvasStore);
+const { canasWrapper, color, selectedPropColor, selectedProp } = storeToRefs(canvasStore);
 const selected = ref();
 const fabricCanvas = ref();
 let canvaswrapper: any;
@@ -50,9 +55,7 @@ watch(selectedPropColor, () => {
       idx = i;
     }
   }
-  animationData.layers[idx].shapes[0].it[1].c.k = hexToRgba(
-    selectedPropColor.value
-  ); // Set fill color to red
+  animationData.layers[idx].shapes[0].it[1].c.k = hexToRgba(selectedPropColor.value); // Set fill color to red
   selected.value.updateAnimationData(animationData);
   // fabricCanvas.remove(fabricCanvas.getActiveObject());
   // Update the animation data of the Lottie animation object
@@ -62,6 +65,27 @@ watch(selectedPropColor, () => {
   fabricCanvas.value.renderAll();
   selected.value.play();
 });
+
+function watchColor() {
+  selected.value = selectedProp.value;
+  console.log("colorr", selectedPropColor.value);
+  const animationData = selected.value.animationData;
+  let idx;
+  for (let i = 0; i < animationData.layers.length; i++) {
+    if (animationData.layers[i].cl === "yellow") {
+      idx = i;
+    }
+  }
+  animationData.layers[idx].shapes[0].it[1].c.k = hexToRgba(selectedPropColor.value); // Set fill color to red
+  selected.value.updateAnimationData(animationData);
+  // fabricCanvas.remove(fabricCanvas.getActiveObject());
+  // Update the animation data of the Lottie animation object
+  selected.value.set("animationData", animationData);
+  console.log("sec", selected.value);
+
+  fabricCanvas.value.renderAll();
+  selected.value.play();
+}
 
 onMounted(() => {
   //@ts-ignore
@@ -184,7 +208,6 @@ function removeProp() {
     height: 32px;
     border: 4px solid #eeeded;
     border-radius: 1.5rem;
-    
   }
   input[type="color"]::-webkit-color-swatch-wrapper {
     padding: 0 !important;

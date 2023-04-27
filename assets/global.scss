@@ -1,6 +1,7 @@
 @import url("https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/css/bootstrap-grid.min.css");
 @import url('https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;800&display=swap');
 @import "/assets/overrides.scss";
+@import "vue3-colorpicker/style.css";
 *,
 h1,
 h2,
@@ -82,4 +83,7 @@ ul {
 .menuitem {
     border-bottom: 2px solid #cccccc2d;
     padding-bottom: 1rem;
+}
+.myborder{
+    border-bottom: 2px solid rgba(204, 204, 204, 0.1764705882);
 }

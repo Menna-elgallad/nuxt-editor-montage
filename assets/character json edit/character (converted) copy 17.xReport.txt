@@ -1,0 +1,24 @@
+Report created: 
+	4/11/2023	4:48:01 PM
+
+Project name: character (converted) copy 17.x.aep
+
+Source files collected to: 
+	G:\animader\character json edit
+
+Source files collected: All
+
+Collected comps:  
+	Comp 1
+	character
+	
+Number of collected files:  1
+
+Size of collected files:  392 KB
+
+Collected source files: 
+	C:\Users\Animus\Desktop\character (converted) folder\(Footage)\character Layers\character.ai
+	
+Rendering plug-ins:
+	Classic 3D
+	

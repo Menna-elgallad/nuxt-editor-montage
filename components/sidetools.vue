@@ -2,14 +2,18 @@
 .tools.flex.flex-row-reverse
   .mycontainer.bg-blue-900.border-round-2xl
     ul.text-0
-      li.mt-2.py-3(v-for="(item,index) in names" :key="index" @click="toggle(  item.name ,index ) " :class="{active : activeindex===index}" ): Icon.text-3xl.icontools(:name="item.icon")
+      li.mt-2.py-3.toollogo(v-for="(item,index) in names" :key="index" @click="toggle(  item.name ,index ) " :class="{active : activeindex===index}" )
+        Icon.text-3xl.icontools(:name="item.icon")
+        div(class="hoverDataMenu text-sm font-semibold") {{item.name}}
   .toolItems( ref="tools") 
     .close( class="flex "): span(@click="close()" style="pointer:cursor")
       Icon.text-2xl.text-blue-700(name="ion:chevron-forward")    
     .toolcontent
-      background(v-if="content==='backround'")
-      Text(v-if="content==='text'")
-      animated(v-if="content==='animation'" @select-props="selectprops()")
+      background(v-if="content==='Backround'")
+      Text(v-if="content==='Text'")
+      animated(v-if="content==='Animation'" @select-props="selectprops()")
+      images(v-if="content==='Images'" )
+      shapes(v-if="content==='Shapes'" )
             
 </template>
 
@@ -46,20 +50,20 @@ function close() {
   content.value = "";
 }
 
-function selectprops(){
-  emit('selectProps')
+function selectprops() {
+  emit("selectProps");
 }
 
 const names = [
-  { name: "backround", icon: "material-symbols:background-grid-small" },
-  { name: "text", icon: "mdi:format-text" },
-  { name: "film", icon: "zondicons:film" },
-  { name: "chars", icon: "bi:people-fill" },
-  { name: "shapes", icon: "bx:bxs-shapes" },
-  { name: "animation", icon: "ic:sharp-animation" },
-  { name: "vid", icon: "fluent:video-32-filled" },
-  { name: "imgs", icon: "ion:images" },
-  { name: "music", icon: "pepicons-pop:music-note-double" },
+  { name: "Backround", icon: "material-symbols:background-grid-small" },
+  { name: "Text", icon: "mdi:format-text" },
+  { name: "Film", icon: "zondicons:film" },
+  { name: "Charachters", icon: "bi:people-fill" },
+  { name: "Shapes", icon: "bx:bxs-shapes" },
+  { name: "Animation", icon: "ic:sharp-animation" },
+  { name: "Videos", icon: "fluent:video-32-filled" },
+  { name: "Images", icon: "ion:images" },
+  { name: "Music", icon: "pepicons-pop:music-note-double" },
 ];
 </script>
 
@@ -145,6 +149,35 @@ const names = [
     background-color: #f3f3f3;
     border-radius: 50%;
     cursor: pointer;
+  }
+}
+.hoverDataMenu {
+  display: none;
+  position: absolute;
+  right: 75px;
+  background: #646464;
+  padding: 0.7rem;
+  color: white;
+  border-radius: 1rem;
+  transition: all 1s ease;
+  &::before {
+    content: "";
+    border-style: solid;
+    border-width: 10px 15px 10px 15px;
+    border-style: solid;
+    border-width: 10px 15px 10px 10px;
+    border-color: transparent transparent transparent #646464;
+    position: absolute;
+    right: -23px;
+    top: 10px;
+  }
+}
+.toollogo {
+  transition: all 1s ease;
+  &:hover {
+    .hoverDataMenu {
+      display: block;
+    }
   }
 }
 </style>
