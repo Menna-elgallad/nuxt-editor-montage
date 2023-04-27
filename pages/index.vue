@@ -48,8 +48,10 @@ watch(
 function selectedPropA() {
   allowfocus.value = false;
   topTools.value = "props";
+  console.log(allowfocus.value);
   setTimeout(() => {
     allowfocus.value = true;
+    console.log(allowfocus.value);
   }, 1000);
 }
 onMounted(() => {
