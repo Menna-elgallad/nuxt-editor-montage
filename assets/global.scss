@@ -87,3 +87,15 @@ ul {
 .myborder{
     border-bottom: 2px solid rgba(204, 204, 204, 0.1764705882);
 }
+.pink_grd {
+    background: linear-gradient(180deg, rgb(231 60 118) 0%, rgb(243 86 138) 54%, rgb(241, 124, 165) 100%);
+}
+.hovericon{
+    transition: all 0.5s ease;
+    cursor: pointer;
+    &:hover{
+        color: #77777782 !important;
+        transform: scale(1.05);
+    }
+    
+}

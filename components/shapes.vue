@@ -1,7 +1,7 @@
 <template lang="pug">
-.shapes.mt-3
-    .BasicRepo.row(@click="showbasics =!showbasics" class=" myborder pb-2 relative") 
-        .col-lg-12.relative
+.shapes.mt-3.container
+    .BasicRepo(@click="showbasics =!showbasics" class=" myborder pb-2 relative") 
+        .myhead
             img(src="../assets/folders/shapes.png")
             span(class=" bg-white border-round p-2 absolute down-up ")
                 Icon(name="material-symbols:arrow-drop-down" class=" text-xl" style="transform : rotate(-52deg);" v-if="!showbasics")
@@ -19,7 +19,7 @@ import { useCanvas } from "~~/stores/canvas";
 import { fabric } from "fabric";
 
 const canvasStore = useCanvas();
-
+const emit = defineEmits(["selectprop"]);
 const showbasics = ref(false);
 const shapes = [
   { icon: "mdi-light:shape-square", type: "square" },
@@ -151,17 +151,18 @@ function addshape(type: any) {
   fabricCanvas.renderAll();
   shape.on("mousedown", (ele: any) => {
     canvasStore.$patch({ selectedProp: ele.target });
-    canvasStore.$patch({ selectedID: Math.random() });
+    canvasStore.$patch({ selectedID2: Math.random() });
 
     console.log(shape.fill);
 
     canvasStore.$patch({ selectedPropColor: shape.fill });
+    canvasStore.$patch({ selectedPropBorder: shape.stroke });
     // Change the color of a shape in the animation data object
   });
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 img,
 video {
   width: 100%;
@@ -181,5 +182,9 @@ video {
   height: 56px;
   right: 7px;
   transform: rotate(52deg);
+}
+.myhead {
+  width: 100%;
+  height: 100px;
 }
 </style>

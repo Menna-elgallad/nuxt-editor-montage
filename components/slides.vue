@@ -1,14 +1,20 @@
 <template lang="pug">
-.mcontainer.surface-200.p-5
-    .slides.py-4
-        .flex.gap-3.mt-3(v-for="(element, index) in slideStore.canvasSlides" :key="index" :class="{ 'array-item': true, 'show': element.fabric.id === slideStore.currentCanvas.id }") 
-            h4.text-blue-900 0{{index}}
-            img.slide(:src="canvasToImage(element.fabric)" v-if="hasCanvas")
-            //- .sil(v-html="fabricImage" v-if="hasCanvas")
-            .slide(v-else)
+.mcontainer.surface-200.py-5.px-3
+    .slides.py-1
+        .mt-3(v-for="(element, index) in slideStore.canvasSlides" :key="index" :class="{ 'array-item': true, 'show': element.fabric.id === slideStore.currentCanvas.id }") 
+          .flex.gap-2
+              h4.text-blue-900.text-sm 0{{index+1}}
+              img.slide(:src="canvasToImage(element.fabric)" v-if="hasCanvas")
+              //- .sil(v-html="fabricImage" v-if="hasCanvas")
+              .slide(v-else)
+          .flex.justify-content-center.mt-3    
+            Icon.hovericon.text-3xl.text-700.ml-2(name="fluent:slide-multiple-arrow-right-24-regular"  v-if="index<slideStore.canvasSlides.length-1 ")
+
     .addslide.flex.justify-content-center.align-items-center.mt-3.flex-column(@click="addnewslide()" )
-        Icon(name="bx:layer-plus" class="text-5xl text-blue-900 add" )
-        h4.text-blue-900.mt-2 Blank slide
+        Icon(name="jam:plus-rectangle" class="text-4xl text-blue-900 add" )
+        h4.text-blue-900.mt-2.text-sm Blank slide
+    //- .close( class="flex "): span(@click="close()" style="pointer:cursor")
+    //-     Icon.text-2xl.text-blue-700(name="ion:chevron-forward")      
          
 </template>
 
@@ -33,12 +39,11 @@ onMounted(() => {
   fabricImage.value = canvasToImage(canvas);
   console.log(fabricImage.value);
 
-
   console.log(fabricImage.value);
 });
 const nextIndex = ref(0);
 const state = reactive({
-  array: [{ index: nextIndex.value, show: true }],
+  array: [{ index: nextIndex.value, show: true }]
 });
 
 function canvasToImage(canvas: fabric.Canvas) {
@@ -49,19 +54,19 @@ async function addnewslide() {
   // create a new element object with a show property
   const newCanv = new fabric.Canvas("mycanvas", {
     id: Date.now(),
-    height: 500,
-    width: 750,
+    height: 1080 / 2.8,
+    width: 1920 / 2.8,
     backgroundColor: "white",
     // shadow:1,
     //@ts-ignore
     backgroundColorAlpha: 0,
     borderColor: "black",
     strokeWidth: 5,
-    hasControls: true,
+    hasControls: true
   });
   slideStore.canvasSlides.push({
     fabric: newCanv,
-    slideNumber: slideStore.canvasSlides.length,
+    slideNumber: slideStore.canvasSlides.length
   });
   nextIndex.value++;
   const newElement = { index: nextIndex.value, show: false };
@@ -74,9 +79,9 @@ async function addnewslide() {
   console.log(state.array);
 }
 watch(slideStore, () => {
-  hasCanvas.value = false
+  hasCanvas.value = false;
   setTimeout(() => {
-    hasCanvas.value = true
+    hasCanvas.value = true;
   }, 50);
 });
 </script>
@@ -84,16 +89,27 @@ watch(slideStore, () => {
 <style scoped lang="scss">
 .mcontainer {
   margin-top: -50px;
+  height: 98vh;
+  overflow-y: scroll;
+  width: 20%;
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #fffffff7;
+  }
 }
 .slides {
-  border-bottom: 2px solid #cccccc9c;
+  border-bottom: 2px solid #cccccc61;
 
   .slide {
     background-color: white;
-    border-radius: 1.2rem;
-    width: 200px;
-    height: 100px;
-    box-shadow: 0px 3px 8px 2px #ccc;
+    border-radius: 0.5rem;
+    height: calc(1080px / 11);
+    width: calc(1920px / 11);
+    box-shadow: 0px 8px 5px -4px #e3e3e3;
     transition: all 0.4s ease;
     cursor: pointer;
     &:hover {
@@ -134,5 +150,8 @@ watch(slideStore, () => {
 }
 .show {
   animation: animate 0.2s ease-in forwards;
+}
+.close {
+  position: absolute;
 }
 </style>

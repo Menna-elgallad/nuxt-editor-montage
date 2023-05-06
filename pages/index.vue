@@ -33,7 +33,7 @@ const showMenuBack = ref(false);
 const selectedElement = ref();
 const didMounted = ref(false);
 let fabricCanvas: fabric.Canvas, draggable, fabricElement;
-const { selectedProp, selectedID } = storeToRefs(canvasStore);
+const { selectedProp, selectedID, selectedID2 } = storeToRefs(canvasStore);
 const topTools = ref("back");
 const allowfocus = ref(true);
 watch(
@@ -44,7 +44,14 @@ watch(
   },
   { deep: true }
 );
-
+watch(
+  selectedID2,
+  () => {
+    console.log("selectedProp", selectedProp);
+    selectedPropB();
+  },
+  { deep: true }
+);
 function selectedPropA() {
   allowfocus.value = false;
   topTools.value = "props";
@@ -54,18 +61,28 @@ function selectedPropA() {
     console.log(allowfocus.value);
   }, 1000);
 }
+function selectedPropB() {
+  allowfocus.value = false;
+  topTools.value = "shapes";
+  console.log(allowfocus.value);
+  setTimeout(() => {
+    allowfocus.value = true;
+    console.log(allowfocus.value);
+  }, 1000);
+}
 onMounted(() => {
   fabricCanvas = new fabric.Canvas(canvasRef.value, {
     id: Date.now(),
-    height: 500,
-    width: 750,
+    height: 1080 / 2.8,
+    width: 1920 / 2.8,
     backgroundColor: "white",
     // shadow:1,
     //@ts-ignore
+
     backgroundColorAlpha: 0,
     borderColor: "black",
     strokeWidth: 5,
-    hasControls: true,
+    hasControls: true
   });
 
   //@ts-ignore
@@ -86,15 +103,13 @@ onMounted(() => {
 
   fabricCanvas.set({
     borderColor: "black",
-    strokeWidth: 5,
+    strokeWidth: 5
   });
-
-  
 
   // fabricCanvas.add(imgInstance);
   slideStore.canvasSlides.push({
     fabric: fabricCanvas,
-    slideNumber: 0,
+    slideNumber: 0
   });
 });
 function focus(event: any) {
@@ -109,7 +124,7 @@ function focus(event: any) {
   showMenuBack.value = true;
   gsap.to(".showMenuBack", {
     y: 1,
-    duration: 0.5,
+    duration: 0.5
   });
   canvasWrapper.style.outline = "2px solid #125386";
   slideStore.slideChange = Math.random();
@@ -143,10 +158,10 @@ function releaseControls() {
 .dashboard {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+
   align-items: center;
-  width: 100%;
-  max-width: 50vw;
+  width: 80%;
+  // max-width: 50vw;
   padding-top: 3rem;
   position: relative;
 

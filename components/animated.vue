@@ -1,7 +1,7 @@
 <template lang="pug">
 .container.mt-3
-    .BasicRepo.row(@click="showbasics =!showbasics" class=" myborder pb-2 relative") 
-            .col-lg-12.relative
+    .BasicRepo(@click="showbasics =!showbasics" class=" myborder pb-2 relative") 
+            .myhead
                 img(src="../assets/folders/emoji.png")
                 span(class=" bg-white border-round p-2 absolute down-up ")
                     Icon(name="material-symbols:arrow-drop-down" class=" text-xl" style="transform : rotate(-52deg);" v-if="!showbasics")
@@ -97,4 +97,29 @@ function rgbaToHex(rgba) {
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss" scoped>
+img,
+video {
+  width: 100%;
+  object-fit: cover;
+  height: 100%;
+  cursor: pointer;
+  transition: all 0.5s ease;
+  &:hover {
+    filter: blur(3px);
+    opacity: 50%;
+    filter: saturate(2.2);
+  }
+}
+.down-up {
+  bottom: -30px;
+  width: fit-content;
+  height: 56px;
+  right: 7px;
+  transform: rotate(52deg);
+}
+.myhead {
+  width: 100%;
+  height: 100px;
+}
+</style>

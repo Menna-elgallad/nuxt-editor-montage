@@ -1,11 +1,11 @@
 <template lang="pug">
-.mycontainer-fluid.bg-blue-900
+.mycontainer-fluid
     .nav.flex.justify-content-between.align-items-center
         ul.left-part.flex.gap-2.align-items-center 
             li
               .content
                   Icon(name="fluent:list-16-filled" class="iconli")
-                  span.ml-2.text-lg Animaider
+                  span.ml-2.text-lg mootions
             
             li: Icon.text-3xl.myicon(name="bi:question-circle" class="iconli" )   
             li
@@ -16,7 +16,7 @@
             li.span.font-bold {{ name }}
         ul.right-part.flex.gap-2.align-items-center    
                 li: span.borderright.font-bold {{status}} 
-                li: Mybutton(name="lucide:crown" label="Upgrade"  classname="bg-pink-300" btnclass="left"  )
+                li: Mybutton(name="noto-v1:crown" label="UPGRADE"  classname="pink_grd" btnclass="left"  )
                 
                 li: span.iconss.mysurface-400.text-50
                     i(class="pi pi-play"  )
@@ -34,12 +34,12 @@ const status = ref("saved");
 const items = [
   {
     label: "Download MB4",
-    icon: "pi pi-video",
+    icon: "pi pi-video"
   },
   {
     label: "Download JPG",
-    icon: "pi pi-image",
-  },
+    icon: "pi pi-image"
+  }
 ];
 </script>
 
@@ -49,6 +49,13 @@ const items = [
   color: white;
   position: relative;
   z-index: 100;
+
+  background: linear-gradient(
+    180deg,
+    rgba(13, 60, 97, 1) 0%,
+    rgba(18, 66, 105, 1) 54%,
+    rgba(52, 89, 119, 1) 100%
+  );
 }
 .iconss {
   border-radius: 0.5rem;

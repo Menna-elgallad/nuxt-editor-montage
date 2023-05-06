@@ -13,13 +13,13 @@ const props = defineProps({
   name: String,
   label: String,
   btnclass: String,
-  classname: String,
+  classname: String
 });
 </script>
 
 <style lang="scss" scoped>
 .icobutton {
-  border-radius: 0.8rem;
+  border-radius: 0.4rem;
   padding: 0.5rem 0;
   display: flex;
   align-items: center;
@@ -35,7 +35,7 @@ const props = defineProps({
 .spanborder {
   border-right: 1px solid #77777767;
   display: inline-block;
-  padding-right: 0.5rem;
+  padding-right: 0.3rem;
   margin-top: 2px;
 }
 </style>

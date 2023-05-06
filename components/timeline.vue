@@ -50,12 +50,12 @@ const colors = [
   "#ffeb3b",
   "#ffc107",
   "#ff9800",
-  "#ff5722",
+  "#ff5722"
 ];
 // function randomColor() {
 //   return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
 // }
-function turnHidden(value : boolean , index : number) {
+function turnHidden(value: boolean, index: number) {
   layerStore.layers[index].hidden = value;
 }
 </script>
@@ -136,11 +136,11 @@ function turnHidden(value : boolean , index : number) {
   color: #0d3c61;
 }
 .timeline {
-  align-self: flex-end;
+  margin-top: 1rem;
   max-width: 100%;
   width: 100%;
   overflow-x: hidden;
-  height: 15vw;
+  height: 28vh;
   .time {
     width: 100%;
     height: 40px;

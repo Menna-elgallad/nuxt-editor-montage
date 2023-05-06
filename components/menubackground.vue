@@ -16,6 +16,17 @@
       li.coloranimat
           input(type="color" v-model ="selectedPropColor" :style="{backgroundColor : selectedPropColor}" @mouseup = "watchColor")
       li: span(@click="removeProp()"): Icon(name="material-symbols:delete")    
+    
+  Transition
+    ul.flex.justify-content-center.surface-200(v-if="tools === 'shapes'")
+      li.coloranimat
+          input(type="color" v-model ="selectedPropColor" :style="{backgroundColor : selectedPropColor}" @mouseup = "watchColor")
+      li.color: span
+          Icon.text-2xl(name="mdi:border-color" )
+          input(type="color" v-model ="selectedPropBorder" )
+          .colordiv(:style="{backgroundColor :selectedPropBorder }")    
+      li: span(@click="removeProp()"): Icon(name="material-symbols:delete")    
+         
 </template>
 
 <script lang="ts" setup>
@@ -26,16 +37,20 @@ import { fabric } from "fabric";
 const selectedColor = ref("#000000");
 let fabricCanvas: any;
 const canvasStore = useCanvas();
-const { canasWrapper, color, selectedPropColor, selectedProp } = storeToRefs(
-  canvasStore
-);
+const {
+  canasWrapper,
+  color,
+  selectedPropColor,
+  selectedProp,
+  selectedPropBorder
+} = storeToRefs(canvasStore);
 const selected = ref();
 
 let canvaswrapper: any;
 const flipx = ref(true);
 const flipy = ref(true);
 const props = defineProps({ tools: String });
-
+const bordercolor = ref();
 function hexToRgba(hex) {
   const bigint = parseInt(hex.slice(1), 16);
   const r = (bigint >> 16) & 255;
@@ -44,7 +59,12 @@ function hexToRgba(hex) {
   const a = 1;
   return [r / 255, g / 255, b / 255, a];
 }
-
+watch(selectedPropBorder, () => {
+  console.log("selected", selected.value);
+  var activeObject = fabricCanvas.getActiveObject();
+  activeObject.set("stroke", selectedPropBorder.value);
+  fabricCanvas.renderAll();
+});
 watch(selectedPropColor, () => {
   selected.value = selectedProp.value;
   console.log("colorr", selectedPropColor.value);
@@ -162,11 +182,11 @@ function removeProp() {
       }
       color: var(--blue-900);
       font-size: 1.8rem;
-      padding-right: 1.4rem;
+      // padding-right: 1.4rem;
 
-      &:not(:last-child) {
-        border-right: 2px solid #ccccccdc;
-      }
+      // &:not(:last-child) {
+      //   border-right: 2px solid #ccccccdc;
+      // }
     }
   }
 }
@@ -217,6 +237,8 @@ function removeProp() {
     height: 32px;
     border: 4px solid #eeeded;
     border-radius: 1.5rem;
+    margin-top: 4px;
+    display: block;
   }
   input[type="color"]::-webkit-color-swatch-wrapper {
     padding: 0 !important;

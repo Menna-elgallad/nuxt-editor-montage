@@ -43,32 +43,36 @@ import { useLocalStorageStore } from "~~/stores/assets";
 
 const vidoeEle = ref([]);
 const assetsStore = useLocalStorageStore();
-const { getsrcsImages, getsrcsVideos, setsrcsImages, setsrcsVideos } =
-  assetsStore;
+const {
+  getsrcsImages,
+  getsrcsVideos,
+  setsrcsImages,
+  setsrcsVideos
+} = assetsStore;
 const canvasStore = useCanvas();
 const isVideo = ref(true);
-const {canasWrapper, color } = storeToRefs(canvasStore);
+const { canasWrapper, color } = storeToRefs(canvasStore);
 const backimg = ref([]);
+const imgInstance = ref();
 const imguploaded = ref();
-  const VideoUploaded = ref();
-  const srcs = ref<string[]>([]);
-  const srcsVid = ref<string[]>([]);
-  const imgInstance = ref();
-  let fabricCanvas: any
-  let canvaswrapper: any;
-  onMounted(() => {
-    //@ts-ignore
-  const mycanvas = document.getElementById('mycanvas').fabric
-  console.log(document.getElementById('mycanvas'));
-  
+const srcs = ref<string[]>([]);
+const VideoUploaded = ref();
+const srcsVid = ref<string[]>([]);
+let fabricCanvas: any;
+let canvaswrapper: any;
+onMounted(() => {
+  //@ts-ignore
+  const mycanvas = document.getElementById("mycanvas").fabric;
+  console.log(document.getElementById("mycanvas"));
+
   fabricCanvas = mycanvas;
   console.log(fabricCanvas);
   canvaswrapper = canasWrapper.value;
 });
 
 onActivated(() => {
-  console.log('>>>>>>>>',document.getElementById('mycanvas'))
-})
+  console.log(">>>>>>>>", document.getElementById("mycanvas"));
+});
 
 if (srcsVid.value.length === 0) {
   srcsVid.value = getsrcsVideos;
@@ -79,20 +83,20 @@ if (srcs.value.length === 0) {
 function onfilechange(event: any) {
   imguploaded.value = event.target.files[0];
 }
-function onfilechangeVid(event: any) {
-  VideoUploaded.value = event.target.files[0];
-}
 watch(imguploaded, (curr, prev) => {
   srcs.value.push(URL.createObjectURL(curr));
   setsrcsImages(srcs.value);
 });
+function removeUploded(index: number) {
+  srcs.value.splice(index, 1);
+}
+function onfilechangeVid(event: any) {
+  VideoUploaded.value = event.target.files[0];
+}
 watch(VideoUploaded, (curr, prev) => {
   srcsVid.value.push(URL.createObjectURL(curr));
   setsrcsVideos(srcsVid.value);
 });
-function removeUploded(index: number) {
-  srcs.value.splice(index, 1);
-}
 function removeUplodedVid(indx: number) {
   isVideo.value = false;
   srcsVid.value.splice(indx, 1);
@@ -112,7 +116,7 @@ function uploadedbackAdd(index: number) {
 }
 function addBackground(img: any) {
   fabricCanvas.backgroundImage = img;
-  fabricCanvas.setBackgroundImage(img, function () {
+  fabricCanvas.setBackgroundImage(img, function() {
     let img = fabricCanvas.backgroundImage;
     (img.left = fabricCanvas.width / 2),
       (img.top = fabricCanvas.height / 2),
@@ -129,7 +133,7 @@ function addBackground(img: any) {
     // Center fabric image in canvas
     img.set({
       left: fabricCanvas.width / 2,
-      top: fabricCanvas.height / 2,
+      top: fabricCanvas.height / 2
     });
     fabricCanvas.renderAll();
   });
@@ -170,7 +174,7 @@ watch(color, (curr, prev) => {
 
 <style scoped lang="scss">
 input[type="color"] {
-  appearance:none;
+  appearance: none;
   -webkit-appearance: none;
   border: none;
   width: 32px;

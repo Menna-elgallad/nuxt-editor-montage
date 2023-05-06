@@ -1,6 +1,6 @@
 <template lang="pug">
 .tools.flex.flex-row-reverse
-  .mycontainer.bg-blue-900.border-round-2xl
+  .mycontainer.border-round-2xl
     ul.text-0
       li.mt-2.py-3.toollogo(v-for="(item,index) in names" :key="index" @click="toggle(  item.name ,index ) " :class="{active : activeindex===index}" )
         Icon.text-3xl.icontools(:name="item.icon")
@@ -11,7 +11,7 @@
     .toolcontent
       background(v-if="content==='Backround'")
       Text(v-if="content==='Text'")
-      animated(v-if="content==='Animation'" @select-props="selectprops()")
+      animated(v-if="content==='Elements'" @select-props="selectprops()")
       images(v-if="content==='Images'" )
       shapes(v-if="content==='Shapes'" )
       videos(v-if="content==='Videos'" )
@@ -56,22 +56,29 @@ function selectprops() {
 }
 
 const names = [
-  { name: "Backround", icon: "material-symbols:background-grid-small" },
-  { name: "Text", icon: "mdi:format-text" },
-  { name: "Film", icon: "zondicons:film" },
+  { name: "Scenes", icon: "zondicons:film" },
   { name: "Charachters", icon: "bi:people-fill" },
+  { name: "Text", icon: "mdi:format-text" },
+  { name: "Backround", icon: "material-symbols:background-grid-small" },
+  { name: "Elements", icon: "gis:folder-maps" },
   { name: "Shapes", icon: "bx:bxs-shapes" },
-  { name: "Animation", icon: "ic:sharp-animation" },
-  { name: "Videos", icon: "fluent:video-32-filled" },
   { name: "Images", icon: "ion:images" },
-  { name: "Music", icon: "pepicons-pop:music-note-double" }
+  { name: "Videos", icon: "fluent:video-32-filled" },
+  { name: "Voiceovers", icon: "pepicons-pop:music-note-double" },
+  { name: "Script", icon: "gg:transcript" }
 ];
 </script>
 
 <style lang="scss" scoped>
 .mycontainer {
-  width: 61px;
+  width: 70px;
 
+  background: linear-gradient(
+    180deg,
+    rgba(13, 60, 97, 1) 0%,
+    rgba(18, 66, 105, 1) 54%,
+    rgba(52, 89, 119, 1) 100%
+  );
   transform: translateY(-25px);
   z-index: 5;
 
@@ -109,13 +116,15 @@ const names = [
     position: relative;
     z-index: 1;
     // transform: translateX(100%);
-    padding: 2rem;
+    overflow-x: hidden;
+    padding: 2rem 1.4rem;
     height: 100%;
-    overflow-y: scroll;
+
     background-color: white;
-    width: 350px;
+    width: 320px;
     border-radius: 1.2rem;
-    height: 90vh;
+    height: 85vh;
+    box-shadow: 0 0 8px 2px #cccccc41;
     /* width */
     &::-webkit-scrollbar {
       width: 4px;
