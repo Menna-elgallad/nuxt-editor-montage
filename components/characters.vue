@@ -1,26 +1,24 @@
 <template lang="pug">
-.container.mt-3
-    .BasicRepo(@click="showbasics =!showbasics" class=" myborder pb-2 relative") 
-            .myhead
-                img(src="../assets/folders/emoji.png")
-                span(class=" bg-white border-round p-2 absolute down-up ")
-                    Icon(name="material-symbols:arrow-drop-down" class=" text-xl" style="transform : rotate(-52deg);" v-if="!showbasics")
-                    Icon(name="material-symbols:arrow-drop-up" class=" text-xl" style="transform : rotate(-52deg);" v-else)
-            h5(class=" text-black-alpha-50 mt-2 text-center") Emojis
+.container.mt-3.characters
+    //- .BasicRepo(@click="showbasics =!showbasics" class=" myborder pb-2 relative") 
+    //-         .myhead
+    //-             img(src="../assets/folders/emoji.png")
+    //-             span(class=" bg-white border-round p-2 absolute down-up ")
+    //-                 Icon(name="material-symbols:arrow-drop-down" class=" text-xl" style="transform : rotate(-52deg);" v-if="!showbasics")
+    //-                 Icon(name="material-symbols:arrow-drop-up" class=" text-xl" style="transform : rotate(-52deg);" v-else)
+    //-         h5(class=" text-black-alpha-50 mt-2 text-center") Emojis
     ClientOnly
-      .row(v-if="showbasics" style="margin-left: -50px") 
-        .col-lg-6: lottie-player(autoplay loop style="width:200px" :src="anima1" @click="addjson(anima1)" disableShadowDom)
-        .col-lg-6: lottie-player(autoplay loop style="width:200px" :src="anima2" @click="addjson(anima2)" disableShadowDom )
-       
-      
-      
-    
-
+        .row(style="margin-left: -50px")
+            .col-lg-6: lottie-player( hover style="width:200px" :src="anima1" @click="addjson(anima1)" disableShadowDom)
+            .col-lg-6: lottie-player( hover style="width:200px" :src="anima2" @click="addjson(anima2)" disableShadowDom )
+            .col-lg-6: lottie-player( hover style="width:200px" :src="anima3" @click="addjson(anima3)" disableShadowDom )
+        
 </template>
 
 <script setup lang="ts">
-import anima1 from "../assets/json/jason edit files/emoji/Emoji_05.json";
-import anima2 from "../assets/json/jason edit files/emoji/Emoji_06.json";
+import anima1 from "../assets/characters/character_celebration.json";
+import anima2 from "../assets/characters/character_sneezing.json";
+import anima3 from "../assets/characters/character_confused.json";
 
 import useLotte from "~~/composables/useLottie";
 import { storeToRefs } from "pinia";
@@ -53,19 +51,19 @@ function addjson(animation) {
 
   // console.log("color", fabricImage.animationData.layers[9].shapes[0].it[1].c.k);
   console.log("first", fabricImage.id);
-
+  const animationData = fabricImage.animationData;
   fabricCanvas.add(fabricImage);
+  let idx;
+  for (let i = 0; i < fabricImage.animationData.layers.length; i++) {
+    if (fabricImage.animationData.layers[i].cl === "skin") {
+      idx = i;
+    }
+  }
   fabricImage.on("mousedown", (ele: any) => {
     canvasStore.$patch({ selectedProp: ele.target });
     canvasStore.$patch({ selectedID: Math.random() });
-    const animationData = fabricImage.animationData;
-    let idx;
-    for (let i = 0; i < animationData.layers.length; i++) {
-      if (animationData.layers[i].cl === "yellow") {
-        idx = i;
-      }
-    }
-    const animationColor = animationData.layers[idx].shapes[0].it[1].c.k;
+    const animationColor =
+      fabricImage.animationData.layers[idx].shapes[0].it[1].c.k;
     const hexValue = rgbaToHex(animationColor); // Convert to hexadecimal
     console.log("hexa", hexValue);
     // console.log(toRgba);
@@ -74,21 +72,21 @@ function addjson(animation) {
     // Change the color of a shape in the animation data object
   });
   fabricCanvas.renderAll();
-  // layerStore.$patch({
-  //   layers: [
-  //     ...layerStore.layers,
-  //     {
-  //       element: animation,
-  //       hidden: false,
-  //       name: "charcter",
-  //       opacity: 1,
-  //       type: "charcter",
-  //       locked: false,
-  //       timeToHide: 0,
-  //       timeToShow: 0
-  //     }
-  //   ]
-  // });
+  //   layerStore.$patch({
+  //     layers: [
+  //       ...layerStore.layers,
+  //       {
+  //         element: animation,
+  //         hidden: false,
+  //         name: "charcter",
+  //         opacity: 1,
+  //         type: "charcter",
+  //         locked: false,
+  //         timeToHide: 0,
+  //         timeToShow: 0
+  //       }
+  //     ]
+  //   });
   fabricImage.play();
 }
 function rgbaToHex(rgba) {

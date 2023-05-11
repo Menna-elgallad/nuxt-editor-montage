@@ -25,22 +25,22 @@ const fabricImage = ref();
 const hasCanvas = ref(false);
 const slideStore = useSlide();
 let canvas: fabric.Canvas;
-onMounted(() => {
-  canvas = document.getElementById("mycanvas").fabric;
-  const newCanvas = Object.assign(
-    Object.create(fabric.Canvas.prototype),
-    canvas
-  );
-  hasCanvas.value = true;
-  console.log(newCanvas.toSVG());
-  // newCanvas.width = 200;
-  // newCanvas.height = 100;
+// onMounted(() => {
+//   canvas = document.getElementById("mycanvas").fabric;
+//   const newCanvas = Object.assign(
+//     Object.create(fabric.Canvas.prototype),
+//     canvas
+//   );
+//   hasCanvas.value = true;
+//   console.log(newCanvas.toSVG());
+//   // newCanvas.width = 200;
+//   // newCanvas.height = 100;
 
-  fabricImage.value = canvasToImage(canvas);
-  console.log(fabricImage.value);
+//   fabricImage.value = canvasToImage(canvas);
+//   console.log(fabricImage.value);
 
-  console.log(fabricImage.value);
-});
+//   console.log(fabricImage.value);
+// });
 const nextIndex = ref(0);
 const state = reactive({
   array: [{ index: nextIndex.value, show: true }]
@@ -78,12 +78,12 @@ async function addnewslide() {
 
   console.log(state.array);
 }
-watch(slideStore, () => {
-  hasCanvas.value = false;
-  setTimeout(() => {
-    hasCanvas.value = true;
-  }, 50);
-});
+// watch(slideStore, () => {
+//   hasCanvas.value = false;
+//   setTimeout(() => {
+//     hasCanvas.value = true;
+//   }, 50);
+// });
 </script>
 
 <style scoped lang="scss">

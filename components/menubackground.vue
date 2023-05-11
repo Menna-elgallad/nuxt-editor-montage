@@ -14,18 +14,20 @@
   Transition
     ul.flex.justify-content-center.surface-200(v-if="tools === 'props'")
       li.coloranimat
-          input(type="color" v-model ="selectedPropColor" :style="{backgroundColor : selectedPropColor}" @mouseup = "watchColor")
+          input(type="color" v-model ="selectedPropColor" :style="{backgroundColor : selectedPropColor}" )
+        
       li: span(@click="removeProp()"): Icon(name="material-symbols:delete")    
     
   Transition
     ul.flex.justify-content-center.surface-200(v-if="tools === 'shapes'")
       li.coloranimat
-          input(type="color" v-model ="selectedPropColor" :style="{backgroundColor : selectedPropColor}" @mouseup = "watchColor")
+          input(type="color" v-model ="selectedPropColor" :style="{backgroundColor : selectedPropColor}" )
       li.color: span
           Icon.text-2xl(name="mdi:border-color" )
           input(type="color" v-model ="selectedPropBorder" )
           .colordiv(:style="{backgroundColor :selectedPropBorder }")    
       li: span(@click="removeProp()"): Icon(name="material-symbols:delete")    
+
          
 </template>
 
@@ -74,13 +76,21 @@ watch(selectedPropColor, () => {
     let idx;
     for (let i = 0; i < animationData.layers.length; i++) {
       if (animationData.layers[i].cl === "yellow") {
-        idx = i;
+        animationData.layers[i].shapes[0].it[1].c.k = hexToRgba(
+          selectedPropColor.value
+        );
+      } else if (animationData.layers[i].cl === "skin") {
+        console.log(i, selected.value);
+        animationData.layers[i].shapes[0].it[1].c.k = hexToRgba(
+          selectedPropColor.value
+        );
       }
     }
-    animationData.layers[idx].shapes[0].it[1].c.k = hexToRgba(
-      selectedPropColor.value
-    ); // Set fill color to red
+
+    // Set fill color to red
     selected.value.updateAnimationData(animationData);
+    console.log("sec first", selected.value);
+
     // fabricCanvas.remove(fabricCanvas.getActiveObject());
     // Update the animation data of the Lottie animation object
     selected.value.set("animationData", animationData);
@@ -167,6 +177,7 @@ function removeProp() {
     gap: 1rem;
     // transform: translateY(-50px);
     position: relative;
+    height: 45px;
     // z-index: -100;
     li {
       span {

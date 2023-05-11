@@ -9,12 +9,13 @@
     .close( class="flex "): span(@click="close()" style="pointer:cursor")
       Icon.text-2xl.text-blue-700(name="ion:chevron-forward")    
     .toolcontent
-      background(v-if="content==='Backround'")
+      background(v-if="content==='Background'")
       Text(v-if="content==='Text'")
       animated(v-if="content==='Elements'" @select-props="selectprops()")
       images(v-if="content==='Images'" )
       shapes(v-if="content==='Shapes'" )
       videos(v-if="content==='Videos'" )
+      characters(v-if="content==='Characters'")
             
 </template>
 
@@ -27,7 +28,7 @@ const props = defineProps({
 const tools = ref();
 const activeindex = ref(null);
 const show = ref(false);
-const content = ref("Backround");
+const content = ref("Background");
 
 const emit = defineEmits(["selectProps"]);
 
@@ -57,9 +58,9 @@ function selectprops() {
 
 const names = [
   { name: "Scenes", icon: "zondicons:film" },
-  { name: "Charachters", icon: "bi:people-fill" },
+  { name: "Characters", icon: "bi:people-fill" },
   { name: "Text", icon: "mdi:format-text" },
-  { name: "Backround", icon: "material-symbols:background-grid-small" },
+  { name: "Background", icon: "material-symbols:background-grid-small" },
   { name: "Elements", icon: "gis:folder-maps" },
   { name: "Shapes", icon: "bx:bxs-shapes" },
   { name: "Images", icon: "ion:images" },
