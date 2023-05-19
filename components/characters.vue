@@ -20,8 +20,8 @@
 import anima1 from "../assets/characters/character_confused_male_V1.json";
 import anima2 from "../assets/characters/character_presenting_male_V1.json";
 import anima3 from "../assets/characters/character_sad_male_V1.json";
-import anima4 from "../assets/characters/character_confused.json";
-// import anima4 from "../assets/characters/character_Selfie_male_V1.json";
+// import anima4 from "../assets/characters/character_confused.json";
+import anima4 from "../assets/characters/character_Selfie_male_V1.json";
 
 import useLotte from "~~/composables/useLottie";
 import { storeToRefs } from "pinia";
