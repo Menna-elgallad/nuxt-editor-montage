@@ -7,7 +7,7 @@
         img(src="@/assets/stop_lines.svg" alt="stop")
       button.control-btn
         img(src="@/assets/pause_lines.svg" alt="stop")
-      button.control-btn
+      button.control-btn(@click="openvid()")
         img(src="@/assets/play_lines.svg" alt="stop")
     .layer 
       .layer-name(v-if="layerStore?.layers.length > 0" v-for="(layer, index) in layerStore.layers" :key="index" :style="{'background-color': index % 2 == 0 ? '#e9ecef' : '#fff'}")
@@ -33,6 +33,8 @@
 
 <script setup lang="ts">
 import { useLayer } from "~/stores/layer";
+import { fabric } from "fabric";
+
 const layerStore = useLayer();
 const colors = [
   "#0d3c61",
@@ -57,6 +59,32 @@ const colors = [
 // }
 function turnHidden(value: boolean, index: number) {
   layerStore.layers[index].hidden = value;
+}
+const fabricCanvas: fabric.Canvas = ref({});
+onMounted(() => {
+  fabricCanvas.value = document.getElementById("mycanvas").fabric;
+});
+
+function openvid() {
+  fabricCanvas.value = document.getElementById("mycanvas").fabric;
+  console.log("fabricCanvas.getObjects()", fabricCanvas.value.getObjects());
+  fabricCanvas.value.getObjects().forEach(element => {
+    if (element.type === "lottie") {
+      element.play();
+      // for (let i = 0; i < element.animationData.layers.length; i++) {
+      //   if (element.animationData.layers[i].cl === "hair") {
+      //     console.log("element.animationData", element.animationData       );
+      //     element.animationData.layers[i].shapes[0].it[1].c.k = [
+      //       0.8196078431372549,
+      //       0.5333333333333333,
+      //       0.2784313725490196,
+      //       1
+      //     ];
+      //   }
+      // }
+    }
+  });
+  fabricCanvas.value.renderAll();
 }
 </script>
 

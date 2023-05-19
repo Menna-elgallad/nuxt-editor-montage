@@ -59,6 +59,7 @@ function hexToRgba(hex) {
   const g = (bigint >> 8) & 255;
   const b = bigint & 255;
   const a = 1;
+  console.log([r / 255, g / 255, b / 255, a]);
   return [r / 255, g / 255, b / 255, a];
 }
 watch(selectedPropBorder, () => {
@@ -68,10 +69,11 @@ watch(selectedPropBorder, () => {
   fabricCanvas.renderAll();
 });
 watch(selectedPropColor, () => {
-  selected.value = selectedProp.value;
+  const selectedAnimation = fabricCanvas.getActiveObject();
+
   console.log("colorr", selectedPropColor.value);
 
-  const animationData = selected.value.animationData;
+  const animationData = selectedAnimation.animationData;
   if (animationData) {
     let idx;
     for (let i = 0; i < animationData.layers.length; i++) {
@@ -80,12 +82,12 @@ watch(selectedPropColor, () => {
           selectedPropColor.value
         );
       } else if (animationData.layers[i].cl === "hair") {
-        console.log(i, selected.value);
+        // console.log(i, selected.value);
         animationData.layers[i].shapes[0].it[1].c.k = hexToRgba(
           selectedPropColor.value
         );
       } else if (animationData.layers[i].cl === "beard") {
-        console.log(i, selected.value);
+        // console.log(i, selected.value);
         animationData.layers[i].shapes[0].it[1].c.k = hexToRgba(
           selectedPropColor.value
         );
@@ -93,16 +95,17 @@ watch(selectedPropColor, () => {
     }
 
     // Set fill color to red
-    selected.value.updateAnimationData(animationData);
-    console.log("sec first", selected.value);
+    console.log("animationData2", animationData);
+
+    console.log("sec first", selectedAnimation);
 
     // fabricCanvas.remove(fabricCanvas.getActiveObject());
     // Update the animation data of the Lottie animation object
-    selected.value.set("animationData", animationData);
-    console.log("sec", selected.value);
+    selectedAnimation.setAnimationData(animationData);
 
     fabricCanvas.renderAll();
-    selected.value.play();
+    // console.log("fabricCanvas", fabricCanvas.getObjects());
+    selectedAnimation.play();
   } else {
     console.log("selected", selected.value);
     var activeObject = fabricCanvas.getActiveObject();

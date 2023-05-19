@@ -37,7 +37,7 @@ const canvasStore = useCanvas();
 const layerStore = useLayer();
 const { canasWrapper, color } = storeToRefs(canvasStore);
 const emit = defineEmits(["selectProps"]);
-
+var tmpCanvasEl = fabric.util.createCanvasElement();
 let fabricCanvas: fabric.Canvas;
 let canvaswrapper: any;
 fabricCanvas = document.getElementById("mycanvas").fabric;
@@ -48,21 +48,23 @@ function addjson(animation) {
   const fabricImage = new uselottie(undefined, {
     scaleX: 0.4,
     scaleY: 0.4,
-    animationData: animation,
-    id: Math.random()
+    animationData: animation
+    // id: Math.random()
   });
 
-  const animationData = fabricImage.animationData;
   fabricCanvas.add(fabricImage);
-  let idx;
-  for (let i = 0; i < fabricImage.animationData.layers.length; i++) {
-    if (fabricImage.animationData.layers[i].cl === "hair") {
-      idx = i;
-    }
-  }
+
   fabricImage.on("mousedown", (ele: any) => {
     canvasStore.$patch({ selectedProp: ele.target });
     canvasStore.$patch({ selectedID: Math.random() });
+    const animationData = fabricImage.animationData;
+    console.log("animationData" ,animationData)
+    let idx;
+    for (let i = 0; i < fabricImage.animationData.layers.length; i++) {
+      if (fabricImage.animationData.layers[i].cl === "hair") {
+        idx = i;
+      }
+    }
     const animationColor =
       fabricImage.animationData.layers[idx].shapes[0].it[1].c.k;
     const hexValue = rgbaToHex(animationColor); // Convert to hexadecimal
@@ -89,6 +91,7 @@ function addjson(animation) {
   //     ]
   //   });
   fabricImage.play();
+  // fabricImage.stop();
 }
 function rgbaToHex(rgba) {
   const [r, g, b] = rgba.slice(0, 3).map(value => Math.round(value * 255));

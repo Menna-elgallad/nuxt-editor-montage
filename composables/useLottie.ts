@@ -15,10 +15,11 @@ export default function useLotte(){
     srcFromAttribute: false,
     enableRetinaScaling: true,
     initialize: function(path, options) {
-      if (!options.width) options.width = 1000;
-      if (!options.height) options.height = 1000;
+      if (!options.width) options.width = 500;
+      if (!options.height) options.height = 500;
 
       this.path = path;
+      this.type = "lottie"
       this.tmpCanvasEl = fabric.util.createCanvasElement();
       this.tmpCanvasEl.width = options.width;
       this.tmpCanvasEl.height = options.height;
@@ -26,6 +27,8 @@ export default function useLotte(){
       this.lottieItem = lottie.loadAnimation({
         renderer: "canvas",
         loop: true,
+ 
+
         autoplay: false,
         ...(path && { path }),
         ...(options.animationData && { animationData: options.animationData }),
@@ -41,6 +44,23 @@ export default function useLotte(){
 
       this.callSuper("initialize", this.tmpCanvasEl, options);
     },
+    setAnimationData: function(animationData) {
+      this.lottieItem.destroy(); // Destroy the previous animation
+      this.lottieItem = lottie.loadAnimation({
+        renderer: "canvas",
+        loop: true,
+        autoplay: false,
+        animationData: animationData,
+        rendererSettings: {
+          context: this.tmpCanvasEl.getContext("2d"),
+          preserveAspectRatio: "xMidYMid meet"
+        }
+      });
+  
+      this.lottieItem.addEventListener("enterFrame", e => {
+        this.canvas?.requestRenderAll();
+      });
+    },
 
     play: function() {
       this.lottieItem.play();
@@ -52,31 +72,32 @@ export default function useLotte(){
       return this.path;
     }
   });
-  fabric.Lottie.prototype.updateAnimationData = function(newData) {
-    this.lottieItem.stop();
-    this.lottieItem.destroy();
-    this.lottieItem = null;
-
-    this.lottieItem = lottie.loadAnimation({
-      renderer: "canvas",
-      loop: true,
-      autoplay: false,
-      ...(this.path && { path: this.path }),
-      ...(newData && { animationData: newData }),
-      rendererSettings: {
-        context: this.tmpCanvasEl.getContext("2d"),
-        preserveAspectRatio: "xMidYMid meet"
-      }
-      
-    });
+  // fabric.Lottie.prototype.updateAnimationData = function(newData) {
+  //   // this.lottieItem.stop();
+  //   // this.lottieItem.destroy();
     
-    this.lottieItem.addEventListener("enterFrame", e => {
-      this.canvas?.requestRenderAll();
-    });
-    this.callSuper("initialize", this.tmpCanvasEl, this.options);
-    this.lottieItem.play();
-    this.canvas?.requestRenderAll();
-  };
+  //   // this.lottieItem = null;
+
+  //   this.lottieItem = lottie.loadAnimation({
+  //     renderer: "canvas",
+  //     loop: true,
+  //     // autoplay: false,
+      
+  //     // ...(this.path && { path: this.path }),
+  //     ...(newData && { animationData: newData }),
+  //     rendererSettings: {
+  //       context: this.tmpCanvasEl.getContext("2d"),
+  //       preserveAspectRatio: "xMidYMid meet"
+  //     }
+      
+  //   });
+    
+  //   this.lottieItem.addEventListener("enterFrame", e => {
+  //     this.canvas?.requestRenderAll();
+  //   });
+  //   // this.callSuper("initialize", this.tmpCanvasEl, this.options);
+  
+  // };
   // //@ts-ignore
   fabric.Lottie.fromObject = function(_object, callback) {
     const object = fabric.util.object.clone(_object);
@@ -97,6 +118,8 @@ export default function useLotte(){
         }
       );
     });
+
   };
+ 
   return fabric.Lottie 
 }
