@@ -15,7 +15,7 @@
     ul.flex.justify-content-center.surface-200(v-if="tools === 'props'")
       li.coloranimat
           input(type="color" v-model ="selectedPropColor" :style="{backgroundColor : selectedPropColor}" )
-        
+         
       li: span(@click="removeProp()"): Icon(name="material-symbols:delete")    
     
   Transition
@@ -79,7 +79,12 @@ watch(selectedPropColor, () => {
         animationData.layers[i].shapes[0].it[1].c.k = hexToRgba(
           selectedPropColor.value
         );
-      } else if (animationData.layers[i].cl === "skin") {
+      } else if (animationData.layers[i].cl === "hair") {
+        console.log(i, selected.value);
+        animationData.layers[i].shapes[0].it[1].c.k = hexToRgba(
+          selectedPropColor.value
+        );
+      } else if (animationData.layers[i].cl === "beard") {
         console.log(i, selected.value);
         animationData.layers[i].shapes[0].it[1].c.k = hexToRgba(
           selectedPropColor.value

@@ -54,7 +54,7 @@ export default function useLotte(){
   });
   fabric.Lottie.prototype.updateAnimationData = function(newData) {
     this.lottieItem.stop();
-    // this.lottieItem.destroy();
+    this.lottieItem.destroy();
     this.lottieItem = null;
 
     this.lottieItem = lottie.loadAnimation({
@@ -75,28 +75,28 @@ export default function useLotte(){
     });
     this.callSuper("initialize", this.tmpCanvasEl, this.options);
     this.lottieItem.play();
-    // this.canvas?.requestRenderAll();
+    this.canvas?.requestRenderAll();
   };
   // //@ts-ignore
-  // fabric.Lottie.fromObject = function(_object, callback) {
-  //   const object = fabric.util.object.clone(_object);
-  //   fabric.Image.prototype._initFilters.call(object, object.filters, function(
-  //     filters
-  //   ) {
-  //     object.filters = filters || [];
-  //     fabric.Image.prototype._initFilters.call(
-  //       object,
-  //       [object.resizeFilter],
-  //       function(resizeFilters) {
-  //         object.resizeFilter = resizeFilters[0];
-  //         fabric.util.enlivenObjects([object.clipPath], function(enlivedProps) {
-  //           object.clipPath = enlivedProps[0];
-  //           const fabricLottie = new fabric.Lottie(object.src, object);
-  //           callback(fabricLottie, false);
-  //         });
-  //       }
-  //     );
-  //   });
-  // };
+  fabric.Lottie.fromObject = function(_object, callback) {
+    const object = fabric.util.object.clone(_object);
+    fabric.Image.prototype._initFilters.call(object, object.filters, function(
+      filters
+    ) {
+      object.filters = filters || [];
+      fabric.Image.prototype._initFilters.call(
+        object,
+        [object.resizeFilter],
+        function(resizeFilters) {
+          object.resizeFilter = resizeFilters[0];
+          fabric.util.enlivenObjects([object.clipPath], function(enlivedProps) {
+            object.clipPath = enlivedProps[0];
+            const fabricLottie = new fabric.Lottie(object.src, object);
+            callback(fabricLottie, false);
+          });
+        }
+      );
+    });
+  };
   return fabric.Lottie 
 }

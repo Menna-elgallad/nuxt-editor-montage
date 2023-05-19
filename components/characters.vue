@@ -8,17 +8,20 @@
     //-                 Icon(name="material-symbols:arrow-drop-up" class=" text-xl" style="transform : rotate(-52deg);" v-else)
     //-         h5(class=" text-black-alpha-50 mt-2 text-center") Emojis
     ClientOnly
-        .row(style="margin-left: -50px")
-            .col-lg-6: lottie-player( hover style="width:200px" :src="anima1" @click="addjson(anima1)" disableShadowDom)
-            .col-lg-6: lottie-player( hover style="width:200px" :src="anima2" @click="addjson(anima2)" disableShadowDom )
-            .col-lg-6: lottie-player( hover style="width:200px" :src="anima3" @click="addjson(anima3)" disableShadowDom )
+        .row()
+            .col-lg-6: lottie-player( hover style="width:100px" :src="anima1" @click="addjson(anima1)" disableShadowDom)
+            .col-lg-6: lottie-player( hover style="width:100px" :src="anima2" @click="addjson(anima2)" disableShadowDom )
+            .col-lg-6: lottie-player( hover style="width:100px" :src="anima3" @click="addjson(anima3)" disableShadowDom )
+            .col-lg-6: lottie-player( hover style="width:100px" :src="anima4" @click="addjson(anima4)" disableShadowDom )
         
 </template>
 
 <script setup lang="ts">
-import anima1 from "../assets/characters/character_celebration.json";
-import anima2 from "../assets/characters/character_sneezing.json";
-import anima3 from "../assets/characters/character_confused.json";
+import anima1 from "../assets/characters/character_confused_male_V1.json";
+import anima2 from "../assets/characters/character_presenting_male_V1.json";
+import anima3 from "../assets/characters/character_sad_male_V1.json";
+import anima4 from "../assets/characters/character_confused.json";
+// import anima4 from "../assets/characters/character_Selfie_male_V1.json";
 
 import useLotte from "~~/composables/useLottie";
 import { storeToRefs } from "pinia";
@@ -49,13 +52,11 @@ function addjson(animation) {
     id: Math.random()
   });
 
-  // console.log("color", fabricImage.animationData.layers[9].shapes[0].it[1].c.k);
-  console.log("first", fabricImage.id);
   const animationData = fabricImage.animationData;
   fabricCanvas.add(fabricImage);
   let idx;
   for (let i = 0; i < fabricImage.animationData.layers.length; i++) {
-    if (fabricImage.animationData.layers[i].cl === "skin") {
+    if (fabricImage.animationData.layers[i].cl === "hair") {
       idx = i;
     }
   }
