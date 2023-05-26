@@ -74,21 +74,21 @@ function addjson(animation) {
     // Change the color of a shape in the animation data object
   });
   fabricCanvas.renderAll();
-  // layerStore.$patch({
-  //   layers: [
-  //     ...layerStore.layers,
-  //     {
-  //       element: animation,
-  //       hidden: false,
-  //       name: "charcter",
-  //       opacity: 1,
-  //       type: "charcter",
-  //       locked: false,
-  //       timeToHide: 0,
-  //       timeToShow: 0
-  //     }
-  //   ]
-  // });
+  layerStore.$patch({
+    layers: [
+      ...layerStore.layers,
+      {
+        element: animation,
+        hidden: false,
+        name: "charcter",
+        opacity: 1,
+        type: "charcter",
+        locked: false,
+        timeToHide: 0,
+        timeToShow: 0
+      }
+    ]
+  });
   fabricImage.play();
 }
 function rgbaToHex(rgba) {

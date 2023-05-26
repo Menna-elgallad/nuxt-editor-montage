@@ -169,6 +169,7 @@ function openvid() {
   width: 100%;
   overflow-x: hidden;
   height: 28vh;
+  padding: 1rem;
   .time {
     width: 100%;
     height: 40px;
@@ -180,6 +181,7 @@ function openvid() {
     width: 100%;
     padding-top: 9px;
     margin-left: 5px;
+    border-radius: 1.2rem;
   }
   .time-element {
     color: #fff;
@@ -190,6 +192,7 @@ function openvid() {
     display: flex;
     align-items: center;
     font-size: 20px;
+    border-radius: 1.8rem;
     font-weight: bold;
   }
   .top-time {

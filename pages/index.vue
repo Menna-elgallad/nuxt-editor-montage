@@ -71,10 +71,12 @@ function selectedPropB() {
   }, 1000);
 }
 onMounted(() => {
+  const screenWidth = window.innerWidth;
+  const ourWidth = ((screenWidth * 50) / 100 - 40) * 0.9;
   fabricCanvas = new fabric.Canvas(canvasRef.value, {
     id: Date.now(),
-    height: 1080 / 2.8,
-    width: 1920 / 2.8,
+    height: calculateHeight(ourWidth),
+    width: ourWidth,
     backgroundColor: "white",
     // shadow:1,
     //@ts-ignore
@@ -82,7 +84,7 @@ onMounted(() => {
     backgroundColorAlpha: 0,
     borderColor: "black",
     strokeWidth: 5,
-    hasControls: true
+    hasControls: true,
   });
 
   //@ts-ignore
@@ -103,15 +105,20 @@ onMounted(() => {
 
   fabricCanvas.set({
     borderColor: "black",
-    strokeWidth: 5
+    strokeWidth: 5,
   });
 
   // fabricCanvas.add(imgInstance);
   slideStore.canvasSlides.push({
     fabric: fabricCanvas,
-    slideNumber: 0
+    slideNumber: 0,
   });
 });
+
+function calculateHeight(width: number) {
+  return (width * 3) / 4;
+}
+
 function focus(event: any) {
   if (!allowfocus.value) {
     return;
@@ -124,7 +131,7 @@ function focus(event: any) {
   showMenuBack.value = true;
   gsap.to(".showMenuBack", {
     y: 1,
-    duration: 0.5
+    duration: 0.5,
   });
   canvasWrapper.style.outline = "2px solid #125386";
   slideStore.slideChange = Math.random();
@@ -158,7 +165,7 @@ function releaseControls() {
 .dashboard {
   display: flex;
   flex-direction: column;
-
+  justify-content: space-evenly;
   align-items: center;
   width: 80%;
   // max-width: 50vw;
