@@ -53,25 +53,61 @@ function addjson(animation) {
   });
 
   fabricCanvas.add(fabricImage);
-
+  fabricImage.animate("angle", "+=45", {
+    onChange: fabricCanvas.renderAll.bind(fabricCanvas),
+    duration: 1000
+  });
   fabricImage.on("mousedown", (ele: any) => {
     canvasStore.$patch({ selectedProp: ele.target });
     canvasStore.$patch({ selectedID: Math.random() });
     const animationData = fabricImage.animationData;
-    console.log("animationData" ,animationData)
-    let idx;
+    console.log("animationData", animationData);
+    let hair;
+    let shirt;
+    let skin;
+    let pants;
+    let light;
     for (let i = 0; i < fabricImage.animationData.layers.length; i++) {
       if (fabricImage.animationData.layers[i].cl === "hair") {
-        idx = i;
+        hair = i;
+      } else if (fabricImage.animationData.layers[i].cl === "shirt") {
+        shirt = i;
+      } else if (fabricImage.animationData.layers[i].cl === "skin") {
+        skin = i;
+      } else if (fabricImage.animationData.layers[i].cl === "pants") {
+        pants = i;
+      } else if (fabricImage.animationData.layers[i].cl === "light") {
+        light = i;
       }
     }
-    const animationColor =
-      fabricImage.animationData.layers[idx].shapes[0].it[1].c.k;
-    const hexValue = rgbaToHex(animationColor); // Convert to hexadecimal
-    console.log("hexa", hexValue);
+    const haircolor = rgbaToHex(
+      fabricImage.animationData.layers[hair].shapes[0].it[1].c.k
+    );
+    const shirtcolor = rgbaToHex(
+      fabricImage.animationData.layers[shirt].shapes[0].it[1].c.k
+    );
+    const skincolor = rgbaToHex(
+      fabricImage.animationData.layers[skin].shapes[0].it[1].c.k
+    );
+    const pantscolor = rgbaToHex(
+      fabricImage.animationData.layers[pants].shapes[0].it[1].c.k
+    );
+    const lightcolor = rgbaToHex(
+      fabricImage.animationData.layers[light].shapes[0].it[1].c.k
+    );
+    // Convert to hexadecimal
+
     // console.log(toRgba);
 
-    canvasStore.$patch({ selectedPropColor: hexValue });
+    canvasStore.$patch({
+      selectedPropColors: [
+        haircolor,
+        shirtcolor,
+        skincolor,
+        pantscolor,
+        lightcolor
+      ]
+    });
     // Change the color of a shape in the animation data object
   });
   fabricCanvas.renderAll();

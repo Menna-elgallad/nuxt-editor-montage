@@ -47,8 +47,8 @@ function addshape(type: any) {
       shape = new fabric.Circle({
         radius: 50,
         fill: "#ccc",
-        left: 100,
-        top: 100
+        left: 50,
+        top: 0
       });
       break;
     case "square":
@@ -148,6 +148,14 @@ function addshape(type: any) {
       throw new Error(`Invalid shape type: ${type}`);
   }
 
+  // shape.animate("angle", 45, {
+  //   onChange: fabricCanvas.renderAll.bind(fabricCanvas)
+  // });
+  shape.animate("top", "+=100", {
+    onChange: fabricCanvas.renderAll.bind(fabricCanvas),
+    duration: 1000,
+    easing: fabric.util.ease.easeOutBounce
+  });
   fabricCanvas.add(shape);
   fabricCanvas.renderAll();
   shape.on("mousedown", (ele: any) => {

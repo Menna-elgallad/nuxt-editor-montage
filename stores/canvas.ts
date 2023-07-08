@@ -14,6 +14,7 @@ export const useCanvas = defineStore("canvas", {
     selectedElement,
     selectedProp: "",
     selectedPropColor: "",
+    selectedPropColors: [],
     selectedID: "",
     selectedID2: "",
     myCanvas: myCanvas,
