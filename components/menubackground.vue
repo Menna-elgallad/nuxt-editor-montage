@@ -13,13 +13,15 @@
        
   Transition
     ul.flex.justify-content-center.surface-200(v-if="tools === 'props'")
-      li.coloranimat
-          input(type="color" v-model ="selectedPropColor" :style="{backgroundColor : selectedPropColor}" )
-         
+      li(v-for="(item , index) in selectedPropColors")
+        .coloranimat
+            input(type="color" v-model ="selectedPropColors[index]" :style="{backgroundColor : item}" )
+          
       li: span(@click="removeProp()"): Icon(name="material-symbols:delete")    
-    
+      
   Transition
     ul.flex.justify-content-center.surface-200(v-if="tools === 'shapes'")
+      
       li.coloranimat
           input(type="color" v-model ="selectedPropColor" :style="{backgroundColor : selectedPropColor}" )
       li.color: span
@@ -43,6 +45,7 @@ const {
   canasWrapper,
   color,
   selectedPropColor,
+  selectedPropColors,
   selectedProp,
   selectedPropBorder
 } = storeToRefs(canvasStore);
@@ -70,6 +73,7 @@ watch(selectedPropBorder, () => {
 });
 watch(selectedPropColor, () => {
   const selectedAnimation = fabricCanvas.getActiveObject();
+  console.log("color1");
 
   console.log("colorr", selectedPropColor.value);
 
@@ -78,16 +82,6 @@ watch(selectedPropColor, () => {
     let idx;
     for (let i = 0; i < animationData.layers.length; i++) {
       if (animationData.layers[i].cl === "yellow") {
-        animationData.layers[i].shapes[0].it[1].c.k = hexToRgba(
-          selectedPropColor.value
-        );
-      } else if (animationData.layers[i].cl === "hair") {
-        // console.log(i, selected.value);
-        animationData.layers[i].shapes[0].it[1].c.k = hexToRgba(
-          selectedPropColor.value
-        );
-      } else if (animationData.layers[i].cl === "beard") {
-        // console.log(i, selected.value);
         animationData.layers[i].shapes[0].it[1].c.k = hexToRgba(
           selectedPropColor.value
         );
@@ -113,6 +107,69 @@ watch(selectedPropColor, () => {
     fabricCanvas.renderAll();
   }
 });
+
+watch(
+  selectedPropColors,
+  () => {
+    console.log("colorsssss");
+    const selectedAnimation = fabricCanvas.getActiveObject();
+
+    console.log("colorr", selectedPropColors.value);
+
+    const animationData = selectedAnimation.animationData;
+
+    if (animationData) {
+      let idx;
+      for (let i = 0; i < animationData.layers.length; i++) {
+        if (animationData.layers[i].cl === "hair") {
+          // console.log(i, selected.value);
+          animationData.layers[i].shapes[0].it[1].c.k = hexToRgba(
+            selectedPropColors.value[0]
+          );
+        } else if (animationData.layers[i].cl === "beard") {
+          // console.log(i, selected.value);
+          animationData.layers[i].shapes[0].it[1].c.k = hexToRgba(
+            selectedPropColors.value[0]
+          );
+        } else if (animationData.layers[i].cl === "shirt") {
+          // console.log(i, selected.value);
+          animationData.layers[i].shapes[0].it[1].c.k = hexToRgba(
+            selectedPropColors.value[1]
+          );
+        } else if (animationData.layers[i].cl === "skin") {
+          // console.log(i, selected.value);
+          animationData.layers[i].shapes[0].it[1].c.k = hexToRgba(
+            selectedPropColors.value[2]
+          );
+        } else if (animationData.layers[i].cl === "pants") {
+          // console.log(i, selected.value);
+          animationData.layers[i].shapes[0].it[1].c.k = hexToRgba(
+            selectedPropColors.value[3]
+          );
+        } else if (animationData.layers[i].cl === "light") {
+          // console.log(i, selected.value);
+          animationData.layers[i].shapes[0].it[1].c.k = hexToRgba(
+            selectedPropColors.value[4]
+          );
+        }
+      }
+
+      // Set fill color to red
+      console.log("animationData2", animationData);
+
+      console.log("sec first", selectedAnimation);
+
+      // fabricCanvas.remove(fabricCanvas.getActiveObject());
+      // Update the animation data of the Lottie animation object
+      selectedAnimation.setAnimationData(animationData);
+
+      fabricCanvas.renderAll();
+      // console.log("fabricCanvas", fabricCanvas.getObjects());
+      selectedAnimation.play();
+    }
+  },
+  { deep: true }
+);
 
 onMounted(() => {
   //@ts-ignore

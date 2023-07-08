@@ -84,7 +84,7 @@ onMounted(() => {
     backgroundColorAlpha: 0,
     borderColor: "black",
     strokeWidth: 5,
-    hasControls: true,
+    hasControls: true
   });
 
   //@ts-ignore
@@ -105,18 +105,18 @@ onMounted(() => {
 
   fabricCanvas.set({
     borderColor: "black",
-    strokeWidth: 5,
+    strokeWidth: 5
   });
 
   // fabricCanvas.add(imgInstance);
   slideStore.canvasSlides.push({
     fabric: fabricCanvas,
-    slideNumber: 0,
+    slideNumber: 0
   });
 });
 
 function calculateHeight(width: number) {
-  return (width * 3) / 4;
+  return (width * 3) / 5;
 }
 
 function focus(event: any) {
@@ -131,7 +131,7 @@ function focus(event: any) {
   showMenuBack.value = true;
   gsap.to(".showMenuBack", {
     y: 1,
-    duration: 0.5,
+    duration: 0.5
   });
   canvasWrapper.style.outline = "2px solid #125386";
   slideStore.slideChange = Math.random();

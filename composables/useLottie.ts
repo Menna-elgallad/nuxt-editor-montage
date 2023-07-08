@@ -15,8 +15,8 @@ export default function useLotte(){
     srcFromAttribute: false,
     enableRetinaScaling: true,
     initialize: function(path, options) {
-      if (!options.width) options.width = 500;
-      if (!options.height) options.height = 500;
+      if (!options.width) options.width = 1000;
+      if (!options.height) options.height = 1000;
 
       this.path = path;
       this.type = "lottie"
