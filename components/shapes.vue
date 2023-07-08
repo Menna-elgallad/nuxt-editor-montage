@@ -15,6 +15,7 @@
 </template>
 
 <script setup lang="ts">
+
 import { useCanvas } from "~~/stores/canvas";
 import { fabric } from "fabric";
 

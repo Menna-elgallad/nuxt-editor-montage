@@ -52,8 +52,9 @@ const colors = [
   "#ffeb3b",
   "#ffc107",
   "#ff9800",
-  "#ff5722"
+  "#ff5722",
 ];
+console.log(layerStore.layers)
 // function randomColor() {
 //   return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
 // }
@@ -68,7 +69,7 @@ onMounted(() => {
 function openvid() {
   fabricCanvas.value = document.getElementById("mycanvas").fabric;
   console.log("fabricCanvas.getObjects()", fabricCanvas.value.getObjects());
-  fabricCanvas.value.getObjects().forEach(element => {
+  fabricCanvas.value.getObjects().forEach((element) => {
     if (element.type === "lottie") {
       element.play();
       // for (let i = 0; i < element.animationData.layers.length; i++) {
@@ -90,10 +91,10 @@ function openvid() {
 
 <style lang="scss" scoped>
 .cont {
-  flex: 0.8;
+  flex: 0.2;
 }
 .layers {
-  flex: 0.2;
+  flex: 0.8;
   overflow: hidden;
   height: 100%;
   .layer {
@@ -170,6 +171,7 @@ function openvid() {
   overflow-x: hidden;
   height: 28vh;
   padding: 1rem;
+  background-color: white;
   .time {
     width: 100%;
     height: 40px;

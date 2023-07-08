@@ -12,5 +12,7 @@ export const useSlide = defineStore("slide", {
     currentSlide: 0,
     currentCanvas: {} as fabric.Canvas,
     slideChange: Math.random(),
+    timeToShow: 0,
+    timeToHide: 10000,
   }),
 });

@@ -9,7 +9,7 @@
       .canvasElement(@click="focus")
 
         canvas#mycanvas(ref="canvasRef" )
-      timeline 
+      timeline(@drag="dragObjectProps" @follow-cursor="followCursor" @hide-seekbar="hideSeekbar" @seek="seek") 
     sidetools(v-if="didMounted" @click="releaseControls()")   
     
           
@@ -25,6 +25,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useCanvas } from "~~/stores/canvas";
 import { storeToRefs } from "pinia";
 import { useSlide } from "~~/stores/slide";
+import {TIME_OPTIONS ,OUTPUT_FORMAT_OPTIONS , DEFAULT_DURATION , DRAWER_WIDTH } from '~/utils/constants'
 const canvasStore = useCanvas();
 const slideStore = useSlide();
 const myimg = ref(null);
@@ -36,6 +37,26 @@ let fabricCanvas: fabric.Canvas, draggable, fabricElement;
 const { selectedProp, selectedID, selectedID2 } = storeToRefs(canvasStore);
 const topTools = ref("back");
 const allowfocus = ref(true);
+
+const state = reactive({
+  timelineScale: 0,
+  playInterval: null,
+  zoomLevel: 100,
+  layers: [],
+  playbackSpeed: TIME_OPTIONS[1].value,
+  outputFormat: OUTPUT_FORMAT_OPTIONS[1].value,
+  newLayer: null,
+  dragging: false,
+  trimming: false,
+  // NOTE: Miliseconds
+  currentTime: 0,
+  // NOTE: Miliseconds
+  duration: DEFAULT_DURATION,
+  seeking: false,
+  seekHoverOffset: 0,
+  seekbarOffset: 0
+});
+
 watch(
   selectedID,
   () => {
@@ -114,6 +135,84 @@ onMounted(() => {
     slideNumber: 0,
   });
 });
+
+const dragObjectProps = ({ offsetX }: MouseEvent, layer: any) => {
+  if (!paused.value) {
+    return;
+  }
+  let action = "dragging";
+  const layerWidth = layer.duration / 10 - layer.endTrim - layer.startTrim;
+  if (offsetX <= 7) {
+    action = "trimLeft";
+  } else if (offsetX >= layerWidth - 7) {
+    action = "trimRight";
+  }
+  const dragging = ({ pageX }: MouseEvent) => {
+    const offset = pageX - DRAWER_WIDTH;
+    if (action === "dragging") {
+      state.dragging = true;
+      state.seeking = false;
+      if (offset - 50 >= 0) {
+        layer.offset = offset - 50;
+      }
+    } else if (action === "trimLeft") {
+      const res = offset - layer.offset;
+      if (res >= 0 && res < layerWidth) {
+        layer.startTrim = res;
+      }
+    } else if (action === "trimRight") {
+      // TODO: Fix this at some point
+      const res = Math.abs(offset - layer.offset - layerWidth);
+      if (res <= layerWidth) {
+        layer.endTrim = Math.abs(res);
+      }
+    }
+  };
+  const released = () => {
+    state.dragging = false;
+    state.seeking = true;
+    document.removeEventListener("mousemove", dragging);
+    document.removeEventListener("mouseup", released);
+    updateLayerVisibility();
+  };
+  document.addEventListener("mouseup", released);
+  document.addEventListener("mousemove", dragging);
+};
+
+const updateLayerVisibility = () => {
+  // @ts-ignore
+  const activeObjectId: string = fabricCanvas?.getActiveObject()?.get("id");
+  for (const layer of layers.value) {
+    // @ts-ignore
+    const objectId: string = layer.object?.get("id");
+    layer.object!.visible = false;
+    if (isLayerVisible(layer, false)) {
+      layer.object!.visible = true;
+    } else {
+      layer.object!.visible = false;
+      if (objectId === activeObjectId) {
+        fabricCanvas?.discardActiveObject().renderAll();
+      }
+    }
+  }
+};
+
+const isLayerVisible = (layer: any, noTrim: boolean) => {
+  let layerOffsetMs = layer.offset * 10 + layer.startTrim * 10;
+  if (noTrim) {
+    layerOffsetMs = layer.offset * 10;
+    return (
+      state.currentTime >= layerOffsetMs &&
+      state.currentTime <= layerOffsetMs + layer.duration
+    );
+  } else {
+    const duration = layer.duration - layer.startTrim * 10 - layer.endTrim * 10;
+    return (
+      state.currentTime >= layerOffsetMs &&
+      state.currentTime <= layerOffsetMs + duration
+    );
+  }
+};
 
 function calculateHeight(width: number) {
   return (width * 3) / 4;
