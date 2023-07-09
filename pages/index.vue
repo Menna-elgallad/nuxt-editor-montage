@@ -8,7 +8,7 @@
   
       .canvasElement(@click="focus")
 
-        canvas#mycanvas(ref="canvasRef" )
+        canvas#mycanvas-1(ref="canvasRef" )
       timeline(@drag="dragObjectProps" @follow-cursor="followCursor" @hide-seekbar="hideSeekbar" @seek="seek") 
     sidetools(v-if="didMounted" @click="releaseControls()")   
     
@@ -25,7 +25,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useCanvas } from "~~/stores/canvas";
 import { storeToRefs } from "pinia";
 import { useSlide } from "~~/stores/slide";
-import {TIME_OPTIONS ,OUTPUT_FORMAT_OPTIONS , DEFAULT_DURATION , DRAWER_WIDTH } from '~/utils/constants'
+import { TimeLineStore } from "~~/stores/timeline";
+const timeLineStore = TimeLineStore();
 const canvasStore = useCanvas();
 const slideStore = useSlide();
 const myimg = ref(null);
@@ -37,25 +38,6 @@ let fabricCanvas: fabric.Canvas, draggable, fabricElement;
 const { selectedProp, selectedID, selectedID2 } = storeToRefs(canvasStore);
 const topTools = ref("back");
 const allowfocus = ref(true);
-
-const state = reactive({
-  timelineScale: 0,
-  playInterval: null,
-  zoomLevel: 100,
-  layers: [],
-  playbackSpeed: TIME_OPTIONS[1].value,
-  outputFormat: OUTPUT_FORMAT_OPTIONS[1].value,
-  newLayer: null,
-  dragging: false,
-  trimming: false,
-  // NOTE: Miliseconds
-  currentTime: 0,
-  // NOTE: Miliseconds
-  duration: DEFAULT_DURATION,
-  seeking: false,
-  seekHoverOffset: 0,
-  seekbarOffset: 0
-});
 
 watch(
   selectedID,
@@ -95,7 +77,7 @@ onMounted(() => {
   const screenWidth = window.innerWidth;
   const ourWidth = ((screenWidth * 50) / 100 - 40) * 0.9;
   fabricCanvas = new fabric.Canvas(canvasRef.value, {
-    id: Date.now(),
+    id: timeLineStore.activeSlide.id,
     height: calculateHeight(ourWidth),
     width: ourWidth,
     backgroundColor: "white",
@@ -105,12 +87,12 @@ onMounted(() => {
     backgroundColorAlpha: 0,
     borderColor: "black",
     strokeWidth: 5,
-    hasControls: true
+    hasControls: true,
   });
 
   //@ts-ignore
-  document.getElementById("mycanvas").fabric = fabricCanvas;
-  console.log(document.getElementById("mycanvas").fabric);
+  document.getElementById("mycanvas-1").fabric = fabricCanvas;
+  console.log(document.getElementById("mycanvas-1").fabric);
   didMounted.value = true; //Note: this is to make sure that the canvas is mounted before the sidetools component is mounted
   gsap.registerPlugin(ScrollTrigger, Draggable);
   const myimg = document.getElementById("img");
@@ -126,13 +108,13 @@ onMounted(() => {
 
   fabricCanvas.set({
     borderColor: "black",
-    strokeWidth: 5
+    strokeWidth: 5,
   });
 
   // fabricCanvas.add(imgInstance);
   slideStore.canvasSlides.push({
     fabric: fabricCanvas,
-    slideNumber: 0
+    slideNumber: 0,
   });
 });
 
@@ -161,7 +143,6 @@ const dragObjectProps = ({ offsetX }: MouseEvent, layer: any) => {
         layer.startTrim = res;
       }
     } else if (action === "trimRight") {
-      // TODO: Fix this at some point
       const res = Math.abs(offset - layer.offset - layerWidth);
       if (res <= layerWidth) {
         layer.endTrim = Math.abs(res);
@@ -230,7 +211,7 @@ function focus(event: any) {
   showMenuBack.value = true;
   gsap.to(".showMenuBack", {
     y: 1,
-    duration: 0.5
+    duration: 0.5,
   });
   canvasWrapper.style.outline = "2px solid #125386";
   slideStore.slideChange = Math.random();

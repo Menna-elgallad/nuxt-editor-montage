@@ -50,6 +50,9 @@ const {
   selectedPropBorder
 } = storeToRefs(canvasStore);
 const selected = ref();
+import { TimeLineStore } from "~~/stores/timeline";
+const timeLineStore = TimeLineStore()
+const activatedSlide = timeLineStore.activeSlide.id
 
 let canvaswrapper: any;
 const flipx = ref(true);
@@ -173,7 +176,8 @@ watch(
 
 onMounted(() => {
   //@ts-ignore
-  const mycanvas = document.getElementById("mycanvas").fabric;
+  console.log(`mycanvas-${activatedSlide}`)
+  const mycanvas = document.getElementById(`mycanvas-${activatedSlide}`).fabric;
   fabricCanvas = mycanvas;
 
   canvaswrapper = canasWrapper.value;

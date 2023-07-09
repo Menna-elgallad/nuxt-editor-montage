@@ -22,11 +22,14 @@ import { useLocalStorageStore } from "~~/stores/assets";
 let fabricCanvas: any;
 let canvaswrapper: any;
 const backimg = ref([]);
+import { TimeLineStore } from "~~/stores/timeline";
+const timeLineStore = TimeLineStore()
+const activatedSlide = timeLineStore.activeSlide.id
 
 const imgInstance = ref();
 onMounted(() => {
   //@ts-ignore
-  const mycanvas = document.getElementById("mycanvas").fabric;;
+  const mycanvas = document.getElementById(`mycanvas-${activatedSlide}`).fabric;;
 
   fabricCanvas = mycanvas;
 

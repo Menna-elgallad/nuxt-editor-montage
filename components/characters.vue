@@ -35,28 +35,35 @@ const showbasics = ref(false);
 const mycolors = ["red", "green", "blue"];
 const canvasStore = useCanvas();
 const layerStore = useLayer();
+import { TimeLineStore } from "~~/stores/timeline";
+const timelineStore = TimeLineStore();
 const { canasWrapper, color } = storeToRefs(canvasStore);
+const timeLineStore = TimeLineStore()
+const activatedSlide = timeLineStore.activeSlide.id
 const emit = defineEmits(["selectProps"]);
 var tmpCanvasEl = fabric.util.createCanvasElement();
 let fabricCanvas: fabric.Canvas;
 let canvaswrapper: any;
-fabricCanvas = document.getElementById("mycanvas").fabric;
+console.log(document.getElementById(`mycanvas-${activatedSlide}`))
+fabricCanvas = document.getElementById(`mycanvas-${activatedSlide}`).fabric;
 canvaswrapper = canasWrapper.value;
 const uselottie = useLotte();
 
 function addjson(animation) {
+  fabricCanvas = document.getElementById(`mycanvas-${timeLineStore.activeSlide.id}`).fabric;
+  console.log(`mycanvas-${timeLineStore.activeSlide.id}`)
   const fabricImage = new uselottie(undefined, {
     scaleX: 0.4,
     scaleY: 0.4,
-    animationData: animation
+    animationData: animation,
     // id: Math.random()
   });
 
   fabricCanvas.add(fabricImage);
-  fabricImage.animate("angle", "+=45", {
-    onChange: fabricCanvas.renderAll.bind(fabricCanvas),
-    duration: 1000
-  });
+  // fabricImage.animate("angle", "+=45", {
+  //   onChange: fabricCanvas.renderAll.bind(fabricCanvas),
+  //   duration: 1000
+  // });
   fabricImage.on("mousedown", (ele: any) => {
     canvasStore.$patch({ selectedProp: ele.target });
     canvasStore.$patch({ selectedID: Math.random() });
@@ -105,10 +112,20 @@ function addjson(animation) {
         shirtcolor,
         skincolor,
         pantscolor,
-        lightcolor
-      ]
+        lightcolor,
+      ],
     });
     // Change the color of a shape in the animation data object
+  });
+  timelineStore.addlayerToActiveSlide({
+    element: fabricImage,
+    hidden: false,
+    name: "character",
+    opacity: 1,
+    type: "character",
+    locked: false,
+    timeToHide: 0,
+    timeToShow: 0,
   });
   fabricCanvas.renderAll();
   //   layerStore.$patch({
@@ -130,7 +147,7 @@ function addjson(animation) {
   // fabricImage.stop();
 }
 function rgbaToHex(rgba) {
-  const [r, g, b] = rgba.slice(0, 3).map(value => Math.round(value * 255));
+  const [r, g, b] = rgba.slice(0, 3).map((value) => Math.round(value * 255));
   return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
 }
 </script>

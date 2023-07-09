@@ -25,8 +25,11 @@ const fabricImage = ref();
 const hasCanvas = ref(false);
 const slideStore = useSlide();
 let canvas: fabric.Canvas;
+import { TimeLineStore } from "~~/stores/timeline";
+const timeLineStore = TimeLineStore()
+const activatedSlide = timeLineStore.activeSlide.id
 // onMounted(() => {
-//   canvas = document.getElementById("mycanvas").fabric;
+//   canvas = document.getElementById(`mycanvas-${activatedSlide}`).fabric;
 //   const newCanvas = Object.assign(
 //     Object.create(fabric.Canvas.prototype),
 //     canvas

@@ -35,9 +35,12 @@ const VideoUploaded = ref();
 const isVideo = ref(true);
 
 const srcsVid = ref<string[]>([]);
+  import { TimeLineStore } from "~~/stores/timeline";
+const timeLineStore = TimeLineStore()
+const activatedSlide = timeLineStore.activeSlide.id
 onMounted(() => {
   //@ts-ignore
-  const mycanvas = document.getElementById("mycanvas").fabric;
+  const mycanvas = document.getElementById(`mycanvas-${activatedSlide}`).fabric;
 
   fabricCanvas = mycanvas;
   srcsVid.value = getsrcsVideos;

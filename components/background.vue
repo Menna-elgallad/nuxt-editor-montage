@@ -60,10 +60,14 @@ const VideoUploaded = ref();
 const srcsVid = ref<string[]>([]);
 let fabricCanvas: any;
 let canvaswrapper: any;
+import { TimeLineStore } from "~~/stores/timeline";
+const timeLineStore = TimeLineStore()
+const activatedSlide = timeLineStore.activeSlide.id
 onMounted(() => {
   //@ts-ignore
-  const mycanvas = document.getElementById("mycanvas").fabric;
-  console.log(document.getElementById("mycanvas"));
+  
+  const mycanvas = document.getElementById(`mycanvas-${activatedSlide}`).fabric;
+  console.log(document.getElementById(`mycanvas-${activatedSlide}`).fabric);
 
   fabricCanvas = mycanvas;
   console.log(fabricCanvas);
@@ -71,7 +75,7 @@ onMounted(() => {
 });
 
 onActivated(() => {
-  console.log(">>>>>>>>", document.getElementById("mycanvas"));
+  console.log(">>>>>>>>", document.getElementById(`mycanvas-${activatedSlide}`).fabric);
 });
 
 if (srcsVid.value.length === 0) {

@@ -28,12 +28,15 @@ import { storeToRefs } from "pinia";
 import { useCanvas } from "~~/stores/canvas";
 import { useLayer } from "~~/stores/layer";
 import { fabric } from "fabric";
+import { TimeLineStore } from "~/stores/timeline";
 const canvasStore = useCanvas();
 const layerStore = useLayer();
 const { canasWrapper, selectedElement } = storeToRefs(canvasStore);
 let fabricCanvas: fabric.Canvas;
+const timeLineStore = TimeLineStore()
+const activatedSlide = timeLineStore.activeSlide.id
 onMounted(() => {
-  fabricCanvas = document.getElementById("mycanvas").fabric;
+  fabricCanvas = document.getElementById(`mycanvas-${activatedSlide}`).fabric;
 });
 const textData = ref({
   underline: false,
@@ -100,6 +103,7 @@ function newTextbox(
   text: string,
   font: string
 ) {
+  fabricCanvas = document.getElementById(`mycanvas-${timeLineStore.activeSlide.id}`).fabric;
   const id = String(Math.floor(100000 + Math.random() * 900000));
   const newText = new fabric.Textbox(text, {
     left: fabricCanvas.getWidth() / 2,
@@ -156,7 +160,16 @@ function newTextbox(
       },
     ],
   });
-  console.log(layerStore.layers);
+  timeLineStore.addlayerToActiveSlide({
+    element: newText,
+    hidden: false,
+    name: "text",
+    opacity: 1,
+    type: "text",
+    locked: false,
+    timeToHide: 0,
+    timeToShow: 0,
+  });
   // state.layers.push({
   //   id: `text_${id}`,
   //   object: newText,

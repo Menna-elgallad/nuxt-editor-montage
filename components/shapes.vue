@@ -18,7 +18,6 @@
 
 import { useCanvas } from "~~/stores/canvas";
 import { fabric } from "fabric";
-
 const canvasStore = useCanvas();
 const emit = defineEmits(["selectprop"]);
 const showbasics = ref(false);
@@ -32,15 +31,19 @@ const shapes = [
   { icon: "material-symbols:favorite-outline", type: "heart" }
 ];
 let fabricCanvas: any;
+import { TimeLineStore } from "~~/stores/timeline";
+const timeLineStore = TimeLineStore()
+const activatedSlide = timeLineStore.activeSlide.id
 
 onMounted(() => {
   //@ts-ignore
-  const mycanvas = document.getElementById("mycanvas").fabric;
+  const mycanvas = document.getElementById(`mycanvas-${activatedSlide}`).fabric;
   fabricCanvas = mycanvas;
 
   //   canvaswrapper = canasWrapper.value;
 });
 function addshape(type: any) {
+  fabricCanvas = document.getElementById(`mycanvas-${timeLineStore.activeSlide.id}`).fabric;
   let shape;
   switch (type) {
     case "circle":
@@ -167,6 +170,17 @@ function addshape(type: any) {
     canvasStore.$patch({ selectedPropColor: shape.fill });
     canvasStore.$patch({ selectedPropBorder: shape.stroke });
     // Change the color of a shape in the animation data object
+  });
+
+  timelineStore.addlayerToActiveSlide({
+    element: shape,
+    hidden: false,
+    name: "shape",
+    opacity: 1,
+    type: "shape",
+    locked: false,
+    timeToHide: 0,
+    timeToShow: 0,
   });
 }
 </script>

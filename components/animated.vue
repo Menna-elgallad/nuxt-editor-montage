@@ -28,7 +28,6 @@ import { useCanvas } from "~~/stores/canvas";
 import { useLayer } from "~~/stores/layer";
 import { fabric } from "fabric";
 import lottie from "lottie-web";
-
 const showbasics = ref(false);
 // import { emit } from "process";
 const mycolors = ["red", "green", "blue"];
@@ -39,7 +38,10 @@ const emit = defineEmits(["selectProps"]);
 
 let fabricCanvas: fabric.Canvas;
 let canvaswrapper: any;
-fabricCanvas = document.getElementById("mycanvas").fabric;
+import { TimeLineStore } from "~~/stores/timeline";
+const timeLineStore = TimeLineStore()
+const activatedSlide = timeLineStore.activeSlide.id
+fabricCanvas = document.getElementById(`mycanvas-${activatedSlide}`).fabric;
 canvaswrapper = canasWrapper.value;
 const uselottie = useLotte();
 
