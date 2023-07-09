@@ -69,7 +69,6 @@ function addSlide() {
   const container = document.querySelector(".canvasElement");
   const canvas = document.createElement("canvas");
   canvas.style.display = "none";
-  canvas.style.zIndex = "1";
   canvas.id = `mycanvas-${timeLineStore.slides.length + 1}`;
   container?.appendChild(canvas);
   const screenWidth = window.innerWidth;
@@ -87,6 +86,8 @@ function addSlide() {
     strokeWidth: 5,
     hasControls: true,
   });
+
+  canvas.parentNode.style.setProperty("display", 'none')
 
   canvas.fabric = fabricCanvas;
 

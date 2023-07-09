@@ -14,13 +14,15 @@ export const TimeLineStore = defineStore("timeLine", {
   actions: {
     activateSlide(id: number) {
       this.slides.forEach((slide) => {
-        console.log(slide.id)
+        console.log(slide.id);
         const display = slide.id === id ? "block" : "none";
-        if (document.getElementById(`mycanvas-${slide.id}`)?.style.display) {
-          document
-            .getElementById(`mycanvas-${slide.id}`)
-            .style.setProperty("display", display);
-        }
+        const parent = document.getElementById(`mycanvas-${slide.id}`)
+          ?.parentNode as HTMLElement;
+        document
+          .getElementById(`mycanvas-${slide.id}`)
+          .style.setProperty("display", display);
+        parent.style.setProperty("display", display);
+        parent.getElementsByClassName("upper-canvas")[0].style.setProperty("display", display);
       });
       this.slides = this.slides.map((slide) => ({
         ...slide,
