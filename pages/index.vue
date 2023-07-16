@@ -3,7 +3,6 @@
   //- animationBack.showMenuProp
   menubackground.showMenuBack(v-if="didMounted" :tools="topTools" :key="topTools")
   .main.flex.gap-2.justify-content-between  
-    slides(@click="releaseControls()" v-if="didMounted")
     .dashboard(@click="releaseControls()")
   
       .canvasElement(@click="focus")

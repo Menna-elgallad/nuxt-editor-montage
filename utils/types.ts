@@ -7,11 +7,14 @@ export interface Layer {
   opacity: number;
   timeToShow: number;
   timeToHide: number;
+  width? : number;
+  startPosition?:number;
+  endPosition?:number
 }
 
 export interface Slide {
   layers: Layer[];
   isActive: boolean;
-  length: number;
+  width: number;
   id: number;
 }

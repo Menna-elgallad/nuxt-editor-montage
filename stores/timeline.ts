@@ -3,7 +3,7 @@ import { Layer, Slide } from "../utils/types";
 export const TimeLineStore = defineStore("timeLine", {
   state: () => ({
     slides: [
-      { layers: [] as Layer[], id: 1, isActive: true, length: 10 },
+      { layers: [] as Layer[], id: 1, isActive: true, width: 10 },
     ] as Slide[],
   }),
   getters: {
@@ -22,7 +22,9 @@ export const TimeLineStore = defineStore("timeLine", {
           .getElementById(`mycanvas-${slide.id}`)
           .style.setProperty("display", display);
         parent.style.setProperty("display", display);
-        parent.getElementsByClassName("upper-canvas")[0].style.setProperty("display", display);
+        parent
+          .getElementsByClassName("upper-canvas")[0]
+          .style.setProperty("display", display);
       });
       this.slides = this.slides.map((slide) => ({
         ...slide,
@@ -30,12 +32,23 @@ export const TimeLineStore = defineStore("timeLine", {
       }));
     },
     addlayerToActiveSlide(layer: Layer) {
-      console.log(this.slides);
       this.slides.map((slide) => ({
         ...slide,
-        layers: slide.isActive ? slide.layers.push(layer) : slide.layers,
+        layers: slide.isActive
+          ? slide.layers.push({ ...layer, width: layer?.width || slide.width })
+          : slide.layers,
       }));
-      console.log(this.slides);
+    },
+    changeActiveWidth(width: number | string) {
+      if (isNaN(parseInt(String(width))))
+        throw new Error("provided width is not number");
+      this.slides.map((slide) => ({
+        ...slide,
+        width: slide.isActive ? +width : slide.width,
+        layers: slide.layers.map((s) => ({
+          width: s?.width ? (s?.width > +width ? +width : s?.width) : 0,
+        })),
+      }));
     },
   },
 });
