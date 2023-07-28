@@ -4,9 +4,7 @@
   menubackground.showMenuBack(v-if="didMounted" :tools="topTools" :key="topTools")
   .main.flex.gap-2.justify-content-between  
     .dashboard(@click="releaseControls()")
-  
       .canvasElement(@click="focus")
-
         canvas#mycanvas-1(ref="canvasRef" )
       timeline(@drag="dragObjectProps" @follow-cursor="followCursor" @hide-seekbar="hideSeekbar" @seek="seek") 
     sidetools(v-if="didMounted" @click="releaseControls()")   

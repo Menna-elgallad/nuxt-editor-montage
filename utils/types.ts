@@ -17,4 +17,6 @@ export interface Slide {
   isActive: boolean;
   width: number;
   id: number;
+  x1?:number;
+  x2?:number;
 }
