@@ -182,6 +182,7 @@ function addshape(type: any) {
     locked: false,
     timeToHide: 0,
     timeToShow: 0,
+    startPosition : 0
   });
 }
 </script>

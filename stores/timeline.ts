@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { Layer, Slide } from "../utils/types";
+import { fabric } from "fabric";
 export const TimeLineStore = defineStore("timeLine", {
   state: () => ({
     slides: [
@@ -10,6 +11,7 @@ export const TimeLineStore = defineStore("timeLine", {
       width: 0,
       run: false,
     } as { slideId: number; width: number; run: boolean },
+    interval: null as any,
   }),
   getters: {
     activeSlide: (state) => {
@@ -56,6 +58,21 @@ export const TimeLineStore = defineStore("timeLine", {
           : slide.layers,
       }));
     },
+    setUnActiveLayers(canvas: fabric.Canvas) {
+      const activeSlide = this.activeSlide;
+      activeSlide.layers.forEach((layer) => {
+        if (
+          layer.width + layer.startPosition + this.totalWidth(activeSlide.id) <=
+          this.cursor.width
+        ) {
+          layer.element.visible = false;
+          canvas.renderAll();
+        } else {
+          layer.element.visible = true;
+          canvas.renderAll();
+        }
+      });
+    },
     changeActiveWidth(
       width: number | string,
       isSlide: boolean = false,
@@ -96,18 +113,20 @@ export const TimeLineStore = defineStore("timeLine", {
         this.activateSlide(this.activeSlide.id + 1);
       }
     },
-    run() {
-      console.log(this.cursor.width);
-      this.cursor.width === 0 &&
-        setInterval(() => {
-          if (this.cursor.width === this.totalWidth() - 13) {
-            this.cursor.width = 0;
-            this.activateSlide(1);
-            return;
-          }
-          this.cursor.width += this.cursor.run ? 1 : 0;
-          this.changeActiveOnCursor(this.cursor.width);
-        }, 50);
+    run(canvas: fabric.Canvas) {
+      !this.cursor.run && clearInterval(this.interval);
+      this.interval = this.cursor.run
+        ? setInterval(() => {
+            if (this.cursor.width === this.totalWidth() - 13) {
+              this.cursor.width = 0;
+              this.activateSlide(1);
+              return;
+            }
+            this.setUnActiveLayers(canvas);
+            this.cursor.width += this.cursor.run ? 1 : 0;
+            this.changeActiveOnCursor(this.cursor.width);
+          }, 50)
+        : null;
     },
   },
 });

@@ -1,5 +1,5 @@
 export interface Layer {
-  id?:number;
+  id?: number;
   element: any;
   name: string;
   type: string;
@@ -8,9 +8,9 @@ export interface Layer {
   opacity: number;
   timeToShow: number;
   timeToHide: number;
-  width? : number;
-  startPosition?:number;
-  endPosition?:number
+  width: number;
+  startPosition: number;
+  endPosition?: number;
 }
 
 export interface Slide {
@@ -18,6 +18,6 @@ export interface Slide {
   isActive: boolean;
   width: number;
   id: number;
-  x1?:number;
-  x2?:number;
+  x1?: number;
+  x2?: number;
 }

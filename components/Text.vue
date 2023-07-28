@@ -33,8 +33,8 @@ const canvasStore = useCanvas();
 const layerStore = useLayer();
 const { canasWrapper, selectedElement } = storeToRefs(canvasStore);
 let fabricCanvas: fabric.Canvas;
-const timeLineStore = TimeLineStore()
-const activatedSlide = timeLineStore.activeSlide.id
+const timeLineStore = TimeLineStore();
+const activatedSlide = timeLineStore.activeSlide.id;
 onMounted(() => {
   fabricCanvas = document.getElementById(`mycanvas-${activatedSlide}`).fabric;
 });
@@ -103,7 +103,9 @@ function newTextbox(
   text: string,
   font: string
 ) {
-  fabricCanvas = document.getElementById(`mycanvas-${timeLineStore.activeSlide.id}`).fabric;
+  fabricCanvas = document.getElementById(
+    `mycanvas-${timeLineStore.activeSlide.id}`
+  ).fabric;
   const id = String(Math.floor(100000 + Math.random() * 900000));
   const newText = new fabric.Textbox(text, {
     left: fabricCanvas.getWidth() / 2,
@@ -165,11 +167,12 @@ function newTextbox(
     hidden: false,
     name: "text",
     opacity: 1,
-    width:200,
+    width: 200,
     type: "text",
     locked: false,
     timeToHide: 0,
     timeToShow: 0,
+    startPosition: 0,
   });
   // state.layers.push({
   //   id: `text_${id}`,

@@ -127,6 +127,7 @@ function addjson(animation) {
     locked: false,
     timeToHide: 0,
     timeToShow: 0,
+    startPosition : 0
   });
   fabricCanvas.renderAll();
   //   layerStore.$patch({
