@@ -1,4 +1,5 @@
 export interface Layer {
+  id?:number;
   element: any;
   name: string;
   type: string;

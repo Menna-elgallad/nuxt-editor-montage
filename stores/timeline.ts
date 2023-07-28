@@ -39,7 +39,8 @@ export const TimeLineStore = defineStore("timeLine", {
     totalWidth(id?: number) {
       let sum = 0;
       this.slides.forEach(
-        (slid) => (sum += id ? (slid.id <= id - 1 ? slid.width : 0) :slid.width)
+        (slid) =>
+          (sum += id ? (slid.id <= id - 1 ? slid.width : 0) : slid.width)
       );
       return sum;
     },
@@ -47,38 +48,61 @@ export const TimeLineStore = defineStore("timeLine", {
       this.slides.map((slide) => ({
         ...slide,
         layers: slide.isActive
-          ? slide.layers.push({ ...layer, width: layer?.width || slide.width })
+          ? slide.layers.push({
+              ...layer,
+              width: layer?.width || slide.width,
+              id: slide.layers.length + 1,
+            })
           : slide.layers,
       }));
     },
-    changeActiveWidth(width: number | string) {
+    changeActiveWidth(
+      width: number | string,
+      isSlide: boolean = false,
+      slideId?: number
+    ) {
       if (isNaN(parseInt(String(width))))
         throw new Error("provided width is not number");
+
       this.$patch({
         slides: this.slides.map((slide) => ({
           ...slide,
-          width: slide.isActive ? +width : slide.width,
-          layers: slide.isActive ? slide.layers.map((s) => ({
-            ...s,
-            width: s?.width ? (s?.width > +width ? +width : s?.width) : +width,
-          })) : slide.layers,
+          width: slide.isActive && !isSlide ? +width : slide.width,
+          layers: slide.isActive
+            ? !isSlide
+              ? slide.layers.map((s) => ({
+                  ...s,
+                  width: s?.width
+                    ? s?.width > +width
+                      ? +width
+                      : s?.width
+                    : +width,
+                }))
+              : slide.layers.map((s) => ({
+                  ...s,
+                  width:
+                    +slideId === s.id && +width <= slide.width
+                      ? +width
+                      : s.width,
+                }))
+            : slide.layers,
         })),
       });
     },
     changeActiveOnCursor(cursorWidth: number) {
       const nextFullWidth = this.totalWidth(this.activeSlide.id + 1);
-      if (cursorWidth >= nextFullWidth && nextFullWidth < this.totalWidth()){
-        this.cursor.width += 13
+      if (cursorWidth >= nextFullWidth && nextFullWidth < this.totalWidth()) {
+        this.cursor.width += 13;
         this.activateSlide(this.activeSlide.id + 1);
       }
     },
     run() {
-      console.log(this.cursor.width)
+      console.log(this.cursor.width);
       this.cursor.width === 0 &&
         setInterval(() => {
-          if (this.cursor.width === this.totalWidth() -13) {
+          if (this.cursor.width === this.totalWidth() - 13) {
             this.cursor.width = 0;
-            this.activateSlide(1)
+            this.activateSlide(1);
             return;
           }
           this.cursor.width += this.cursor.run ? 1 : 0;

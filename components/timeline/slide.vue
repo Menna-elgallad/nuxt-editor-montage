@@ -4,7 +4,7 @@
     .timeline-slide.relative(:class="{isActive : slide.isActive}")
       .curser.absolute(v-if="timeLineStore.cursor.slideId === slide.id" :style="{'left' : timeLineStore.cursor.width + 'px'}")
       .slide-shape
-    .slideLayer(v-for="layer in slide.layers" :style="{'width' : layer.width + 'px'}") 
+    .slideLayer(v-for="layer in slide.layers" :style="{'width' : layer.width + 'px'}" :id="'slide-shape-' + layer.id") 
       .slide-item {{ layer?.name }}
 
 

@@ -28,7 +28,8 @@ export const useResize = (
     }
     current_width = box.style.width;
     box.style.width = new_width + "px";
-    timeLineStore.changeActiveWidth(new_width);
+    const slideId = box.id.split("slide-shape-")[1];
+    timeLineStore.changeActiveWidth(new_width, !!slideId, slideId);
     if ((new_width = e.clientX - box.offsetLeft - 9) >= boxAminWidth) {
     }
   });
