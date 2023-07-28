@@ -65,11 +65,20 @@ export const TimeLineStore = defineStore("timeLine", {
           layer.width + layer.startPosition + this.totalWidth(activeSlide.id) <=
           this.cursor.width
         ) {
+          console.log("enered");
           layer.element.visible = false;
-          canvas.renderAll();
+          console.log(`mycanvas-${activeSlide.id}`);
+          const fabricCanvas = document.getElementById(
+            `mycanvas-${activeSlide.id}`
+          )?.fabric;
+          fabricCanvas?.renderAll();
         } else {
+          console.log(`mycanvas-${activeSlide.id}`);
           layer.element.visible = true;
-          canvas.renderAll();
+          const fabricCanvas = document.getElementById(
+            `mycanvas-${activeSlide.id}`
+          )?.fabric;
+          fabricCanvas?.renderAll();
         }
       });
     },

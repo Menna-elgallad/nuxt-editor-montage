@@ -118,7 +118,7 @@ onMounted(() => {
 
 function runTimeLine(run : boolean){
   timeLineStore.$patch({cursor : {...timeLineStore.cursor , run}})
-  timeLineStore.run(fabricCanvas)
+  timeLineStore.run()
 }
 
 const updateLayerVisibility = () => {
