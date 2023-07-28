@@ -6,7 +6,8 @@
     .dashboard(@click="releaseControls()")
       .canvasElement(@click="focus")
         canvas#mycanvas-1(ref="canvasRef" )
-      timeline(@drag="dragObjectProps" @follow-cursor="followCursor" @hide-seekbar="hideSeekbar" @seek="seek") 
+      button.run-btn.pi(@click="runTimeLine(!timeLineStore.cursor.run)" :class="[timeLineStore.cursor.run ? 'pi-pause' : 'pi-play']")
+      timeline(@follow-cursor="followCursor" @hide-seekbar="hideSeekbar" @seek="seek")
     sidetools(v-if="didMounted" @click="releaseControls()")   
     
           
@@ -115,47 +116,10 @@ onMounted(() => {
   });
 });
 
-const dragObjectProps = ({ offsetX }: MouseEvent, layer: any) => {
-  if (!paused.value) {
-    return;
-  }
-  let action = "dragging";
-  const layerWidth = layer.duration / 10 - layer.endTrim - layer.startTrim;
-  if (offsetX <= 7) {
-    action = "trimLeft";
-  } else if (offsetX >= layerWidth - 7) {
-    action = "trimRight";
-  }
-  const dragging = ({ pageX }: MouseEvent) => {
-    const offset = pageX - DRAWER_WIDTH;
-    if (action === "dragging") {
-      state.dragging = true;
-      state.seeking = false;
-      if (offset - 50 >= 0) {
-        layer.offset = offset - 50;
-      }
-    } else if (action === "trimLeft") {
-      const res = offset - layer.offset;
-      if (res >= 0 && res < layerWidth) {
-        layer.startTrim = res;
-      }
-    } else if (action === "trimRight") {
-      const res = Math.abs(offset - layer.offset - layerWidth);
-      if (res <= layerWidth) {
-        layer.endTrim = Math.abs(res);
-      }
-    }
-  };
-  const released = () => {
-    state.dragging = false;
-    state.seeking = true;
-    document.removeEventListener("mousemove", dragging);
-    document.removeEventListener("mouseup", released);
-    updateLayerVisibility();
-  };
-  document.addEventListener("mouseup", released);
-  document.addEventListener("mousemove", dragging);
-};
+function runTimeLine(run : boolean){
+  timeLineStore.$patch({cursor : {...timeLineStore.cursor , run}})
+  timeLineStore.run()
+}
 
 const updateLayerVisibility = () => {
   // @ts-ignore
@@ -265,6 +229,14 @@ function releaseControls() {
         var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
     }
   }
+}
+.run-btn{
+  border: none;
+  background-color: transparent;
+  color : #5156F6;
+  font-size: 30px;
+  padding: 20px;
+  cursor: pointer;
 }
 // .showMenuBack {
 //   position: absolute;

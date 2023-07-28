@@ -165,6 +165,7 @@ function newTextbox(
     hidden: false,
     name: "text",
     opacity: 1,
+    width:200,
     type: "text",
     locked: false,
     timeToHide: 0,

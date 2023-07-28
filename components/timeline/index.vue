@@ -4,7 +4,7 @@
   .layers
     timelineSlide(v-for="slide in timeLineStore.slides" :slide="slide" @click="activateSlide(slide)" :id="slide.id")
     .addSlide(@click="addSlide") Add Slide
-    .addSlide(@click="runTimeLine(!timeLineStore.cursor.run)") Run
+
     //- .layer 
     //-   .layer-name(v-if="layerStore?.layers.length > 0" v-for="(layer, index) in layerStore.layers" :key="index" :style="{'background-color': index % 2 == 0 ? '#e9ecef' : '#fff'}")
     //-     .image-cont.flex
@@ -59,10 +59,6 @@ console.log(timeLineStore.slides);
 // }
 function turnHidden(value: boolean, index: number) {
   layerStore.layers[index].hidden = value;
-}
-function runTimeLine(run : boolean){
-  timeLineStore.$patch({cursor : {...timeLineStore.cursor , run}})
-  timeLineStore.run()
 }
 // const fabricCanvas: fabric.Canvas = ref({});
 // onMounted(() => {

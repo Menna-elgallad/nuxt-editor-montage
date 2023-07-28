@@ -177,6 +177,7 @@ function addshape(type: any) {
     hidden: false,
     name: "shape",
     opacity: 1,
+    width:200,
     type: "shape",
     locked: false,
     timeToHide: 0,

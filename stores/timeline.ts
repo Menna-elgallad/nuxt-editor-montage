@@ -58,9 +58,10 @@ export const TimeLineStore = defineStore("timeLine", {
         slides: this.slides.map((slide) => ({
           ...slide,
           width: slide.isActive ? +width : slide.width,
-          layers: slide.layers.map((s) => ({
-            width: s?.width ? (s?.width > +width ? +width : s?.width) : 0,
-          })),
+          layers: slide.isActive ? slide.layers.map((s) => ({
+            ...s,
+            width: s?.width ? (s?.width > +width ? +width : s?.width) : +width,
+          })) : slide.layers,
         })),
       });
     },

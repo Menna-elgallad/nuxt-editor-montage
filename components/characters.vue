@@ -123,6 +123,7 @@ function addjson(animation) {
     name: "character",
     opacity: 1,
     type: "character",
+    width:200,
     locked: false,
     timeToHide: 0,
     timeToShow: 0,
