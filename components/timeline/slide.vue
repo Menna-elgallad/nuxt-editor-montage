@@ -4,6 +4,7 @@
     .timeline-slide.relative(:class="{isActive : slide.isActive}")
       .curser.absolute(v-if="timeLineStore.cursor.slideId === slide.id" :style="{'left' : timeLineStore.cursor.width + 'px'}")
       .slide-shape
+      .slideTime.absolute.flex.justify-content-center.align-items-center {{slide.width / 20}}s 
     .slideLayer(v-for="layer in slide.layers" :style="{'width' : layer.width + 'px'}" :id="'slide-shape-' + layer.id") 
       .slide-item {{ layer?.name }}
 
@@ -55,6 +56,7 @@ useResize("slide-item");
   display: flex;
   justify-content: space-between;
   align-items: center;
+  min-height:35px ;
   &::after,
   &::before {
     content: "";
@@ -66,6 +68,17 @@ useResize("slide-item");
   &::after {
     height: 100%;
   }
+}
+.slideTime {
+  background-color: #c6c7ef;
+  color: white;
+  bottom: 5px;
+  left: 7px;
+  border-radius: 7px;
+  width: 39px;
+  height: 20px;
+  text-align: center;
+  font-size: 10px;
 }
 .timeline-slide {
   width: 200px;

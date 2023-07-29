@@ -235,7 +235,7 @@ function releaseControls() {
   background-color: transparent;
   color : #5156F6;
   font-size: 30px;
-  padding: 20px;
+  padding-top: 10px;
   cursor: pointer;
 }
 // .showMenuBack {

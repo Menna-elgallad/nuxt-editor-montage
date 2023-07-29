@@ -1,9 +1,10 @@
 <template lang="pug">
 
-.timeline.flex
+.timeline.flex.relative
   .layers
     timelineSlide(v-for="slide in timeLineStore.slides" :slide="slide" @click="activateSlide(slide)" :id="slide.id")
     .addSlide(@click="addSlide") Add Slide
+  span.totalTime {{(timeLineStore.cursor.width/20).toFixed(2)}}/{{timeLineStore.totalWidth()/20}}
 
     //- .layer 
     //-   .layer-name(v-if="layerStore?.layers.length > 0" v-for="(layer, index) in layerStore.layers" :key="index" :style="{'background-color': index % 2 == 0 ? '#e9ecef' : '#fff'}")
@@ -88,7 +89,7 @@ function addSlide() {
     hasControls: true,
   });
 
-  canvas.parentNode.style.setProperty("display", 'none')
+  canvas.parentNode.style.setProperty("display", "none");
 
   canvas.fabric = fabricCanvas;
 
@@ -132,13 +133,15 @@ function activateSlide(slide: any) {
 .cont {
   flex: 0.2;
 }
-
+.timeline{
+  max-height: 10vh;
+}
 .addSlide {
   border-radius: 23px;
   border: 2px dashed #c6c7ef;
   background: #f2f3ff;
   width: 141px;
-  height: 131px;
+  height: 100%;
   flex-shrink: 0;
   text-align: center;
   display: flex;
@@ -148,9 +151,23 @@ function activateSlide(slide: any) {
 }
 .layers {
   flex: 0.8;
-  overflow: hidden;
+  overflow: scroll;
   height: 100%;
   display: flex;
+  &::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: #0d3c61;
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: #5156f6;
+  }
   .layer {
     display: flex;
     flex-direction: column;
@@ -223,7 +240,7 @@ function activateSlide(slide: any) {
   max-width: 100%;
   width: 100%;
   overflow-x: hidden;
-  height: 28vh;
+  flex: 0.3;
   padding: 1rem;
   background-color: white;
   .time {
@@ -257,5 +274,11 @@ function activateSlide(slide: any) {
     position: relative;
     border-bottom: 1px solid #0d3c61;
   }
+}
+.totalTime {
+  color: #5156f6;
+  position: absolute;
+  bottom: 10px;
+  right: 13px;
 }
 </style>

@@ -58,7 +58,7 @@ export const TimeLineStore = defineStore("timeLine", {
           : slide.layers,
       }));
     },
-    setUnActiveLayers(canvas: fabric.Canvas) {
+    setUnActiveLayers() {
       const activeSlide = this.activeSlide;
       activeSlide.layers.forEach((layer) => {
         if (
@@ -67,13 +67,11 @@ export const TimeLineStore = defineStore("timeLine", {
         ) {
           console.log("enered");
           layer.element.visible = false;
-          console.log(`mycanvas-${activeSlide.id}`);
           const fabricCanvas = document.getElementById(
             `mycanvas-${activeSlide.id}`
           )?.fabric;
           fabricCanvas?.renderAll();
         } else {
-          console.log(`mycanvas-${activeSlide.id}`);
           layer.element.visible = true;
           const fabricCanvas = document.getElementById(
             `mycanvas-${activeSlide.id}`
@@ -122,7 +120,7 @@ export const TimeLineStore = defineStore("timeLine", {
         this.activateSlide(this.activeSlide.id + 1);
       }
     },
-    run(canvas: fabric.Canvas) {
+    run() {
       !this.cursor.run && clearInterval(this.interval);
       this.interval = this.cursor.run
         ? setInterval(() => {
@@ -131,7 +129,7 @@ export const TimeLineStore = defineStore("timeLine", {
               this.activateSlide(1);
               return;
             }
-            this.setUnActiveLayers(canvas);
+            this.setUnActiveLayers();
             this.cursor.width += this.cursor.run ? 1 : 0;
             this.changeActiveOnCursor(this.cursor.width);
           }, 50)
