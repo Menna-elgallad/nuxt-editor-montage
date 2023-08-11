@@ -9,10 +9,11 @@
     //-         h5(class=" text-black-alpha-50 mt-2 text-center") Emojis
     ClientOnly
         .row()
-            .col-lg-6: lottie-player( hover style="width:100px" :src="anima1" @click="addjson(anima1)" disableShadowDom)
-            .col-lg-6: lottie-player( hover style="width:100px" :src="anima2" @click="addjson(anima2)" disableShadowDom )
-            .col-lg-6: lottie-player( hover style="width:100px" :src="anima3" @click="addjson(anima3)" disableShadowDom )
-            .col-lg-6: lottie-player( hover style="width:100px" :src="anima4" @click="addjson(anima4)" disableShadowDom )
+            .col-lg-6: lottie-player( hover  :src="anima1" @click="addjson(anima1)" disableShadowDom)
+            .col-lg-6: lottie-player( hover  :src="anima2" @click="addjson(anima2)" disableShadowDom )
+            .col-lg-6: lottie-player( hover  :src="anima3" @click="addjson(anima3)" disableShadowDom )
+            .col-lg-6: lottie-player( hover  :src="anima4" @click="addjson(anima4)" disableShadowDom )
+            .col-lg-6: lottie-player( hover  :src="anima5" @click="addjson(anima5)" disableShadowDom )
         
 </template>
 
@@ -22,6 +23,7 @@ import anima2 from "../assets/characters/character_presenting_male_V1.json";
 import anima3 from "../assets/characters/character_sad_male_V1.json";
 // import anima4 from "../assets/characters/character_confused.json";
 import anima4 from "../assets/characters/character_Selfie_male_V1.json";
+import anima5 from "../assets/characters/character_sad_male_V1_poloshirt.json";
 
 import useLotte from "~~/composables/useLottie";
 import { storeToRefs } from "pinia";
@@ -38,24 +40,26 @@ const layerStore = useLayer();
 import { TimeLineStore } from "~~/stores/timeline";
 const timelineStore = TimeLineStore();
 const { canasWrapper, color } = storeToRefs(canvasStore);
-const timeLineStore = TimeLineStore()
-const activatedSlide = timeLineStore.activeSlide.id
+const timeLineStore = TimeLineStore();
+const activatedSlide = timeLineStore.activeSlide.id;
 const emit = defineEmits(["selectProps"]);
 var tmpCanvasEl = fabric.util.createCanvasElement();
 let fabricCanvas: fabric.Canvas;
 let canvaswrapper: any;
-console.log(document.getElementById(`mycanvas-${activatedSlide}`))
+console.log(document.getElementById(`mycanvas-${activatedSlide}`));
 fabricCanvas = document.getElementById(`mycanvas-${activatedSlide}`).fabric;
 canvaswrapper = canasWrapper.value;
 const uselottie = useLotte();
 
 function addjson(animation) {
-  fabricCanvas = document.getElementById(`mycanvas-${timeLineStore.activeSlide.id}`).fabric;
-  console.log(`mycanvas-${timeLineStore.activeSlide.id}`)
+  fabricCanvas = document.getElementById(
+    `mycanvas-${timeLineStore.activeSlide.id}`
+  ).fabric;
+  console.log(`mycanvas-${timeLineStore.activeSlide.id}`);
   const fabricImage = new uselottie(undefined, {
     scaleX: 0.4,
     scaleY: 0.4,
-    animationData: animation,
+    animationData: animation
     // id: Math.random()
   });
 
@@ -112,8 +116,8 @@ function addjson(animation) {
         shirtcolor,
         skincolor,
         pantscolor,
-        lightcolor,
-      ],
+        lightcolor
+      ]
     });
     // Change the color of a shape in the animation data object
   });
@@ -123,11 +127,11 @@ function addjson(animation) {
     name: "character",
     opacity: 1,
     type: "character",
-    width:200,
+    width: 200,
     locked: false,
     timeToHide: 0,
     timeToShow: 0,
-    startPosition : 0
+    startPosition: 0
   });
   fabricCanvas.renderAll();
   //   layerStore.$patch({
@@ -149,7 +153,7 @@ function addjson(animation) {
   // fabricImage.stop();
 }
 function rgbaToHex(rgba) {
-  const [r, g, b] = rgba.slice(0, 3).map((value) => Math.round(value * 255));
+  const [r, g, b] = rgba.slice(0, 3).map(value => Math.round(value * 255));
   return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
 }
 </script>

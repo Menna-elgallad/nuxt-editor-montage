@@ -1,6 +1,6 @@
 <template lang="pug">
 
-.timeline.flex.relative
+.timeline.relative
   .layers
     timelineSlide(v-for="slide in timeLineStore.slides" :slide="slide" @click="activateSlide(slide)" :id="slide.id")
     .addSlide(@click="addSlide") Add Slide
@@ -52,7 +52,7 @@ const colors = [
   "#ffeb3b",
   "#ffc107",
   "#ff9800",
-  "#ff5722",
+  "#ff5722"
 ];
 console.log(timeLineStore.slides);
 // function randomColor() {
@@ -86,7 +86,7 @@ function addSlide() {
     backgroundColorAlpha: 0,
     borderColor: "black",
     strokeWidth: 5,
-    hasControls: true,
+    hasControls: true
   });
 
   canvas.parentNode.style.setProperty("display", "none");
@@ -98,7 +98,7 @@ function addSlide() {
     layers: [],
     id: +timeLineStore.slides.length + 1,
     isActive: false,
-    width: 200,
+    width: 200
   });
 }
 
@@ -133,15 +133,15 @@ function activateSlide(slide: any) {
 .cont {
   flex: 0.2;
 }
-.timeline{
-  max-height: 10vh;
+.timeline {
+  // max-height: 10vh;
 }
 .addSlide {
   border-radius: 23px;
   border: 2px dashed #c6c7ef;
   background: #f2f3ff;
   width: 141px;
-  height: 100%;
+  // height: 100%;
   flex-shrink: 0;
   text-align: center;
   display: flex;
@@ -150,10 +150,12 @@ function activateSlide(slide: any) {
   cursor: pointer;
 }
 .layers {
-  flex: 0.8;
+  // flex: 0.8;
   overflow: scroll;
   height: 100%;
   display: flex;
+  max-height: 170px;
+
   &::-webkit-scrollbar {
     width: 7px;
     height: 7px;
@@ -239,9 +241,13 @@ function activateSlide(slide: any) {
   margin-top: 1rem;
   max-width: 100%;
   width: 100%;
+  border-radius: 15px;
+  // height: 62%;
+  /* display: flex !important; */
+  justify-content: center;
   overflow-x: hidden;
   flex: 0.3;
-  padding: 1rem;
+  padding: 0 0.3rem;
   background-color: white;
   .time {
     width: 100%;

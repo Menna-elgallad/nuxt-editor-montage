@@ -3,11 +3,13 @@
   //- animationBack.showMenuProp
   menubackground.showMenuBack(v-if="didMounted" :tools="topTools" :key="topTools")
   .main.flex.gap-2.justify-content-between  
-    .dashboard(@click="releaseControls()")
-      .canvasElement(@click="focus")
+    .dashboard(@click="releaseControls()" )
+      .canvasElement(@click="focus" )
         canvas#mycanvas-1(ref="canvasRef" )
-      button.run-btn.pi(@click="runTimeLine(!timeLineStore.cursor.run)" :class="[timeLineStore.cursor.run ? 'pi-pause' : 'pi-play']")
-      timeline(@follow-cursor="followCursor" @hide-seekbar="hideSeekbar" @seek="seek")
+      .timeline-index 
+
+          button.run-btn.pi(@click="runTimeLine(!timeLineStore.cursor.run)" :class="[timeLineStore.cursor.run ? 'pi-pause' : 'pi-play']")
+          timeline(@follow-cursor="followCursor" @hide-seekbar="hideSeekbar" @seek="seek" class="p-2")
     sidetools(v-if="didMounted" @click="releaseControls()")   
     
           
@@ -85,7 +87,7 @@ onMounted(() => {
     backgroundColorAlpha: 0,
     borderColor: "black",
     strokeWidth: 5,
-    hasControls: true,
+    hasControls: true
   });
 
   //@ts-ignore
@@ -106,19 +108,19 @@ onMounted(() => {
 
   fabricCanvas.set({
     borderColor: "black",
-    strokeWidth: 5,
+    strokeWidth: 5
   });
 
   // fabricCanvas.add(imgInstance);
   slideStore.canvasSlides.push({
     fabric: fabricCanvas,
-    slideNumber: 0,
+    slideNumber: 0
   });
 });
 
-function runTimeLine(run : boolean){
-  timeLineStore.$patch({cursor : {...timeLineStore.cursor , run}})
-  timeLineStore.run()
+function runTimeLine(run: boolean) {
+  timeLineStore.$patch({ cursor: { ...timeLineStore.cursor, run } });
+  timeLineStore.run();
 }
 
 const updateLayerVisibility = () => {
@@ -172,7 +174,7 @@ function focus(event: any) {
   showMenuBack.value = true;
   gsap.to(".showMenuBack", {
     y: 1,
-    duration: 0.5,
+    duration: 0.5
   });
   canvasWrapper.style.outline = "2px solid #125386";
   slideStore.slideChange = Math.random();
@@ -204,18 +206,19 @@ function releaseControls() {
 }
 
 .dashboard {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
+  // display: flex;
+  // flex-direction: column;
+  // justify-content: space-evenly;
+  // height: 100%;
+  // align-items: center;
   width: 80%;
   // max-width: 50vw;
-  padding-top: 3rem;
+  padding-top: 1rem;
   position: relative;
 
   .canvasElement {
     position: relative;
-
+    margin: auto;
     &:hover {
       outline: 2px solid #125386 !important;
     }
@@ -230,10 +233,12 @@ function releaseControls() {
     }
   }
 }
-.run-btn{
+.run-btn {
   border: none;
+  display: block;
+  margin: auto;
   background-color: transparent;
-  color : #5156F6;
+  color: #5156f6;
   font-size: 30px;
   padding-top: 10px;
   cursor: pointer;
@@ -242,4 +247,11 @@ function releaseControls() {
 //   position: absolute;
 //   width: 100%;
 // }
+.timeline-index {
+  width: 100%;
+  height: 62%;
+  // display: flex;
+  // flex-direction: column;
+  // flex: 1;
+}
 </style>
