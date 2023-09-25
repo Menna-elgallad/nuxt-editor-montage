@@ -3,8 +3,8 @@
 .slide-cont.relative
     .curser.absolute(v-if="timeLineStore.cursor.slideId === slide.id" :style="{'left' : timeLineStore.cursor.width + 'px'}")
     .timeline-slide(:class="{isActive : slide.isActive}")
-      .slide-shape
-      .slideTime.absolute.flex.justify-content-center.align-items-center {{slide.width / 20}}s 
+      .slide-shape.relative
+        .slideTime.absolute.flex.justify-content-center.align-items-center {{slide.width / 20}}s 
     .slideLayer(v-for="layer in slide.layers" :style="{'width' : layer.width + 'px'}" :id="'slide-shape-' + layer.id") 
       .slide-item {{ layer?.name }}
 
@@ -16,22 +16,59 @@ import { TimeLineStore } from "~~/stores/timeline";
 const props = defineProps({
   slide: {
     type: Object,
-    required: true
-  }
+    required: true,
+  },
 });
 const timeLineStore = TimeLineStore();
 console.log(timeLineStore.cursor.slideId);
 useResize("slide-shape", true);
 useResize("slide-item");
+
+
+
+onMounted(() => {
+  let isDraggingCursor = false;
+  let cursor = document.querySelector(".curser");
+  let cursorOffsetX = 0;
+  cursor.addEventListener("mousedown", function (e) {
+    isDraggingCursor = true;
+    cursorOffsetX = e.clientX - cursor.offsetLeft;
+  });
+  let holeWith = 0
+  document.addEventListener("mousemove", function (e) {
+    if (isDraggingCursor) {
+      let newLeft = e.clientX - cursorOffsetX;
+      holeWith = newLeft
+      if (
+        newLeft >= 0
+      ) {
+        timeLineStore.setUnActiveLayers();
+        timeLineStore.cursor.width = newLeft;
+        timeLineStore.changeActiveOnCursor(newLeft);
+        // cursor.style.left = newLeft + "px";
+      }
+    }
+  });
+  
+  document.addEventListener("mouseup", function () {
+    isDraggingCursor = false;
+    timeLineStore.setUnActiveLayers();
+    timeLineStore.changeActiveOnCursor(holeWith);
+
+
+  });
+})
 </script>
 
 <style lang="scss" scoped>
 .slide-cont {
   height: fit-content;
   .curser {
-    width: 1px;
+    width: 2px;
     background-color: rgba(128, 128, 128, 0.5);
     height: 100%;
+    cursor: grab;
+    z-index: 999;
   }
 
   display: flex;
@@ -57,17 +94,21 @@ useResize("slide-item");
   display: flex;
   justify-content: space-between;
   align-items: center;
+  /* cursor: move; */
   min-height: 35px;
-  &::after,
-  &::before {
+  &::after {
     content: "";
     display: block;
     width: 4px;
     height: 100%;
     cursor: ew-resize;
   }
-  &::after {
+  &::before {
+    content: "";
+    display: block;
+    width: 4px;
     height: 100%;
+    /* cursor: ew-resize; */
   }
 }
 .slide-shape {

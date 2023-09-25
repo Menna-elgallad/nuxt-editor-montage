@@ -209,8 +209,10 @@ function releaseControls() {
   // display: flex;
   // flex-direction: column;
   // justify-content: space-evenly;
-  // height: 100%;
+  height: 80vh;
   // align-items: center;
+  display: flex;
+    flex-direction: column;
   width: 80%;
   // max-width: 50vw;
   padding-top: 1rem;
@@ -236,7 +238,7 @@ function releaseControls() {
 .run-btn {
   border: none;
   display: block;
-  margin: auto;
+  /* margin: auto; */
   background-color: transparent;
   color: #5156f6;
   font-size: 30px;
@@ -249,9 +251,10 @@ function releaseControls() {
 // }
 .timeline-index {
   width: 100%;
-  height: 62%;
-  // display: flex;
-  // flex-direction: column;
-  // flex: 1;
+  /* height: 62%; */
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  /* flex: 1; */
 }
 </style>

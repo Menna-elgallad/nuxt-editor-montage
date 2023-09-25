@@ -2,7 +2,7 @@
 
 .timeline.relative
   .layers
-    timelineSlide(v-for="slide in timeLineStore.slides" :slide="slide" @click="activateSlide(slide)" :id="slide.id")
+    timelineSlide(v-for="slide in timeLineStore?.slides" :slide="slide" @click="activateSlide(slide)" :id="slide.id")
     .addSlide(@click="addSlide") Add Slide
   span.totalTime {{(timeLineStore.cursor.width/20).toFixed(2)}}/{{timeLineStore.totalWidth()/20}}
 
@@ -134,6 +134,7 @@ function activateSlide(slide: any) {
   flex: 0.2;
 }
 .timeline {
+  align-self: flex-end;
   // max-height: 10vh;
 }
 .addSlide {
@@ -246,7 +247,7 @@ function activateSlide(slide: any) {
   /* display: flex !important; */
   justify-content: center;
   overflow-x: hidden;
-  flex: 0.3;
+  /* flex: 0.3; */
   padding: 0 0.3rem;
   background-color: white;
   .time {
