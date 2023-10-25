@@ -10,18 +10,35 @@
     ClientOnly
         .row.animation(v-if="showAnimation")
             h4(class=" m-2 ") Animate
-            .row
-              .col-lg-3.animation-icon-container(@click="[  animationName = 'fade' ,addjson(selectedJson) ]" ): img.animationIcon(src="../assets/aniamtion-icons/fadeout.svg")
-              .col-lg-3.animation-icon-container(@click="[  animationName = 'revealBottom',addjson(selectedJson)]"): img.animationIcon(src="../assets/aniamtion-icons/reveal1.svg")
-              .col-lg-3.animation-icon-container(@click="[  animationName = 'revealTop',addjson(selectedJson)]"): img.animationIcon(src="../assets/aniamtion-icons/reveal2.svg")
-              .col-lg-3.animation-icon-container(@click="[  animationName = 'revealLeft',addjson(selectedJson)]"): img.animationIcon(src="../assets/aniamtion-icons/revealout.svg")
-              .col-lg-3.animation-icon-container(@click="[  animationName = 'revealRight',addjson(selectedJson)]"): img.animationIcon(src="../assets/aniamtion-icons/revealout2.svg")
-              .col-lg-3.animation-icon-container(@click="[  animationName = 'slideBottom',addjson(selectedJson)]"): img.animationIcon(src="../assets/aniamtion-icons/rightslide1.svg")
-              .col-lg-3.animation-icon-container(@click="[  animationName = 'slideTop',addjson(selectedJson)]"): img.animationIcon(src="../assets/aniamtion-icons/rightslide2.svg")
-              .col-lg-3.animation-icon-container(@click="[  animationName = 'slideRight',addjson(selectedJson)]"): img.animationIcon(src="../assets/aniamtion-icons/slideout4.svg")
-              .col-lg-3.animation-icon-container(@click="[  animationName = 'slideLeft',addjson(selectedJson)]"): img.animationIcon(src="../assets/aniamtion-icons/slideout.svg")
-              .col-lg-3.animation-icon-container(@click="[  animationName = 'swear',addjson(selectedJson)]"): img.animationIcon(src="../assets/aniamtion-icons/smear1.svg")
-              .col-lg-3.animation-icon-container(@click="[  animationName = 'pop',addjson(selectedJson)]"): img.animationIcon(src="../assets/aniamtion-icons/zoom4.svg")
+            .flex.w-full   
+              button(class=" w-6 p-2" :class="{'bg-blue-900 text-0' : animationTab=='in'}" @click="animationTab = 'in'") In
+              button(class="w-6 p-2"  :class="{'bg-blue-900 text-0' : animationTab=='out'}" @click="animationTab = 'out'" ) Out
+            transition(name="opacity"    mode="out-in"
+        appear )
+                .row(v-if=" animationTab==='in'")
+                  .col-lg-3.animation-icon-container(@click="[  animationNameIn = 'fade' ,addjson(selectedJson) ]" ): img.animationIcon(src="../assets/aniamtion-icons/fadeout.svg")
+                  .col-lg-3.animation-icon-container(@click="[  animationNameIn = 'revealBottom',addjson(selectedJson)]"): img.animationIcon(src="../assets/aniamtion-icons/reveal1.svg")
+                  .col-lg-3.animation-icon-container(@click="[  animationNameIn = 'revealTop',addjson(selectedJson)]"): img.animationIcon(src="../assets/aniamtion-icons/reveal2.svg")
+                  .col-lg-3.animation-icon-container(@click="[  animationNameIn = 'revealLeft',addjson(selectedJson)]"): img.animationIcon(src="../assets/aniamtion-icons/revealout.svg")
+                  .col-lg-3.animation-icon-container(@click="[  animationNameIn = 'revealRight',addjson(selectedJson)]"): img.animationIcon(src="../assets/aniamtion-icons/revealout2.svg")
+                  .col-lg-3.animation-icon-container(@click="[  animationNameIn = 'slideBottom',addjson(selectedJson)]"): img.animationIcon(src="../assets/aniamtion-icons/rightslide1.svg")
+                  .col-lg-3.animation-icon-container(@click="[  animationNameIn = 'slideTop',addjson(selectedJson)]"): img.animationIcon(src="../assets/aniamtion-icons/rightslide2.svg")
+                  .col-lg-3.animation-icon-container(@click="[  animationNameIn = 'slideRight',addjson(selectedJson)]"): img.animationIcon(src="../assets/aniamtion-icons/slideout4.svg")
+                  .col-lg-3.animation-icon-container(@click="[  animationNameIn = 'slideLeft',addjson(selectedJson)]"): img.animationIcon(src="../assets/aniamtion-icons/slideout.svg")
+                  .col-lg-3.animation-icon-container(@click="[  animationNameIn = 'swear',addjson(selectedJson)]"): img.animationIcon(src="../assets/aniamtion-icons/smear1.svg")
+                  .col-lg-3.animation-icon-container(@click="[  animationNameIn = 'pop',addjson(selectedJson)]"): img.animationIcon(src="../assets/aniamtion-icons/zoom4.svg")
+                .row(v-else-if=" animationTab==='out'")
+                  .col-lg-3.animation-icon-container(@click="[  animationNameOut = 'fade' ,addjson(selectedJson) ]" ): img.animationIcon(src="../assets/aniamtion-icons/fadeout.svg")
+                  .col-lg-3.animation-icon-container(@click="[  animationNameOut = 'revealBottom',addjson(selectedJson)]"): img.animationIcon(src="../assets/aniamtion-icons/reveal1.svg")
+                  .col-lg-3.animation-icon-container(@click="[  animationNameOut = 'revealTop',addjson(selectedJson)]"): img.animationIcon(src="../assets/aniamtion-icons/reveal2.svg")
+                  .col-lg-3.animation-icon-container(@click="[  animationNameOut = 'revealLeft',addjson(selectedJson)]"): img.animationIcon(src="../assets/aniamtion-icons/revealout.svg")
+                  .col-lg-3.animation-icon-container(@click="[  animationNameOut = 'revealRight',addjson(selectedJson)]"): img.animationIcon(src="../assets/aniamtion-icons/revealout2.svg")
+                  .col-lg-3.animation-icon-container(@click="[  animationNameOut = 'slideBottom',addjson(selectedJson)]"): img.animationIcon(src="../assets/aniamtion-icons/rightslide1.svg")
+                  .col-lg-3.animation-icon-container(@click="[  animationNameOut = 'slideTop',addjson(selectedJson)]"): img.animationIcon(src="../assets/aniamtion-icons/rightslide2.svg")
+                  .col-lg-3.animation-icon-container(@click="[  animationNameOut = 'slideRight',addjson(selectedJson)]"): img.animationIcon(src="../assets/aniamtion-icons/slideout4.svg")
+                  .col-lg-3.animation-icon-container(@click="[  animationNameOut = 'slideLeft',addjson(selectedJson)]"): img.animationIcon(src="../assets/aniamtion-icons/slideout.svg")
+                  .col-lg-3.animation-icon-container(@click="[  animationNameOut = 'swear',addjson(selectedJson)]"): img.animationIcon(src="../assets/aniamtion-icons/smear1.svg")
+                  .col-lg-3.animation-icon-container(@click="[  animationNameOut = 'pop',addjson(selectedJson)]"): img.animationIcon(src="../assets/aniamtion-icons/zoom4.svg")
 
         .row(v-else)
             //- .col-lg-6: lottie-player( hover  :src="anima1" @click="addjson(anima1)" disableShadowDom)
@@ -55,122 +72,9 @@ import { fabric } from "fabric";
 import lottie from "lottie-web";
 
 
-class AnimationManager {
-  constructor(animation) {
-    this.animation = animation
-  }
- 
-  pop() {
-     this.animation.set('scaleX', 0);
-     this.animation.set('scaleY', 0);
-    this.animation.animate({ 'scaleX': 0.3 ,'scaleY': 0.3  } , {
-    onChange: fabricCanvas.renderAll.bind(fabricCanvas),
-    duration: 1000,
-    easing: fabric.util.ease.easeOutCubic
-});
-  }
-  fade() {
-     this.animation.set('opacity', 0);
-    this.animation.animate({ 'opacity': 1  } , {
-    onChange: fabricCanvas.renderAll.bind(fabricCanvas),
-    duration: 1000,
-    easing: fabric.util.ease.easeOutCubic
-});
-  }
-  swear() {
-     this.animation.set('angle', 45);
-     this.animation.set('top', 100);
-     this.animation.set('opacity', 0);
-    this.animation.animate({ 'top': 0 , 'angle' : 0  , 'opacity' : 1 } , {
-    onChange: fabricCanvas.renderAll.bind(fabricCanvas),
-    duration: 1000,
-    easing: fabric.util.ease.easeOutCubic
-});
-  }
-  slideRight() {
-     this.animation.set('left', 100);
-    this.animation.animate({ 'left': 0  } , {
-    onChange: fabricCanvas.renderAll.bind(fabricCanvas),
-    duration: 1000,
-    easing: fabric.util.ease.easeOutCubic
-});
-  }
-  slideLeft() {
-     this.animation.set('left', -100);
-    this.animation.animate({ 'left': 0  } , {
-    onChange: fabricCanvas.renderAll.bind(fabricCanvas),
-    duration: 1000,
-    easing: fabric.util.ease.easeOutCubic
-});
-  }
-  slideTop() {
-     this.animation.set('top', -100);
-    this.animation.animate({ 'top': 0  } , {
-    onChange: fabricCanvas.renderAll.bind(fabricCanvas),
-    duration: 1000,
-    easing: fabric.util.ease.easeOutCubic
-});
-  }
-  slideBottom() {
-     this.animation.set('top', 100);
-    this.animation.animate({ 'top': 0  } , {
-    onChange: fabricCanvas.renderAll.bind(fabricCanvas),
-    duration: 1000,
-    easing: fabric.util.ease.easeOutCubic
-});
-  }
-
-  revealTop() {
-     this.animation.set('top', -30);
-     this.animation.set('opacity', 0);
-    this.animation.animate({ 'top': 0 , 'opacity' : 1   } , {
-    onChange: fabricCanvas.renderAll.bind(fabricCanvas),
-    duration: 1000,
-    easing: fabric.util.ease.easeOutCubic
-});
-  }
-
-  revealBottom() {
-     this.animation.set('top', 30);
-     this.animation.set('opacity', 0);
-    this.animation.animate({ 'top': 0 , 'opacity' : 1   } , {
-    onChange: fabricCanvas.renderAll.bind(fabricCanvas),
-    duration: 1000,
-    easing: fabric.util.ease.easeOutCubic
-});
-  }
-
-  revealLeft() {
-     this.animation.set('left', -30);
-     this.animation.set('opacity', 0);
-    this.animation.animate({ 'left': 0 , 'opacity' : 1   } , {
-    onChange: fabricCanvas.renderAll.bind(fabricCanvas),
-    duration: 1000,
-    easing: fabric.util.ease.easeOutCubic
-});
-  }
-
-  revealRight() {
-     this.animation.set('left', 30);
-     this.animation.set('opacity', 0);
-    this.animation.animate({ 'left': 0 , 'opacity' : 1   } , {
-    onChange: fabricCanvas.renderAll.bind(fabricCanvas),
-    duration: 1000,
-    easing: fabric.util.ease.easeOutCubic
-});
-  }
-  playAnimation(animationName) {
-    if (typeof this[animationName] === 'function') {
-      this[animationName]();
-    } else {
-      console.log(`Invalid animation name: ${animationName}`);
-    }
-  }
-
-  
-}
-
-const animationName = ref()
+const animationTab=  ref('in')
+const animationNameIn = ref()
+const animationNameOut = ref()
 const selectedJson = ref()
 const showbasics = ref(false);
 // import { emit } from "process";
@@ -187,10 +91,13 @@ const emit = defineEmits(["selectProps"]);
 var tmpCanvasEl = fabric.util.createCanvasElement();
 let fabricCanvas: fabric.Canvas;
 let canvaswrapper: any;
-console.log(document.getElementById(`mycanvas-${activatedSlide}`));
+
 fabricCanvas = document.getElementById(`mycanvas-${activatedSlide}`).fabric;
 canvaswrapper = canasWrapper.value;
 const uselottie = useLotte();
+
+
+
 
 function addjson(animation) {
   fabricCanvas = document.getElementById(
@@ -200,13 +107,15 @@ function addjson(animation) {
   const fabricImage = new uselottie(undefined, {
     scaleX: 0.3,
     scaleY: 0.3,
-    animationData: animation
-    // id: Math.random()
+    animationData: animation,
+    id: Math.random()
   });
 
   fabricCanvas.add(fabricImage);
-  let animate1 = new AnimationManager(fabricImage)
-  animate1.playAnimation(animationName.value);
+  let animateIn = new AnimationManagerIn(fabricImage)
+  let animateOut = new AnimationManagerOut(fabricImage)
+   animateIn.playAnimation(animationNameIn.value);
+  const initialState =  animateOut.playAnimation(animationNameOut.value);
   showAnimation.value = false
   fabricImage.on("mousedown", (ele: any) => {
     canvasStore.$patch({ selectedProp: ele.target });
@@ -283,6 +192,11 @@ function addjson(animation) {
   });
   timelineStore.addlayerToActiveSlide({
     element: fabricImage,
+    animationIn : animateIn , 
+    animationOut : animateOut , 
+    animationNameIn : animationNameIn.value ,
+    animationNameOut : animationNameOut.value ,
+    initialState : initialState  , 
     hidden: false,
     name: "character",
     opacity: 1,
@@ -291,24 +205,9 @@ function addjson(animation) {
     locked: false,
     timeToHide: 0,
     timeToShow: 0,
-    startPosition: 0
+    startPosition: 0 , 
   });
   fabricCanvas.renderAll();
-  //   layerStore.$patch({
-  //     layers: [
-  //       ...layerStore.layers,
-  //       {
-  //         element: animation,
-  //         hidden: false,
-  //         name: "charcter",
-  //         opacity: 1,
-  //         type: "charcter",
-  //         locked: false,
-  //         timeToHide: 0,
-  //         timeToShow: 0
-  //       }
-  //     ]
-  //   });
   fabricImage.play();
   // fabricImage.stop();
 }

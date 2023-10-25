@@ -5,6 +5,11 @@ export const useLayer = defineStore("layer", {
 
 interface Layer {
   element: any;
+  animationIn : any , 
+  animationOut : any , 
+  animationNameIn : string,
+  animationNameOut : string,
+  initialState : any , 
   name: string;
   type: string;
   hidden: boolean;

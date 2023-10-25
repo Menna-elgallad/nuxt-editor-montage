@@ -239,9 +239,10 @@ function activateSlide(slide: any) {
   color: #0d3c61;
 }
 .timeline {
-  margin-top: 1rem;
+  // margin-top: 1rem;
   max-width: 100%;
   width: 100%;
+  height: 100%;
   border-radius: 15px;
   // height: 62%;
   /* display: flex !important; */

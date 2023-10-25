@@ -126,19 +126,19 @@ function runTimeLine(run: boolean) {
 const updateLayerVisibility = () => {
   // @ts-ignore
   const activeObjectId: string = fabricCanvas?.getActiveObject()?.get("id");
-  for (const layer of layers.value) {
-    // @ts-ignore
-    const objectId: string = layer.object?.get("id");
-    layer.object!.visible = false;
-    if (isLayerVisible(layer, false)) {
-      layer.object!.visible = true;
-    } else {
-      layer.object!.visible = false;
-      if (objectId === activeObjectId) {
-        fabricCanvas?.discardActiveObject().renderAll();
-      }
-    }
-  }
+  // for (const layer of layers.value) {
+  //   // @ts-ignore
+  //   const objectId: string = layer.object?.get("id");
+  //   layer.object!.visible = false;
+  //   if (isLayerVisible(layer, false)) {
+  //     layer.object!.visible = true;
+  //   } else {
+  //     layer.object!.visible = false;
+  //     if (objectId === activeObjectId) {
+  //       fabricCanvas?.remove(fabricCanvas.getActiveObject()).renderAll();
+  //     }
+  //   }
+  // }
 };
 
 const isLayerVisible = (layer: any, noTrim: boolean) => {
@@ -209,7 +209,7 @@ function releaseControls() {
   // display: flex;
   // flex-direction: column;
   // justify-content: space-evenly;
-  height: 80vh;
+  height: 100%;
   // align-items: center;
   display: flex;
     flex-direction: column;

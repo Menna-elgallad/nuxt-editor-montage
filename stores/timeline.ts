@@ -60,22 +60,43 @@ export const TimeLineStore = defineStore("timeLine", {
     },
     setUnActiveLayers() {
       const activeSlide = this.activeSlide;
+      
       activeSlide.layers.forEach((layer) => {
         if (
           layer.width + layer.startPosition + this.totalWidth(activeSlide.id) <=
           this.cursor.width
         ) {
           console.log("enered");
-          layer.element.visible = false;
+         
+          // layer.element.visible = false;
           const fabricCanvas = document.getElementById(
             `mycanvas-${activeSlide.id}`
           )?.fabric;
-          fabricCanvas?.renderAll();
+          // console.log(fabricCanvas.getObjects().find((e) => e.id === layer.element.id) )
+          const obj =  fabricCanvas.getObjects().find((e) => e.id === layer.element.id) 
+          if (obj){
+            const initial = layer.animationOut.playAnimation(layer.animationNameOut);
+            setTimeout(function () {    fabricCanvas.remove(obj) }, 1000);
+          
+          
+          }
+          console.log(layer.element)
+        
+          fabricCanvas.renderAll();
         } else {
-          layer.element.visible = true;
+          // layer.element.visible = true;
           const fabricCanvas = document.getElementById(
             `mycanvas-${activeSlide.id}`
           )?.fabric;
+          const checkExistance = fabricCanvas.getObjects().some((e)=> e.id === layer.element.id)
+          if (!checkExistance){
+
+            fabricCanvas?.add(layer.element);
+            layer.element.play()
+            layer.animation.playAnimation(layer.animationName);
+          }
+          // console.log(layer.element , fabricCanvas.getObjects())
+          console.log("viewww")
           fabricCanvas?.renderAll();
         }
       });
