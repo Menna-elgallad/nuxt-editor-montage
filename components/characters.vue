@@ -8,38 +8,98 @@
     //-                 Icon(name="material-symbols:arrow-drop-up" class=" text-xl" style="transform : rotate(-52deg);" v-else)
     //-         h5(class=" text-black-alpha-50 mt-2 text-center") Emojis
     ClientOnly
-        .row.animation(v-if="showAnimation")
-            h4(class=" m-2 ") Animate
-            .flex.w-full   
+        .row.animation(v-if="showAnimation " )
+            .flex.gap-1.align-items-center
+                Icon( class="icon-hover" name="ic:outline-keyboard-arrow-left" @click="showAnimation=false")
+                h3(class=" m-2 ") Animate
+            .flex.w-full.my-3   
               button(class=" w-6 p-2" :class="{'bg-blue-900 text-0' : animationTab=='in'}" @click="animationTab = 'in'") In
               button(class="w-6 p-2"  :class="{'bg-blue-900 text-0' : animationTab=='out'}" @click="animationTab = 'out'" ) Out
             transition(name="opacity"    mode="out-in"
         appear )
-                .row(v-if=" animationTab==='in'")
-                  .col-lg-3.animation-icon-container(@click="[  animationNameIn = 'fade' ,addjson(selectedJson) ]" ): img.animationIcon(src="../assets/aniamtion-icons/fadeout.svg")
-                  .col-lg-3.animation-icon-container(@click="[  animationNameIn = 'revealBottom',addjson(selectedJson)]"): img.animationIcon(src="../assets/aniamtion-icons/reveal1.svg")
-                  .col-lg-3.animation-icon-container(@click="[  animationNameIn = 'revealTop',addjson(selectedJson)]"): img.animationIcon(src="../assets/aniamtion-icons/reveal2.svg")
-                  .col-lg-3.animation-icon-container(@click="[  animationNameIn = 'revealLeft',addjson(selectedJson)]"): img.animationIcon(src="../assets/aniamtion-icons/revealout.svg")
-                  .col-lg-3.animation-icon-container(@click="[  animationNameIn = 'revealRight',addjson(selectedJson)]"): img.animationIcon(src="../assets/aniamtion-icons/revealout2.svg")
-                  .col-lg-3.animation-icon-container(@click="[  animationNameIn = 'slideBottom',addjson(selectedJson)]"): img.animationIcon(src="../assets/aniamtion-icons/rightslide1.svg")
-                  .col-lg-3.animation-icon-container(@click="[  animationNameIn = 'slideTop',addjson(selectedJson)]"): img.animationIcon(src="../assets/aniamtion-icons/rightslide2.svg")
-                  .col-lg-3.animation-icon-container(@click="[  animationNameIn = 'slideRight',addjson(selectedJson)]"): img.animationIcon(src="../assets/aniamtion-icons/slideout4.svg")
-                  .col-lg-3.animation-icon-container(@click="[  animationNameIn = 'slideLeft',addjson(selectedJson)]"): img.animationIcon(src="../assets/aniamtion-icons/slideout.svg")
-                  .col-lg-3.animation-icon-container(@click="[  animationNameIn = 'swear',addjson(selectedJson)]"): img.animationIcon(src="../assets/aniamtion-icons/smear1.svg")
-                  .col-lg-3.animation-icon-container(@click="[  animationNameIn = 'pop',addjson(selectedJson)]"): img.animationIcon(src="../assets/aniamtion-icons/zoom4.svg")
-                .row(v-else-if=" animationTab==='out'")
-                  .col-lg-3.animation-icon-container(@click="[  animationNameOut = 'fade' ,addjson(selectedJson) ]" ): img.animationIcon(src="../assets/aniamtion-icons/fadeout.svg")
-                  .col-lg-3.animation-icon-container(@click="[  animationNameOut = 'revealBottom',addjson(selectedJson)]"): img.animationIcon(src="../assets/aniamtion-icons/reveal1.svg")
-                  .col-lg-3.animation-icon-container(@click="[  animationNameOut = 'revealTop',addjson(selectedJson)]"): img.animationIcon(src="../assets/aniamtion-icons/reveal2.svg")
-                  .col-lg-3.animation-icon-container(@click="[  animationNameOut = 'revealLeft',addjson(selectedJson)]"): img.animationIcon(src="../assets/aniamtion-icons/revealout.svg")
-                  .col-lg-3.animation-icon-container(@click="[  animationNameOut = 'revealRight',addjson(selectedJson)]"): img.animationIcon(src="../assets/aniamtion-icons/revealout2.svg")
-                  .col-lg-3.animation-icon-container(@click="[  animationNameOut = 'slideBottom',addjson(selectedJson)]"): img.animationIcon(src="../assets/aniamtion-icons/rightslide1.svg")
-                  .col-lg-3.animation-icon-container(@click="[  animationNameOut = 'slideTop',addjson(selectedJson)]"): img.animationIcon(src="../assets/aniamtion-icons/rightslide2.svg")
-                  .col-lg-3.animation-icon-container(@click="[  animationNameOut = 'slideRight',addjson(selectedJson)]"): img.animationIcon(src="../assets/aniamtion-icons/slideout4.svg")
-                  .col-lg-3.animation-icon-container(@click="[  animationNameOut = 'slideLeft',addjson(selectedJson)]"): img.animationIcon(src="../assets/aniamtion-icons/slideout.svg")
-                  .col-lg-3.animation-icon-container(@click="[  animationNameOut = 'swear',addjson(selectedJson)]"): img.animationIcon(src="../assets/aniamtion-icons/smear1.svg")
-                  .col-lg-3.animation-icon-container(@click="[  animationNameOut = 'pop',addjson(selectedJson)]"): img.animationIcon(src="../assets/aniamtion-icons/zoom4.svg")
-
+                .rows(v-if=" animationTab==='in'")
+                  .row
+                    .col-lg-3.flex.align-items-center.justify-content-center.flex-column(@click="[ animationNameIn = 'pop' ,  addAnimation() ]")
+                      .animation-icon-container: img.animationIcon(src="../assets/aniamtion-icons/zoom4.svg")
+                      p.text-center.text-sm Pop                    
+                    .col-lg-3.text-center(@click="[ animationNameIn = 'fade' , addAnimation()  ]" )
+                      .animation-icon-container: img.animationIcon(src="../assets/aniamtion-icons/fadeout.svg")
+                      p.text-center.text-sm Fade                    
+                  h4.text-blue-600.mt-3.mb-2 Slide
+                  .row.text-center 
+                    .col-lg-3.flex.align-items-center.justify-content-center.flex-column(@click="[ animationNameIn = 'slideLeft' ,  addAnimation() ]")
+                        .animation-icon-container: img.animationIcon(src="../assets/aniamtion-icons/slideout.svg")
+                        p.text-center.text-sm Right
+                    .col-lg-3.flex.align-items-center.justify-content-center.flex-column(@click="[ animationNameIn = 'slideRight' ,  addAnimation() ]")
+                        .animation-icon-container: img.animationIcon(src="../assets/aniamtion-icons/slideout4.svg")
+                        p.text-center.text-sm Left
+                    .col-lg-3.flex.align-items-center.justify-content-center.flex-column(@click="[ animationNameIn = 'slideBottom' ,  addAnimation() ]")
+                        .animation-icon-container: img.animationIcon(src="../assets/aniamtion-icons/rightslide1.svg")
+                        p.text-center.text-sm Top
+                    .col-lg-3.flex.align-items-center.justify-content-center.flex-column(@click="[ animationNameIn = 'slideTop' ,  addAnimation() ]")
+                        .animation-icon-container: img.animationIcon(src="../assets/aniamtion-icons/rightslide2.svg")
+                        p.text-center.text-sm Down
+                  h4.text-blue-600.mt-3.mb-2 Reveal
+                  .row
+                        .col-lg-3.flex.align-items-center.justify-content-center.flex-column(@click="[ animationNameIn = 'revealLeft' ,  addAnimation() ]")
+                            .animation-icon-container: img.animationIcon(src="../assets/aniamtion-icons/revealout.svg")
+                            p.text-center.text-sm Right
+                       
+                        .col-lg-3.flex.align-items-center.justify-content-center.flex-column(@click="[ animationNameIn = 'revealRight'  , addAnimation() ]")
+                            .animation-icon-container: img.animationIcon(src="../assets/aniamtion-icons/revealout2.svg")
+                            p.text-center.text-sm Left
+                       
+                        .col-lg-3.flex.align-items-center.justify-content-center.flex-column(@click=" [animationNameIn = 'revealBottom' , addAnimation() ]")
+                            .animation-icon-container: img.animationIcon(src="../assets/aniamtion-icons/reveal1.svg")
+                            p.text-center.text-sm Top
+                       
+                        .col-lg-3.flex.align-items-center.justify-content-center.flex-column(@click="[ animationNameIn = 'revealTop' ,  addAnimation() ]")
+                            .animation-icon-container: img.animationIcon(src="../assets/aniamtion-icons/reveal2.svg")
+                            p.text-center.text-sm Down
+                  
+                        .col-lg-3.flex.align-items-center.justify-content-center.flex-column(@click="[ animationNameIn = 'swear' ,  addAnimation() ]")
+                            .animation-icon-container: img.animationIcon(src="../assets/aniamtion-icons/smear1.svg")
+                            p.text-center.text-sm Swear
+                
+                .rows(v-else-if=" animationTab==='out'")
+                  .row
+                    .col-lg-3.flex.align-items-center.justify-content-center.flex-column(@click=" [animationNameOut = 'fade', addAnimation() ] " )
+                      .animation-icon-container:  img.animationIcon(src="../assets/aniamtion-icons/fadeout.svg")
+                      p.text-center.text-sm Fade
+                    .col-lg-3.flex.align-items-center.justify-content-center.flex-column(@click="[ animationNameOut = 'pop' , addAnimation()]")
+                      .animation-icon-container:  img.animationIcon(src="../assets/aniamtion-icons/zoom4.svg")
+                      p.text-center.text-sm Pop
+                  h4.text-blue-600.mt-3.mb-2 Slide
+                  .row
+                      .col-lg-3.flex.align-items-center.justify-content-center.flex-column(@click="[ animationNameOut = 'slideLeft' , addAnimation()]")
+                        .animation-icon-container:  img.animationIcon(src="../assets/aniamtion-icons/slideout.svg")
+                        p.text-center.text-sm Right
+                      .col-lg-3.flex.align-items-center.justify-content-center.flex-column(@click="[ animationNameOut = 'slideRight' , addAnimation()]")
+                        .animation-icon-container:  img.animationIcon(src="../assets/aniamtion-icons/slideout4.svg")
+                        p.text-center.text-sm Left
+                      .col-lg-3.flex.align-items-center.justify-content-center.flex-column(@click="[ animationNameOut = 'slideBottom' , addAnimation()]")
+                        .animation-icon-container:  img.animationIcon(src="../assets/aniamtion-icons/rightslide1.svg")
+                        p.text-center.text-sm Top
+                      .col-lg-3.flex.align-items-center.justify-content-center.flex-column(@click="[ animationNameOut = 'slideTop' , addAnimation()]")
+                        .animation-icon-container:  img.animationIcon(src="../assets/aniamtion-icons/rightslide2.svg")
+                        p.text-center.text-sm Down
+                  h4.text-blue-600.mt-3.mb-2 Reveal 
+                  .row
+                    .col-lg-3.flex.align-items-center.justify-content-center.flex-column(@click="[ animationNameOut = 'revealLeft' , addAnimation()]")
+                      .animation-icon-container:  img.animationIcon(src="../assets/aniamtion-icons/revealout.svg")
+                      p.text-center.text-sm Right
+                    .col-lg-3.flex.align-items-center.justify-content-center.flex-column(@click="[ animationNameOut = 'revealRight' , addAnimation()]")
+                      .animation-icon-container:  img.animationIcon(src="../assets/aniamtion-icons/revealout2.svg")
+                      p.text-center.text-sm Left
+                    .col-lg-3.flex.align-items-center.justify-content-center.flex-column(@click="[ animationNameOut = 'revealBottom' , addAnimation()]")
+                      .animation-icon-container:  img.animationIcon(src="../assets/aniamtion-icons/reveal1.svg")
+                      p.text-center.text-sm Top
+                    .col-lg-3.flex.align-items-center.justify-content-center.flex-column(@click="[ animationNameOut = 'revealTop' , addAnimation()]")
+                      .animation-icon-container:  img.animationIcon(src="../assets/aniamtion-icons/reveal2.svg")
+                      p.text-center.text-sm Down
+                    .col-lg-3.flex.align-items-center.justify-content-center.flex-column(@click="[ animationNameOut = 'swear' , addAnimation()]")
+                      .animation-icon-container:  img.animationIcon(src="../assets/aniamtion-icons/smear1.svg")
+                      p.text-center.text-sm Swear
         .row(v-else)
             //- .col-lg-6: lottie-player( hover  :src="anima1" @click="addjson(anima1)" disableShadowDom)
             //- .col-lg-6: lottie-player( hover  :src="anima2" @click="addjson(anima2)" disableShadowDom )
@@ -47,8 +107,8 @@
             //- .col-lg-6: lottie-player( hover  :src="anima4" @click="addjson(anima4)" disableShadowDom )
             //- .col-lg-6: lottie-player( hover  :src="anima5" @click="addjson(anima5)" disableShadowDom )
             //- .col-lg-6: lottie-player( hover  :src="anima1" @click="[selectedJson = anima1 , showAnimation=true ]" disableShadowDom )
-            .col-lg-6: lottie-player( hover  :src="anima2" @click="[selectedJson = anima2 , showAnimation=true ]" disableShadowDom )
-            .col-lg-6: lottie-player( hover  :src="anima3" @click="[selectedJson = anima3 , showAnimation=true ]" disableShadowDom )
+            .col-lg-6: lottie-player( hover  :src="anima2" @click="addjson(anima2)" disableShadowDom )
+            .col-lg-6: lottie-player( hover  :src="anima3" @click="addjson(anima3)" disableShadowDom )
             //- .col-lg-6: lottie-player( hover  :src="anima7" @click="addjson(anima7)" disableShadowDom )
             //- .col-lg-6: lottie-player( hover  :src="anima8" @click="addjson(anima8)" disableShadowDom )
 
@@ -73,7 +133,7 @@ import lottie from "lottie-web";
 
 
 const animationTab=  ref('in')
-const animationNameIn = ref()
+const animationNameIn = ref("")
 const animationNameOut = ref()
 const selectedJson = ref()
 const showbasics = ref(false);
@@ -86,6 +146,7 @@ import { TimeLineStore } from "~~/stores/timeline";
 const timelineStore = TimeLineStore();
 const { canasWrapper, color } = storeToRefs(canvasStore);
 const timeLineStore = TimeLineStore();
+const { activeSlide } = storeToRefs(timeLineStore );
 const activatedSlide = timeLineStore.activeSlide.id;
 const emit = defineEmits(["selectProps"]);
 var tmpCanvasEl = fabric.util.createCanvasElement();
@@ -93,10 +154,20 @@ let fabricCanvas: fabric.Canvas;
 let canvaswrapper: any;
 
 fabricCanvas = document.getElementById(`mycanvas-${activatedSlide}`).fabric;
+const active = ref(fabricCanvas.getActiveObject())
 canvaswrapper = canasWrapper.value;
 const uselottie = useLotte();
 
+watch(active  ,(curr)=>{
+  console.log(curr , "curr")
+if (curr) {
+  showAnimation.value = showAnimation.value 
+}
+else { 
+  showAnimation.value = false
+}
 
+},{deep:true})
 
 
 function addjson(animation) {
@@ -107,17 +178,19 @@ function addjson(animation) {
   const fabricImage = new uselottie(undefined, {
     scaleX: 0.3,
     scaleY: 0.3,
+    top : 150 , 
+    left : 150,   
+    originX: 'center',
+    originY: 'center' , 
     animationData: animation,
     id: Math.random()
   });
 
   fabricCanvas.add(fabricImage);
-  let animateIn = new AnimationManagerIn(fabricImage)
-  let animateOut = new AnimationManagerOut(fabricImage)
-   animateIn.playAnimation(animationNameIn.value);
-  const initialState =  animateOut.playAnimation(animationNameOut.value);
-  showAnimation.value = false
+  
   fabricImage.on("mousedown", (ele: any) => {
+    showAnimation.value = true ; 
+
     canvasStore.$patch({ selectedProp: ele.target });
     canvasStore.$patch({ selectedID: Math.random() });
     const animationData = fabricImage.animationData;
@@ -192,11 +265,6 @@ function addjson(animation) {
   });
   timelineStore.addlayerToActiveSlide({
     element: fabricImage,
-    animationIn : animateIn , 
-    animationOut : animateOut , 
-    animationNameIn : animationNameIn.value ,
-    animationNameOut : animationNameOut.value ,
-    initialState : initialState  , 
     hidden: false,
     name: "character",
     opacity: 1,
@@ -211,6 +279,41 @@ function addjson(animation) {
   fabricImage.play();
   // fabricImage.stop();
 }
+
+function addAnimation(){
+ 
+  const animatedItem = timelineStore.slides[activeSlide.value.id-1].layers.find((e) => e.element.id == fabricCanvas.getActiveObject().id )
+  const animatedItemIndex = timelineStore.slides[activeSlide.value.id-1].layers.findIndex((e) => e.element.id == fabricCanvas.getActiveObject().id)
+  let animateIn = new AnimationManagerIn(animatedItem?.element)
+  let animateOut = new AnimationManagerOut(animatedItem?.element)
+  console.log(animationNameOut.value , animationNameIn.value)
+
+  timeLineStore.$patch({ slides : [
+
+    ...timeLineStore.slides.slice(0, activeSlide.value.id-1), 
+    ...timeLineStore.slides.slice(activeSlide.value.id-1 + 1)  , 
+
+    {  ...timeLineStore.slides[activeSlide.value.id-1]  , layers : [ 
+ 
+      ...timeLineStore.slides[activeSlide.value.id-1].layers.slice(0 , animatedItemIndex ) ,
+      {...animatedItem ,   animationIn : animateIn , 
+     animationOut : animateOut , 
+     animationNameIn : animationNameIn.value ,
+     animationNameOut : animationNameOut.value ,
+     top : animatedItem?.element.top , 
+     left : animatedItem?.element.left , 
+     scaleX : animatedItem?.element.scaleX , 
+     scaleY : animatedItem?.element.scaleY , 
+      }, 
+      ...timeLineStore.slides[activeSlide.value.id-1].layers.slice( animatedItemIndex +1 ) , 
+
+    ]  }
+  ]   });
+
+console.log(timeLineStore.slides)
+
+}
+
 function rgbaToHex(rgba) {
   const [r, g, b] = rgba.slice(0, 3).map(value => Math.round(value * 255));
   return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
@@ -245,10 +348,13 @@ video {
 .animation-icon-container{
   background-color: white;
   border-radius: 15px;
-  padding: 1rem;
+  padding: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   box-shadow: 0 0 8px 4px #cccccc1a;
-  width:70px ;
-  height:70px ;
+  width:50px ;
+  height:50px ;
   margin: 5px;
   img{
     object-fit: contain !important;

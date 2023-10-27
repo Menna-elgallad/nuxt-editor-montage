@@ -66,37 +66,57 @@ export const TimeLineStore = defineStore("timeLine", {
           layer.width + layer.startPosition + this.totalWidth(activeSlide.id) <=
           this.cursor.width
         ) {
-          console.log("enered");
+          
          
           // layer.element.visible = false;
           const fabricCanvas = document.getElementById(
             `mycanvas-${activeSlide.id}`
           )?.fabric;
-          // console.log(fabricCanvas.getObjects().find((e) => e.id === layer.element.id) )
+      
           const obj =  fabricCanvas.getObjects().find((e) => e.id === layer.element.id) 
-          if (obj){
-            const initial = layer.animationOut.playAnimation(layer.animationNameOut);
-            setTimeout(function () {    fabricCanvas.remove(obj) }, 1000);
-          
-          
+        let initial ; 
+          if (obj && layer.animationNameOut && layer.width === this.cursor.width){
+            console.log(layer.animationOut ,layer.animationNameOut )
+            initial = layer.animationOut.playAnimation(layer.animationNameOut);
+            
           }
-          console.log(layer.element)
-        
+          if (initial && obj){
+            setTimeout(()=> fabricCanvas.remove(obj) , initial.duration)
+          }
+          if (!layer.animationNameOut) { 
+            fabricCanvas.remove(obj)
+          }
+
+        if (!obj){
+          
+          layer.element.opacity = 1 ;    
+          layer.element.left = layer.left ? layer.left : layer.element.left ;    
+          layer.element.top = layer.top ? layer.top : layer.element.top ; 
+          layer.element.scaleX = layer.scaleX ? layer.scaleX : layer.element.scaleX ; 
+          layer.element.scaleY = layer.scaleY ? layer.scaleY : layer.element.scaleY ; 
+        }
+       
+
+          console.log(layer , "element")  
           fabricCanvas.renderAll();
         } else {
           // layer.element.visible = true;
           const fabricCanvas = document.getElementById(
             `mycanvas-${activeSlide.id}`
           )?.fabric;
+         
+          // if(this.cursor.width===1 && this.cursor.run){
+          //   fabricCanvas.remove( fabricCanvas.getObjects().find((e)=> e.id === layer.element.id))
+
+          // }
           const checkExistance = fabricCanvas.getObjects().some((e)=> e.id === layer.element.id)
           if (!checkExistance){
 
             fabricCanvas?.add(layer.element);
             layer.element.play()
-            layer.animation.playAnimation(layer.animationName);
+            layer.animationIn?.playAnimation(layer.animationNameIn);
           }
-          // console.log(layer.element , fabricCanvas.getObjects())
-          console.log("viewww")
+       
           fabricCanvas?.renderAll();
         }
       });

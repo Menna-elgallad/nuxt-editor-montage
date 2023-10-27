@@ -12,9 +12,7 @@
           timeline(@follow-cursor="followCursor" @hide-seekbar="hideSeekbar" @seek="seek" class="p-2")
     sidetools(v-if="didMounted" @click="releaseControls()")   
     
-          
-
-
+        
 </template>
 
 <script setup lang="ts">
@@ -126,19 +124,19 @@ function runTimeLine(run: boolean) {
 const updateLayerVisibility = () => {
   // @ts-ignore
   const activeObjectId: string = fabricCanvas?.getActiveObject()?.get("id");
-  // for (const layer of layers.value) {
-  //   // @ts-ignore
-  //   const objectId: string = layer.object?.get("id");
-  //   layer.object!.visible = false;
-  //   if (isLayerVisible(layer, false)) {
-  //     layer.object!.visible = true;
-  //   } else {
-  //     layer.object!.visible = false;
-  //     if (objectId === activeObjectId) {
-  //       fabricCanvas?.remove(fabricCanvas.getActiveObject()).renderAll();
-  //     }
-  //   }
-  // }
+  for (const layer of layers.value) {
+    // @ts-ignore
+    const objectId: string = layer.object?.get("id");
+    layer.object!.visible = false;
+    if (isLayerVisible(layer, false)) {
+      layer.object!.visible = true;
+    } else {
+      layer.object!.visible = false;
+      if (objectId === activeObjectId) {
+        fabricCanvas?.discardActiveObject().renderAll();
+      }
+    }
+  }
 };
 
 const isLayerVisible = (layer: any, noTrim: boolean) => {
@@ -209,10 +207,10 @@ function releaseControls() {
   // display: flex;
   // flex-direction: column;
   // justify-content: space-evenly;
-  height: 100%;
+  height: 89vh;
   // align-items: center;
   display: flex;
-    flex-direction: column;
+  flex-direction: column;
   width: 80%;
   // max-width: 50vw;
   padding-top: 1rem;
@@ -220,7 +218,8 @@ function releaseControls() {
 
   .canvasElement {
     position: relative;
-    margin: auto;
+    margin-left: auto;
+    margin-right: auto;
     &:hover {
       outline: 2px solid #125386 !important;
     }
@@ -242,7 +241,8 @@ function releaseControls() {
   background-color: transparent;
   color: #5156f6;
   font-size: 30px;
-  padding-top: 10px;
+  // padding-top: 10px;
+  margin: 10px 0;
   cursor: pointer;
 }
 // .showMenuBack {
@@ -255,6 +255,6 @@ function releaseControls() {
   justify-content: space-between;
   display: flex;
   flex-direction: column;
-  /* flex: 1; */
+  flex:1
 }
 </style>

@@ -122,7 +122,7 @@ const names = [
     height: 100%;
 
     background-color: white;
-    width: 320px;
+    width: 370px;
     border-radius: 1.2rem;
     height: 85vh;
     box-shadow: 0 0 8px 2px #cccccc41;

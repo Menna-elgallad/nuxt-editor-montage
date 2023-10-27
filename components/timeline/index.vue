@@ -142,7 +142,7 @@ function activateSlide(slide: any) {
   border: 2px dashed #c6c7ef;
   background: #f2f3ff;
   width: 141px;
-  // height: 100%;
+  height: 135px;
   flex-shrink: 0;
   text-align: center;
   display: flex;
@@ -155,7 +155,7 @@ function activateSlide(slide: any) {
   overflow: scroll;
   height: 100%;
   display: flex;
-  max-height: 170px;
+  max-height: 260px;
 
   &::-webkit-scrollbar {
     width: 7px;
@@ -242,7 +242,8 @@ function activateSlide(slide: any) {
   // margin-top: 1rem;
   max-width: 100%;
   width: 100%;
-  height: 100%;
+
+  height: 263px;
   border-radius: 15px;
   // height: 62%;
   /* display: flex !important; */
