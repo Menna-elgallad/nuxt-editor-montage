@@ -166,8 +166,28 @@ if (curr) {
 else { 
   showAnimation.value = false
 }
-
 },{deep:true})
+
+watch(animationNameIn , (curr)=>{
+  let animateIn = new AnimationManagerIn(fabricCanvas.getActiveObject())
+  animateIn?.playAnimation(curr);
+})
+watch(animationNameOut , (curr)=>{
+  let animateOut = new AnimationManagerOut(fabricCanvas.getActiveObject())
+  let initial = animateOut?.playAnimation(curr);
+  // fabricCanvas.getActiveObject().top = initial.top ;  
+  if (initial){
+      
+    setTimeout(()=> fabricCanvas.getActiveObject().set({opacity : 1  , left : initial.left , top : initial.top , scaleX : initial.scaleX , scaleY : initial.scaleY  })  , initial.duration+100 )
+    console.log(fabricCanvas.getActiveObject() , "active")
+    fabricCanvas.renderAll()
+
+  }
+  // fabricCanvas.getActiveObject().left = initial.left  ; 
+
+})
+
+
 
 
 function addjson(animation) {
@@ -190,11 +210,10 @@ function addjson(animation) {
   
   fabricImage.on("mousedown", (ele: any) => {
     showAnimation.value = true ; 
-
     canvasStore.$patch({ selectedProp: ele.target });
     canvasStore.$patch({ selectedID: Math.random() });
     const animationData = fabricImage.animationData;
- 
+    
     // const sadShirt =  anima8.layers.filter((e)=> e.cl==='shirt')
     // const sadShirt2 =  anima8.layers.filter((e)=> e.nm==='detailshirt')
     // console.log("sad", sadShirt)
@@ -282,14 +301,12 @@ function addjson(animation) {
 
 function addAnimation(){
  
-  const animatedItem = timelineStore.slides[activeSlide.value.id-1].layers.find((e) => e.element.id == fabricCanvas.getActiveObject().id )
-  const animatedItemIndex = timelineStore.slides[activeSlide.value.id-1].layers.findIndex((e) => e.element.id == fabricCanvas.getActiveObject().id)
+  const animatedItem = timelineStore.slides[activeSlide.value.id-1].layers.find((e) => e.element.id == fabricCanvas.getActiveObject()?.id )
+  const animatedItemIndex = timelineStore.slides[activeSlide.value.id-1].layers.findIndex((e) => e.element.id == fabricCanvas.getActiveObject()?.id)
   let animateIn = new AnimationManagerIn(animatedItem?.element)
   let animateOut = new AnimationManagerOut(animatedItem?.element)
-  console.log(animationNameOut.value , animationNameIn.value)
-
+  
   timeLineStore.$patch({ slides : [
-
     ...timeLineStore.slides.slice(0, activeSlide.value.id-1), 
     ...timeLineStore.slides.slice(activeSlide.value.id-1 + 1)  , 
 
@@ -310,7 +327,6 @@ function addAnimation(){
     ]  }
   ]   });
 
-console.log(timeLineStore.slides)
 
 }
 

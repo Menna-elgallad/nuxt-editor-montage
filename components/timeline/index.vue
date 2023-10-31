@@ -243,7 +243,7 @@ function activateSlide(slide: any) {
   max-width: 100%;
   width: 100%;
 
-  height: 263px;
+  height: 190px;
   border-radius: 15px;
   // height: 62%;
   /* display: flex !important; */

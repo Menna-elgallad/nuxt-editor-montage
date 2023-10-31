@@ -12,6 +12,7 @@ export const TimeLineStore = defineStore("timeLine", {
       run: false,
     } as { slideId: number; width: number; run: boolean },
     interval: null as any,
+    initialObject: {},
   }),
   getters: {
     activeSlide: (state) => {
@@ -60,63 +61,68 @@ export const TimeLineStore = defineStore("timeLine", {
     },
     setUnActiveLayers() {
       const activeSlide = this.activeSlide;
-      
+
       activeSlide.layers.forEach((layer) => {
         if (
           layer.width + layer.startPosition + this.totalWidth(activeSlide.id) <=
           this.cursor.width
         ) {
-          
-         
           // layer.element.visible = false;
           const fabricCanvas = document.getElementById(
             `mycanvas-${activeSlide.id}`
           )?.fabric;
-      
-          const obj =  fabricCanvas.getObjects().find((e) => e.id === layer.element.id) 
-        let initial ; 
-          if (obj && layer.animationNameOut && layer.width === this.cursor.width){
-            console.log(layer.animationOut ,layer.animationNameOut )
-            initial = layer.animationOut.playAnimation(layer.animationNameOut);
-            
+
+          const obj = fabricCanvas
+            .getObjects()
+            .find((e) => e.id === layer.element.id);
+
+          if (
+            obj &&
+            layer.animationNameOut &&
+            layer.width === this.cursor.width
+          ) {
+            console.log(layer.animationOut, layer.animationNameOut);
+            this.initial = layer.animationOut.playAnimation(
+              layer.animationNameOut
+            );
           }
-          if (initial && obj){
-            setTimeout(()=> fabricCanvas.remove(obj) , initial.duration)
+          if (this.initial && obj) {
+            setTimeout(() => fabricCanvas.remove(obj), this.initial.duration);
           }
-          if (!layer.animationNameOut) { 
-            fabricCanvas.remove(obj)
+          if (!layer.animationNameOut) {
+            fabricCanvas.remove(obj);
           }
 
-        if (!obj){
-          
-          layer.element.opacity = 1 ;    
-          layer.element.left = layer.left ? layer.left : layer.element.left ;    
-          layer.element.top = layer.top ? layer.top : layer.element.top ; 
-          layer.element.scaleX = layer.scaleX ? layer.scaleX : layer.element.scaleX ; 
-          layer.element.scaleY = layer.scaleY ? layer.scaleY : layer.element.scaleY ; 
-        }
-       
+          if (!obj && this.initial) {
+            console.log("initial", this.initial);
+            layer.element.opacity = 1;
+            layer.element.left = this.initial.left;
+            layer.element.top = this.initial.top;
+            layer.element.scaleX = this.initial.scaleX;
+            layer.element.scaleY = this.initial.scaleY;
+          }
 
-          console.log(layer , "element")  
+          console.log(layer, "element");
           fabricCanvas.renderAll();
         } else {
           // layer.element.visible = true;
           const fabricCanvas = document.getElementById(
             `mycanvas-${activeSlide.id}`
           )?.fabric;
-         
+
           // if(this.cursor.width===1 && this.cursor.run){
           //   fabricCanvas.remove( fabricCanvas.getObjects().find((e)=> e.id === layer.element.id))
 
           // }
-          const checkExistance = fabricCanvas.getObjects().some((e)=> e.id === layer.element.id)
-          if (!checkExistance){
-
+          const checkExistance = fabricCanvas
+            .getObjects()
+            .some((e) => e.id === layer.element.id);
+          if (!checkExistance) {
             fabricCanvas?.add(layer.element);
-            layer.element.play()
+            layer.element.play();
             layer.animationIn?.playAnimation(layer.animationNameIn);
           }
-       
+
           fabricCanvas?.renderAll();
         }
       });
