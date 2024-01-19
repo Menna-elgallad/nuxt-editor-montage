@@ -1,260 +1,106 @@
 <template lang="pug">
-.contents  
-  //- animationBack.showMenuProp
-  menubackground.showMenuBack(v-if="didMounted" :tools="topTools" :key="topTools")
-  .main.flex.gap-2.justify-content-between  
-    .dashboard(@click="releaseControls()" )
-      .canvasElement(@click="focus" )
-        canvas#mycanvas-1(ref="canvasRef" )
-      .timeline-index 
+.mx-auto.mt-20
+    section.text-center.container
+        .text.max-w-4xl.mx-auto.pt-20
+            h1(class="text-primary font-bold  text-6xl mb-4"  data-nuxt="zoom-out" data-nuxt-delay="100" v-animate-inview="'nuxt-animate'" ) Make Stunning Videos Easily in #[span(class=" font-normal marker bg-gradient-to-r to-[#FA618A] via-[#FA618A]  from-[#5156F6] inline-block text-transparent bg-clip-text") No Time]
+            p.text-sm.mb-5( data-nuxt="fade" data-nuxt-delay="200" v-animate-inview="'nuxt-animate'") Effortless, no need for prior experience, using the power of Ai.
+        .flex.justify-center.gap-x-10.gap-y-3.max-w-4xl.mx-auto.items-center.flex-wrap.mb-5(data-nuxt="fade" data-nuxt-delay="300" v-animate-inview="'nuxt-animate'")
+            .btn.bg-primary.text-white.px-16(class="py-3")  Create Video
+            .rounded-xl(class='p-0.5  bg-gradient-to-r from-[#FA618A]  to-[#5156F6]  ease-in-out duration-300 transition  hover:scale-[95%]  ')
+                        .btn.rounded-lg.px-9.bg-white.text-xs.text-black(class="py-3.5 hover:!scale-100") Request Early Accesses
+        .img.max-w-4xl.mx-auto(data-nuxt="slide-up-lg" data-nuxt-delay="400" v-animate-inview="'nuxt-animate'") 
+            img(src="/landing/dashboard.png")
+    section.container.relative  
+        .absolute.float-animation(class="top-[232px] left-[-109px]")   
+            img(src="/landing/frontShapes1.svg" ) 
+        .absolute.float-animation(class="top-[676px] left-[-50px]")   
+            img(src="/landing/frontShapes2.svg" ) 
+        .absolute.float-animation(class="top-[340px] right-[-297px]")   
+            img(src="/landing/frontShapes3.svg" ) 
+        .absolute.float-animation(class="top-[133px] left-[588px]")   
+            img(src="/landing/frontShapes4.svg" ) 
 
-          button.run-btn.pi(@click="runTimeLine(!timeLineStore.cursor.run)" :class="[timeLineStore.cursor.run ? 'pi-pause' : 'pi-play']")
-          timeline(@follow-cursor="followCursor" @hide-seekbar="hideSeekbar" @seek="seek" class="p-2")
-    sidetools(v-if="didMounted" @click="releaseControls()")   
-    
+        .text.max-w-4xl.mx-auto.pt-20.text-center
+             h1(class="text-primary font-bold  text-6xl mb-4"  data-nuxt="zoom-out" data-nuxt-delay="100" v-animate-inview="'nuxt-animate'" )  Mootions Has It All
         
+        .grid(class="lg:grid-cols-4 gap-5  ")
+            div(class=" "  data-nuxt="slide-left" data-nuxt-delay="100" v-animate-inview="'nuxt-animate'") 
+                .gradient-container.p-4
+                    h3.text-md.font-semibold.mb-2 Simple and Efficient
+                    p.text-sm.mb-2 intuitive tools for quick and hassle-free video creation.
+                    .img-app-large: img(src="/landing/m2-transparent.gif")
+
+            div(class="  lg:col-span-2 col-span-1"  data-nuxt="slide-up-lg" data-nuxt-delay="300" v-animate-inview="'nuxt-animate'") 
+                .gradient-container.p-4
+                    h3.text-md.font-semibold.mb-2 Localized Templates
+                    p.text-sm.mb-2 Tailored and region-specific pre-designed templates, allowing users to effortlessly create content that resonates with their target audience
+                    .img-app-large: img(src="/landing/m1-transparent.gif" )
+
+            div(class="  row-span-2"  data-nuxt="slide-right" data-nuxt-delay="300" v-animate-inview="'nuxt-animate'")  
+                .gradient-container.p-4
+                    h3.text-md.font-semibold.mb-2 Character Builder
+            div(class="  lg:col-span-2 col-span-1"  data-nuxt="slide-left" data-nuxt-delay="400" v-animate-inview="'nuxt-animate'") 
+                .gradient-container.p-4
+                    h3.text-md.font-semibold.mb-2 AI  Script Writer
+                    .grid(class="md:grid-cols-2 grid-cols-1  ")
+                        .text
+                            p.text-sm.mb-3 Effortlessly craft captivating scripts in seconds, seamlessly integrated for your convenience.
+                            p.text-sm.opacity-50 Welcome to a world where creativity knows no bounds. Today, we embark on a journey into the realm of seamless animation with
+                        .img-app-large: img(src="/landing/mouse-4.gif"  )
+            div(class=" "  data-nuxt="slide-up-lg" data-nuxt-delay="500" v-animate-inview="'nuxt-animate'") 
+                .gradient-container.p-4
+                    h3.text-md.font-semibold.mb-2 AI Voice Over
+                    p.text-sm.mb-2 Experience seamless efficiency the all-in-one AI voice-over solution—no extra steps required.
+                    .img-app-small: img(src="/landing/mic-transparent.gif" )
+    section 
+        .text.max-w-4xl.mx-auto.pt-28.text-center.container.mb-3
+            h2.text-3xl.font-semibold Ready to Get Started?
+            p.text-xl.font-light: i Creating amazing videos has never been easier. 
+        Carousel            
+        .max-w-4xl.mx-auto.pt-3.text-center.container   
+              .btn.bg-primary.text-white.px-16.w-fit.m-auto(class="py-3 !rounded-[2rem] shadow-primary shadow-md") Explore More
+    section 
+        .bg-primary.mt-20
+            .text.max-w-4xl.mx-auto.pt-20.text-center.container.mb-16
+                h2.text-3xl.font-semibold.text-white Tons of Others Loved It
+            
+            Scroll-horizent       
+    section.relative.z-10#footer
+        div(class="bg-zinc-800 rounded-[60px] text-white min-h-[400px] absolute left-1/2 translate-x-[-50%]  w-[90%] bottom-[-20px] z-10 px-5 py-20")
+                .flex.justify-content-between.flex-wrap   
+                    div
+                        //- img(src="/logo-light.svg") 
+                        h1.text-xl.font-bold.mb-3 mootions
+                        p.max-w-xs.font-light A platform designed for anyone who wants to make stunning videos effortlessly.   
+                        .icones.text-md.flex.gap-2.mt-3 
+                            Icon(name="ant-design:instagram-outlined")        
+                            Icon(name="ant-design:facebook-outlined")        
+                            Icon(name="ant-design:linkedin-outlined")     
+                    div
+                        .grid(class="grid-cols-2 gap-16")
+                            ul
+                              li.mb-3 Use Cases
+                              li.font-extralight  Youtube Intro
+                              li.font-extralight  Presentations
+                              li.font-extralight   Instagram Stories
+                              li.font-extralight  Social Media Videos
+                              li.font-extralight Promo Videos
+                              li.font-extralight  Sales Pitch
+
+                            ul
+                              li.mb-3 Company
+                              li.font-extralight  About
+                              li.font-extralight  FAQs
+                              li.font-extralight  Careers
+                              li.font-extralight  Contact Us
+    section.relative.z-1.p-10 
+        p.container.mx-auto.text-xs.mt-1 ⓒ2023 Mootions, All rights reserved.    
+
+                
+        
+
 </template>
 
-<script setup lang="ts">
-import gsap from "gsap";
-import { Draggable } from "gsap/Draggable";
-import { fabric } from "fabric";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useCanvas } from "~~/stores/canvas";
-import { storeToRefs } from "pinia";
-import { useSlide } from "~~/stores/slide";
-import { TimeLineStore } from "~~/stores/timeline";
-const timeLineStore = TimeLineStore();
-const canvasStore = useCanvas();
-const slideStore = useSlide();
-const myimg = ref(null);
-const canvasRef = ref();
-const showMenuBack = ref(false);
-const selectedElement = ref();
-const didMounted = ref(false);
-let fabricCanvas: fabric.Canvas, draggable, fabricElement;
-const { selectedProp, selectedID, selectedID2 } = storeToRefs(canvasStore);
-const topTools = ref("back");
-const allowfocus = ref(true);
+<script></script>
 
-watch(
-  selectedID,
-  () => {
-    console.log("selectedProp", selectedProp);
-    selectedPropA();
-  },
-  { deep: true }
-);
-watch(
-  selectedID2,
-  () => {
-    console.log("selectedProp", selectedProp);
-    selectedPropB();
-  },
-  { deep: true }
-);
-function selectedPropA() {
-  allowfocus.value = false;
-  topTools.value = "props";
-  console.log(allowfocus.value);
-  setTimeout(() => {
-    allowfocus.value = true;
-    console.log(allowfocus.value);
-  }, 1000);
-}
-function selectedPropB() {
-  allowfocus.value = false;
-  topTools.value = "shapes";
-  console.log(allowfocus.value);
-  setTimeout(() => {
-    allowfocus.value = true;
-    console.log(allowfocus.value);
-  }, 1000);
-}
-onMounted(() => {
-  const screenWidth = window.innerWidth;
-  const ourWidth = ((screenWidth * 50) / 100 - 40) * 0.9;
-  fabricCanvas = new fabric.Canvas(canvasRef.value, {
-    id: timeLineStore.activeSlide.id,
-    height: calculateHeight(ourWidth),
-    width: ourWidth,
-    backgroundColor: "white",
-    // shadow:1,
-    //@ts-ignore
-
-    backgroundColorAlpha: 0,
-    borderColor: "black",
-    strokeWidth: 5,
-    hasControls: true
-  });
-
-  //@ts-ignore
-  document.getElementById("mycanvas-1").fabric = fabricCanvas;
-  console.log(document.getElementById("mycanvas-1").fabric);
-  didMounted.value = true; //Note: this is to make sure that the canvas is mounted before the sidetools component is mounted
-  gsap.registerPlugin(ScrollTrigger, Draggable);
-  const myimg = document.getElementById("img");
-  const canvasWrapper = document.querySelector<any>(".canvasElement");
-  const animtion = ref();
-  // console.log(canvasRef.value);
-  if (canvasWrapper) {
-    canvasWrapper.style.width = fabricCanvas.width + "px";
-    canvasWrapper.style.height = fabricCanvas.height + "px";
-  }
-  canvasStore.$patch({ canasWrapper: canvasWrapper });
-  canvasStore.$patch({ canvasref: canvasRef.value });
-
-  fabricCanvas.set({
-    borderColor: "black",
-    strokeWidth: 5
-  });
-
-  // fabricCanvas.add(imgInstance);
-  slideStore.canvasSlides.push({
-    fabric: fabricCanvas,
-    slideNumber: 0
-  });
-});
-
-function runTimeLine(run: boolean) {
-  timeLineStore.$patch({ cursor: { ...timeLineStore.cursor, run } });
-  timeLineStore.run();
-}
-
-const updateLayerVisibility = () => {
-  // @ts-ignore
-  const activeObjectId: string = fabricCanvas?.getActiveObject()?.get("id");
-  for (const layer of layers.value) {
-    // @ts-ignore
-    const objectId: string = layer.object?.get("id");
-    layer.object!.visible = false;
-    if (isLayerVisible(layer, false)) {
-      layer.object!.visible = true;
-    } else {
-      layer.object!.visible = false;
-      if (objectId === activeObjectId) {
-        fabricCanvas?.discardActiveObject().renderAll();
-      }
-    }
-  }
-};
-
-const isLayerVisible = (layer: any, noTrim: boolean) => {
-  let layerOffsetMs = layer.offset * 10 + layer.startTrim * 10;
-  if (noTrim) {
-    layerOffsetMs = layer.offset * 10;
-    return (
-      state.currentTime >= layerOffsetMs &&
-      state.currentTime <= layerOffsetMs + layer.duration
-    );
-  } else {
-    const duration = layer.duration - layer.startTrim * 10 - layer.endTrim * 10;
-    return (
-      state.currentTime >= layerOffsetMs &&
-      state.currentTime <= layerOffsetMs + duration
-    );
-  }
-};
-
-function calculateHeight(width: number) {
-  return (width * 3) / 5;
-}
-
-function focus(event: any) {
-  if (!allowfocus.value) {
-    return;
-  }
-  event.stopPropagation();
-  console.log("background");
-  const canvasWrapper = document.querySelector<any>(".canvasElement");
-  topTools.value = "back";
-
-  showMenuBack.value = true;
-  gsap.to(".showMenuBack", {
-    y: 1,
-    duration: 0.5
-  });
-  canvasWrapper.style.outline = "2px solid #125386";
-  slideStore.slideChange = Math.random();
-}
-function releaseControls() {
-  const canvasWrapper = document.querySelector<any>(".canvasElement");
-  if (showMenuBack.value) {
-    canvasWrapper.style.outline = "none";
-  }
-}
-</script>
-<style lang="scss">
-.setting {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  z-index: 10;
-
-  background-color: #ccccccbb;
-  padding: 0.5rem;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  &:hover {
-    box-shadow: 0 0 8px 2px #cccccc70;
-  }
-}
-
-.dashboard {
-  // display: flex;
-  // flex-direction: column;
-  // justify-content: space-evenly;
-  height: 89vh;
-  // align-items: center;
-  display: flex;
-  flex-direction: column;
-  width: 80%;
-  // max-width: 50vw;
-  padding-top: 1rem;
-  position: relative;
-
-  .canvasElement {
-    position: relative;
-    margin-left: auto;
-    margin-right: auto;
-    &:hover {
-      outline: 2px solid #125386 !important;
-    }
-    .canvas-container {
-      // transform: translate(-50%, -50%);
-      --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
-        0 8px 10px -6px rgb(0 0 0 / 0.1);
-      --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color),
-        0 8px 10px -6px var(--tw-shadow-color);
-      box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
-        var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-    }
-  }
-}
-.run-btn {
-  border: none;
-  display: block;
-  /* margin: auto; */
-  background-color: transparent;
-  color: #5156f6;
-  font-size: 30px;
-  // padding-top: 10px;
-  margin: 10px 0;
-  cursor: pointer;
-}
-// .showMenuBack {
-//   position: absolute;
-//   width: 100%;
-// }
-.timeline-index {
-  width: 100%;
-  /* height: 62%; */
-  justify-content: space-between;
-  display: flex;
-  flex-direction: column;
-  flex:1
-}
-</style>
+<style></style>

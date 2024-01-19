@@ -1,10 +1,10 @@
 import { fabric } from "fabric";
 import { storeToRefs } from "pinia";
 import { TimeLineStore } from "~~/stores/timeline";
-const timelineStore = TimeLineStore();
-const timeLineStore = TimeLineStore();
-const activatedSlide = timeLineStore.activeSlide.id;
 export class AnimationManagerIn {
+  timelineStore = TimeLineStore();
+  timeLineStore = TimeLineStore();
+  activatedSlide = timeLineStore.activeSlide.id;
   fabricCanvas: fabric.Canvas = document.getElementById(
     `mycanvas-${activatedSlide}`
   )?.fabric;

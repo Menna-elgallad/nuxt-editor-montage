@@ -1,13 +1,13 @@
 <template lang="pug">
 .main
-  mynav
-  .mycontainer
+    AppNav
+    
     slot
 </template>
 
 <style lang="scss" scoped>
-.main {
-  height: 100vh;
-  overflow: hidden;
-}
+// .main {
+//   height: 100vh;
+//   overflow: hidden;
+// }
 </style>

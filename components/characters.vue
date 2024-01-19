@@ -9,7 +9,7 @@
     //-         h5(class=" text-black-alpha-50 mt-2 text-center") Emojis
     ClientOnly
         .row.animation(v-if="showAnimation " )
-            .flex.gap-1.align-items-center
+            .flex.gap-1.items-center
                 Icon( class="icon-hover" name="ic:outline-keyboard-arrow-left" @click="showAnimation=false")
                 h3(class=" m-2 ") Animate
             .flex.w-full.my-3   
@@ -19,7 +19,7 @@
         appear )
                 .rows(v-if=" animationTab==='in'")
                   .row
-                    .col-lg-3.flex.align-items-center.justify-content-center.flex-column(@click="[ animationNameIn = 'pop' ,  addAnimation() ]")
+                    .col-lg-3.flex.items-center.justify-center.flex-column(@click="[ animationNameIn = 'pop' ,  addAnimation() ]")
                       .animation-icon-container: img.animationIcon(src="../assets/aniamtion-icons/zoom4.svg")
                       p.text-center.text-sm Pop                    
                     .col-lg-3.text-center(@click="[ animationNameIn = 'fade' , addAnimation()  ]" )
@@ -27,77 +27,77 @@
                       p.text-center.text-sm Fade                    
                   h4.text-blue-600.mt-3.mb-2 Slide
                   .row.text-center 
-                    .col-lg-3.flex.align-items-center.justify-content-center.flex-column(@click="[ animationNameIn = 'slideLeft' ,  addAnimation() ]")
+                    .col-lg-3.flex.items-center.justify-center.flex-column(@click="[ animationNameIn = 'slideLeft' ,  addAnimation() ]")
                         .animation-icon-container: img.animationIcon(src="../assets/aniamtion-icons/slideout.svg")
                         p.text-center.text-sm Right
-                    .col-lg-3.flex.align-items-center.justify-content-center.flex-column(@click="[ animationNameIn = 'slideRight' ,  addAnimation() ]")
+                    .col-lg-3.flex.items-center.justify-center.flex-column(@click="[ animationNameIn = 'slideRight' ,  addAnimation() ]")
                         .animation-icon-container: img.animationIcon(src="../assets/aniamtion-icons/slideout4.svg")
                         p.text-center.text-sm Left
-                    .col-lg-3.flex.align-items-center.justify-content-center.flex-column(@click="[ animationNameIn = 'slideBottom' ,  addAnimation() ]")
+                    .col-lg-3.flex.items-center.justify-center.flex-column(@click="[ animationNameIn = 'slideBottom' ,  addAnimation() ]")
                         .animation-icon-container: img.animationIcon(src="../assets/aniamtion-icons/rightslide1.svg")
                         p.text-center.text-sm Top
-                    .col-lg-3.flex.align-items-center.justify-content-center.flex-column(@click="[ animationNameIn = 'slideTop' ,  addAnimation() ]")
+                    .col-lg-3.flex.items-center.justify-center.flex-column(@click="[ animationNameIn = 'slideTop' ,  addAnimation() ]")
                         .animation-icon-container: img.animationIcon(src="../assets/aniamtion-icons/rightslide2.svg")
                         p.text-center.text-sm Down
                   h4.text-blue-600.mt-3.mb-2 Reveal
                   .row
-                        .col-lg-3.flex.align-items-center.justify-content-center.flex-column(@click="[ animationNameIn = 'revealLeft' ,  addAnimation() ]")
+                        .col-lg-3.flex.items-center.justify-center.flex-column(@click="[ animationNameIn = 'revealLeft' ,  addAnimation() ]")
                             .animation-icon-container: img.animationIcon(src="../assets/aniamtion-icons/revealout.svg")
                             p.text-center.text-sm Right
                        
-                        .col-lg-3.flex.align-items-center.justify-content-center.flex-column(@click="[ animationNameIn = 'revealRight'  , addAnimation() ]")
+                        .col-lg-3.flex.items-center.justify-center.flex-column(@click="[ animationNameIn = 'revealRight'  , addAnimation() ]")
                             .animation-icon-container: img.animationIcon(src="../assets/aniamtion-icons/revealout2.svg")
                             p.text-center.text-sm Left
                        
-                        .col-lg-3.flex.align-items-center.justify-content-center.flex-column(@click=" [animationNameIn = 'revealBottom' , addAnimation() ]")
+                        .col-lg-3.flex.items-center.justify-center.flex-column(@click=" [animationNameIn = 'revealBottom' , addAnimation() ]")
                             .animation-icon-container: img.animationIcon(src="../assets/aniamtion-icons/reveal1.svg")
                             p.text-center.text-sm Top
                        
-                        .col-lg-3.flex.align-items-center.justify-content-center.flex-column(@click="[ animationNameIn = 'revealTop' ,  addAnimation() ]")
+                        .col-lg-3.flex.items-center.justify-center.flex-column(@click="[ animationNameIn = 'revealTop' ,  addAnimation() ]")
                             .animation-icon-container: img.animationIcon(src="../assets/aniamtion-icons/reveal2.svg")
                             p.text-center.text-sm Down
                   
-                        .col-lg-3.flex.align-items-center.justify-content-center.flex-column(@click="[ animationNameIn = 'swear' ,  addAnimation() ]")
+                        .col-lg-3.flex.items-center.justify-center.flex-column(@click="[ animationNameIn = 'swear' ,  addAnimation() ]")
                             .animation-icon-container: img.animationIcon(src="../assets/aniamtion-icons/smear1.svg")
                             p.text-center.text-sm Swear
                 
                 .rows(v-else-if=" animationTab==='out'")
                   .row
-                    .col-lg-3.flex.align-items-center.justify-content-center.flex-column(@click=" [animationNameOut = 'fade', addAnimation() ] " )
+                    .col-lg-3.flex.items-center.justify-center.flex-column(@click=" [animationNameOut = 'fade', addAnimation() ] " )
                       .animation-icon-container:  img.animationIcon(src="../assets/aniamtion-icons/fadeout.svg")
                       p.text-center.text-sm Fade
-                    .col-lg-3.flex.align-items-center.justify-content-center.flex-column(@click="[ animationNameOut = 'pop' , addAnimation()]")
+                    .col-lg-3.flex.items-center.justify-center.flex-column(@click="[ animationNameOut = 'pop' , addAnimation()]")
                       .animation-icon-container:  img.animationIcon(src="../assets/aniamtion-icons/zoom4.svg")
                       p.text-center.text-sm Pop
                   h4.text-blue-600.mt-3.mb-2 Slide
                   .row
-                      .col-lg-3.flex.align-items-center.justify-content-center.flex-column(@click="[ animationNameOut = 'slideLeft' , addAnimation()]")
+                      .col-lg-3.flex.items-center.justify-center.flex-column(@click="[ animationNameOut = 'slideLeft' , addAnimation()]")
                         .animation-icon-container:  img.animationIcon(src="../assets/aniamtion-icons/slideout.svg")
                         p.text-center.text-sm Right
-                      .col-lg-3.flex.align-items-center.justify-content-center.flex-column(@click="[ animationNameOut = 'slideRight' , addAnimation()]")
+                      .col-lg-3.flex.items-center.justify-center.flex-column(@click="[ animationNameOut = 'slideRight' , addAnimation()]")
                         .animation-icon-container:  img.animationIcon(src="../assets/aniamtion-icons/slideout4.svg")
                         p.text-center.text-sm Left
-                      .col-lg-3.flex.align-items-center.justify-content-center.flex-column(@click="[ animationNameOut = 'slideBottom' , addAnimation()]")
+                      .col-lg-3.flex.items-center.justify-center.flex-column(@click="[ animationNameOut = 'slideBottom' , addAnimation()]")
                         .animation-icon-container:  img.animationIcon(src="../assets/aniamtion-icons/rightslide1.svg")
                         p.text-center.text-sm Top
-                      .col-lg-3.flex.align-items-center.justify-content-center.flex-column(@click="[ animationNameOut = 'slideTop' , addAnimation()]")
+                      .col-lg-3.flex.items-center.justify-center.flex-column(@click="[ animationNameOut = 'slideTop' , addAnimation()]")
                         .animation-icon-container:  img.animationIcon(src="../assets/aniamtion-icons/rightslide2.svg")
                         p.text-center.text-sm Down
                   h4.text-blue-600.mt-3.mb-2 Reveal 
                   .row
-                    .col-lg-3.flex.align-items-center.justify-content-center.flex-column(@click="[ animationNameOut = 'revealLeft' , addAnimation()]")
+                    .col-lg-3.flex.items-center.justify-center.flex-column(@click="[ animationNameOut = 'revealLeft' , addAnimation()]")
                       .animation-icon-container:  img.animationIcon(src="../assets/aniamtion-icons/revealout.svg")
                       p.text-center.text-sm Right
-                    .col-lg-3.flex.align-items-center.justify-content-center.flex-column(@click="[ animationNameOut = 'revealRight' , addAnimation()]")
+                    .col-lg-3.flex.items-center.justify-center.flex-column(@click="[ animationNameOut = 'revealRight' , addAnimation()]")
                       .animation-icon-container:  img.animationIcon(src="../assets/aniamtion-icons/revealout2.svg")
                       p.text-center.text-sm Left
-                    .col-lg-3.flex.align-items-center.justify-content-center.flex-column(@click="[ animationNameOut = 'revealBottom' , addAnimation()]")
+                    .col-lg-3.flex.items-center.justify-center.flex-column(@click="[ animationNameOut = 'revealBottom' , addAnimation()]")
                       .animation-icon-container:  img.animationIcon(src="../assets/aniamtion-icons/reveal1.svg")
                       p.text-center.text-sm Top
-                    .col-lg-3.flex.align-items-center.justify-content-center.flex-column(@click="[ animationNameOut = 'revealTop' , addAnimation()]")
+                    .col-lg-3.flex.items-center.justify-center.flex-column(@click="[ animationNameOut = 'revealTop' , addAnimation()]")
                       .animation-icon-container:  img.animationIcon(src="../assets/aniamtion-icons/reveal2.svg")
                       p.text-center.text-sm Down
-                    .col-lg-3.flex.align-items-center.justify-content-center.flex-column(@click="[ animationNameOut = 'swear' , addAnimation()]")
+                    .col-lg-3.flex.items-center.justify-center.flex-column(@click="[ animationNameOut = 'swear' , addAnimation()]")
                       .animation-icon-container:  img.animationIcon(src="../assets/aniamtion-icons/smear1.svg")
                       p.text-center.text-sm Swear
         .row(v-else)
@@ -116,13 +116,11 @@
 </template>
 
 <script setup lang="ts">
-
 import anima2 from "../assets/characters/character_presenting_male_V1.json";
 import anima3 from "../assets/characters/character_disapointed_fullbody.json";
 
 // import anima7 from "../assets/characters/character_disapointed_shorts.json";
 // import anima8 from "../assets/characters/character_disapointed_poloshirt.json";
-
 
 import useLotte from "~~/composables/useLottie";
 import { storeToRefs } from "pinia";
@@ -131,22 +129,21 @@ import { useLayer } from "~~/stores/layer";
 import { fabric } from "fabric";
 import lottie from "lottie-web";
 
-
-const animationTab=  ref('in')
-const animationNameIn = ref("")
-const animationNameOut = ref()
-const selectedJson = ref()
+const animationTab = ref("in");
+const animationNameIn = ref("");
+const animationNameOut = ref();
+const selectedJson = ref();
 const showbasics = ref(false);
 // import { emit } from "process";
 const mycolors = ["red", "green", "blue"];
 const canvasStore = useCanvas();
-const showAnimation = ref(false)
+const showAnimation = ref(false);
 const layerStore = useLayer();
 import { TimeLineStore } from "~~/stores/timeline";
 const timelineStore = TimeLineStore();
 const { canasWrapper, color } = storeToRefs(canvasStore);
 const timeLineStore = TimeLineStore();
-const { activeSlide } = storeToRefs(timeLineStore );
+const { activeSlide } = storeToRefs(timeLineStore);
 const activatedSlide = timeLineStore.activeSlide.id;
 const emit = defineEmits(["selectProps"]);
 var tmpCanvasEl = fabric.util.createCanvasElement();
@@ -154,41 +151,48 @@ let fabricCanvas: fabric.Canvas;
 let canvaswrapper: any;
 
 fabricCanvas = document.getElementById(`mycanvas-${activatedSlide}`).fabric;
-const active = ref(fabricCanvas.getActiveObject())
+const active = ref(fabricCanvas.getActiveObject());
 canvaswrapper = canasWrapper.value;
 const uselottie = useLotte();
 
-watch(active  ,(curr)=>{
-  console.log(curr , "curr")
-if (curr) {
-  showAnimation.value = showAnimation.value 
-}
-else { 
-  showAnimation.value = false
-}
-},{deep:true})
+watch(
+  active,
+  (curr) => {
+    console.log(curr, "curr");
+    if (curr) {
+      showAnimation.value = showAnimation.value;
+    } else {
+      showAnimation.value = false;
+    }
+  },
+  { deep: true }
+);
 
-watch(animationNameIn , (curr)=>{
-  let animateIn = new AnimationManagerIn(fabricCanvas.getActiveObject())
+watch(animationNameIn, (curr) => {
+  let animateIn = new AnimationManagerIn(fabricCanvas.getActiveObject());
   animateIn?.playAnimation(curr);
-})
-watch(animationNameOut , (curr)=>{
-  let animateOut = new AnimationManagerOut(fabricCanvas.getActiveObject())
+});
+watch(animationNameOut, (curr) => {
+  let animateOut = new AnimationManagerOut(fabricCanvas.getActiveObject());
   let initial = animateOut?.playAnimation(curr);
-  // fabricCanvas.getActiveObject().top = initial.top ;  
-  if (initial){
-      
-    setTimeout(()=> fabricCanvas.getActiveObject().set({opacity : 1  , left : initial.left , top : initial.top , scaleX : initial.scaleX , scaleY : initial.scaleY  })  , initial.duration+100 )
-    console.log(fabricCanvas.getActiveObject() , "active")
-    fabricCanvas.renderAll()
-
+  // fabricCanvas.getActiveObject().top = initial.top ;
+  if (initial) {
+    setTimeout(
+      () =>
+        fabricCanvas.getActiveObject().set({
+          opacity: 1,
+          left: initial.left,
+          top: initial.top,
+          scaleX: initial.scaleX,
+          scaleY: initial.scaleY,
+        }),
+      initial.duration + 100
+    );
+    console.log(fabricCanvas.getActiveObject(), "active");
+    fabricCanvas.renderAll();
   }
-  // fabricCanvas.getActiveObject().left = initial.left  ; 
-
-})
-
-
-
+  // fabricCanvas.getActiveObject().left = initial.left  ;
+});
 
 function addjson(animation) {
   fabricCanvas = document.getElementById(
@@ -198,27 +202,27 @@ function addjson(animation) {
   const fabricImage = new uselottie(undefined, {
     scaleX: 0.3,
     scaleY: 0.3,
-    top : 150 , 
-    left : 150,   
-    originX: 'center',
-    originY: 'center' , 
+    top: 150,
+    left: 150,
+    originX: "center",
+    originY: "center",
     animationData: animation,
-    id: Math.random()
+    id: Math.random(),
   });
 
   fabricCanvas.add(fabricImage);
-  
+
   fabricImage.on("mousedown", (ele: any) => {
-    showAnimation.value = true ; 
+    showAnimation.value = true;
     canvasStore.$patch({ selectedProp: ele.target });
     canvasStore.$patch({ selectedID: Math.random() });
     const animationData = fabricImage.animationData;
-    
+
     // const sadShirt =  anima8.layers.filter((e)=> e.cl==='shirt')
     // const sadShirt2 =  anima8.layers.filter((e)=> e.nm==='detailshirt')
     // console.log("sad", sadShirt)
-    // let indexSad = 0 ; 
-    // let indexSad2 = 0 ; 
+    // let indexSad = 0 ;
+    // let indexSad2 = 0 ;
     // for (let i = 0; i < fabricImage.animationData.layers.length; i++ ){
     //   if (fabricImage.animationData.layers[i].cl === "shirt" && indexSad < sadShirt.length){
     //     animationData.layers[i] = sadShirt[indexSad]
@@ -277,8 +281,8 @@ function addjson(animation) {
         shirtcolor,
         skincolor,
         pantscolor,
-        lightcolor
-      ]
+        lightcolor,
+      ],
     });
     // Change the color of a shape in the animation data object
   });
@@ -292,46 +296,57 @@ function addjson(animation) {
     locked: false,
     timeToHide: 0,
     timeToShow: 0,
-    startPosition: 0 , 
+    startPosition: 0,
   });
   fabricCanvas.renderAll();
   fabricImage.play();
   // fabricImage.stop();
 }
 
-function addAnimation(){
- 
-  const animatedItem = timelineStore.slides[activeSlide.value.id-1].layers.find((e) => e.element.id == fabricCanvas.getActiveObject()?.id )
-  const animatedItemIndex = timelineStore.slides[activeSlide.value.id-1].layers.findIndex((e) => e.element.id == fabricCanvas.getActiveObject()?.id)
-  let animateIn = new AnimationManagerIn(animatedItem?.element)
-  let animateOut = new AnimationManagerOut(animatedItem?.element)
-  
-  timeLineStore.$patch({ slides : [
-    ...timeLineStore.slides.slice(0, activeSlide.value.id-1), 
-    ...timeLineStore.slides.slice(activeSlide.value.id-1 + 1)  , 
+function addAnimation() {
+  const animatedItem = timelineStore.slides[
+    activeSlide.value.id - 1
+  ].layers.find((e) => e.element.id == fabricCanvas.getActiveObject()?.id);
+  const animatedItemIndex = timelineStore.slides[
+    activeSlide.value.id - 1
+  ].layers.findIndex((e) => e.element.id == fabricCanvas.getActiveObject()?.id);
+  let animateIn = new AnimationManagerIn(animatedItem?.element);
+  let animateOut = new AnimationManagerOut(animatedItem?.element);
 
-    {  ...timeLineStore.slides[activeSlide.value.id-1]  , layers : [ 
- 
-      ...timeLineStore.slides[activeSlide.value.id-1].layers.slice(0 , animatedItemIndex ) ,
-      {...animatedItem ,   animationIn : animateIn , 
-     animationOut : animateOut , 
-     animationNameIn : animationNameIn.value ,
-     animationNameOut : animationNameOut.value ,
-     top : animatedItem?.element.top , 
-     left : animatedItem?.element.left , 
-     scaleX : animatedItem?.element.scaleX , 
-     scaleY : animatedItem?.element.scaleY , 
-      }, 
-      ...timeLineStore.slides[activeSlide.value.id-1].layers.slice( animatedItemIndex +1 ) , 
+  timeLineStore.$patch({
+    slides: [
+      ...timeLineStore.slides.slice(0, activeSlide.value.id - 1),
+      ...timeLineStore.slides.slice(activeSlide.value.id - 1 + 1),
 
-    ]  }
-  ]   });
-
-
+      {
+        ...timeLineStore.slides[activeSlide.value.id - 1],
+        layers: [
+          ...timeLineStore.slides[activeSlide.value.id - 1].layers.slice(
+            0,
+            animatedItemIndex
+          ),
+          {
+            ...animatedItem,
+            animationIn: animateIn,
+            animationOut: animateOut,
+            animationNameIn: animationNameIn.value,
+            animationNameOut: animationNameOut.value,
+            top: animatedItem?.element.top,
+            left: animatedItem?.element.left,
+            scaleX: animatedItem?.element.scaleX,
+            scaleY: animatedItem?.element.scaleY,
+          },
+          ...timeLineStore.slides[activeSlide.value.id - 1].layers.slice(
+            animatedItemIndex + 1
+          ),
+        ],
+      },
+    ],
+  });
 }
 
 function rgbaToHex(rgba) {
-  const [r, g, b] = rgba.slice(0, 3).map(value => Math.round(value * 255));
+  const [r, g, b] = rgba.slice(0, 3).map((value) => Math.round(value * 255));
   return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
 }
 </script>
@@ -361,7 +376,7 @@ video {
   width: 100%;
   height: 100px;
 }
-.animation-icon-container{
+.animation-icon-container {
   background-color: white;
   border-radius: 15px;
   padding: 0.5rem;
@@ -369,10 +384,10 @@ video {
   justify-content: center;
   align-items: center;
   box-shadow: 0 0 8px 4px #cccccc1a;
-  width:50px ;
-  height:50px ;
+  width: 50px;
+  height: 50px;
   margin: 5px;
-  img{
+  img {
     object-fit: contain !important;
     width: 100% !important;
   }

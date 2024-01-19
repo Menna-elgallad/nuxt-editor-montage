@@ -1,0 +1,219 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/css/bootstrap-grid.min.css");
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap');
+@import "/assets/styles/overrides.scss";
+@import "/assets/styles/animation.scss";
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+
+*,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+span {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+;
+}
+.marker {
+    font-family: 'Permanent Marker', cursive !important;
+
+}
+input {
+    padding: 1rem;
+    border-radius: 1.5;
+    &:focus {
+        box-shadow: 0 0 0 0.2rem #dddddd !important;
+        border-color: #8b8b8b !important;
+    }
+    &:hover {
+        border-color: rgb(138, 137, 137) !important;
+    }
+}
+
+body {
+    overflow-x: hidden;
+    // background-color: #75bdf870;
+    background-color: #f8f8f8;
+}
+
+ul {
+    list-style: none;
+    li {
+        text-decoration: none;
+    }
+}
+
+.page-enter-active,
+.page-leave-active {
+    transition: all 0.4s;
+}
+
+.page-enter-from,
+.page-leave-to {
+    opacity: 0;
+    filter: blur(1rem);
+}
+.opacity-enter-active,
+.opacity-leave-active {
+    transition: all 0.4s ease-in-out;
+}
+
+.opacity-enter-from,
+.opacity-leave-to {
+    opacity: 0;
+
+}
+
+.side-enter-from {
+    transform: translatex(-40px);
+    opacity: 0;
+}
+
+.side-enter-to {
+    transform: translatex(0);
+    opacity: 1;
+}
+
+.side-enter-active {
+    transition: all 0.2s ease-out;
+}
+
+.side-leave-from {
+    transform: translatex(0);
+    opacity: 1;
+}
+
+.side-leave-to {
+    transform: translatex(-40px);
+    opacity: 0;
+}
+
+.side-leave-active {
+    transition: all 0.2s ease-out;
+}
+
+.menuitem {
+    border-bottom: 2px solid #cccccc2d;
+    padding-bottom: 1rem;
+}
+.myborder{
+    border-bottom: 2px solid rgba(204, 204, 204, 0.1764705882);
+}
+.pink_grd {
+    background: linear-gradient(180deg, rgb(231 60 118) 0%, rgb(243 86 138) 54%, rgb(241, 124, 165) 100%);
+}
+.hovericon{
+    transition: all 0.5s ease;
+    cursor: pointer;
+    &:hover{
+        color: #77777782 !important;
+        transform: scale(1.05);
+    }
+    
+}
+.canvasElement{
+    position: relative;
+}
+.canvas-container{
+    position: absolute !important;
+}
+button { 
+    border: none;
+    outline: none;
+}
+.icon-hover{
+    transition: all 0.5s ease ;
+    cursor: pointer;
+    &:hover { 
+        opacity: 0.5;
+    }
+}
+.gradient-container {
+    position: relative;
+    box-sizing: border-box;
+    $border: 2px;
+  
+    background: rgba(255, 255, 255, 0.829);
+    background-clip: padding-box; /* !importanté */
+    border: solid $border transparent; /* !importanté */
+    border-radius: 1em;
+    height: 100%;
+  
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: -1;
+      margin: -$border; /* !importanté */
+      border-radius: inherit; /* !importanté */
+      background: linear-gradient(to right, rgba(165, 238, 255, 0.438), rgba(110, 190, 244, 0.671) , rgba(96, 28, 141, 0.315));
+    }
+  
+   
+  }
+.hover-up{
+    transition: all 0.5s ease ;
+    &:hover {  
+        transform: translateY(-5px);
+    }
+}
+.img-app-large {
+    height: 250px;
+    width: 100%;
+   
+    img{
+        height: 100%;
+        width: 100%;
+object-fit: contain;        
+    }
+}
+.img-app-small {
+    height: 100px;
+    width: 100%;
+   
+    img{
+        height: 100%;
+        width: 100%;
+object-fit: contain;        
+    }
+}
+
+@keyframes float {
+	0% {
+	
+		transform: translatey(0px);
+	}
+	50% {
+		
+		transform: translatey(-20px);
+	}
+	100% {
+	
+		transform: translatey(0px);
+	}
+}
+
+.float-animation { 
+    animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float-circle {
+    from {
+      transform: rotate(0deg) translate3d(5px, 0, 0) rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg) translate3d(5px, 0, 0) rotate(-360deg);
+    }
+  }
+
+  .float-animation-circle { 
+    animation: float 3s infinite linear;
+}
+

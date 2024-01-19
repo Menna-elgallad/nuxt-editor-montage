@@ -2,25 +2,22 @@ export default defineNuxtConfig({
   ssr: false,
 
   css: [
-    "primevue/resources/themes/saga-blue/theme.css",
-    "primevue/resources/primevue.css",
-    "primeicons/primeicons.css",
-    "primeflex/primeflex.css",
-    "assets/global.scss",
+    
+    "assets/styles/global.scss",
   ],
   vite: {
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: `@use "@/assets/variables.scss" as *;`,
+          additionalData: `@use "@/assets/styles/variables.scss" as *;`,
         },
       },
     },
   },
-  modules: ["nuxt-graphql-client", "nuxt-icon", "@pinia/nuxt"],
-
-  build: {
-    transpile: ["primevue"],
-  },
+  modules: ["nuxt-graphql-client", "nuxt-icon", "@pinia/nuxt" ,'@nuxtjs/tailwindcss' ],
+  tailwindcss: {
+    configPath: 'tailwind.config.js' ,
+    cssPath: '~/assets/css/tailwind.css',
+  }
   //   ssr: false,
 });

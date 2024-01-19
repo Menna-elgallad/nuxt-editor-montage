@@ -1,13 +1,13 @@
 <template lang="pug">
 .tools.flex.flex-row-reverse
-  .mycontainer.border-round-2xl
+  .mycontainer.rounded-2xl.bg-primary
     ul.text-0
       li.mt-2.py-3.toollogo(v-for="(item,index) in names" :key="index" @click="toggle(  item.name ,index ) " :class="{active : activeindex===index}" )
-        Icon.text-3xl.icontools(:name="item.icon")
+        Icon.text-xl.icontools.text-white(:name="item.icon")
         div(class="hoverDataMenu text-sm font-semibold") {{item.name}}
   .toolItems( ref="tools") 
     .close( class="flex "): span(@click="close()" style="pointer:cursor")
-      Icon.text-2xl.text-blue-700(name="ion:chevron-forward")    
+      Icon.text-xl.text-blue-700(name="ion:chevron-forward")    
     .toolcontent
       background(v-if="content==='Background'")
       Text(v-if="content==='Text'")
@@ -23,7 +23,7 @@
 import gsap from "gsap";
 const props = defineProps({
   selectedElement: Object,
-  canvas: Object
+  canvas: Object,
 });
 const tools = ref();
 const activeindex = ref(null);
@@ -35,7 +35,7 @@ const emit = defineEmits(["selectProps"]);
 function toggle(item, index) {
   if (show.value === false && !content.value) {
     gsap.to(".toolItems", {
-      xPercent: -1
+      xPercent: -1,
     });
   }
   console.log(item);
@@ -46,7 +46,7 @@ function toggle(item, index) {
 function close() {
   gsap.to(".toolItems", {
     xPercent: 100,
-    duration: 1
+    duration: 1,
   });
   show.value = false;
   content.value = "";
@@ -66,7 +66,7 @@ const names = [
   { name: "Images", icon: "ion:images" },
   { name: "Videos", icon: "fluent:video-32-filled" },
   { name: "Voiceovers", icon: "pepicons-pop:music-note-double" },
-  { name: "Script", icon: "gg:transcript" }
+  { name: "Script", icon: "gg:transcript" },
 ];
 </script>
 
@@ -74,12 +74,12 @@ const names = [
 .mycontainer {
   width: 70px;
 
-  background: linear-gradient(
-    180deg,
-    rgba(13, 60, 97, 1) 0%,
-    rgba(18, 66, 105, 1) 54%,
-    rgba(52, 89, 119, 1) 100%
-  );
+  // background: linear-gradient(
+  //   180deg,
+  //   rgba(13, 60, 97, 1) 0%,
+  //   rgba(18, 66, 105, 1) 54%,
+  //   rgba(52, 89, 119, 1) 100%
+  // );
   transform: translateY(-25px);
   z-index: 5;
 
@@ -97,12 +97,14 @@ const names = [
 
       &.active {
         background-color: rgb(255 255 255);
-        color: var(--blue-900);
+        svg {
+          color: $primary !important;
+        }
       }
 
       &:hover {
         background-color: rgba(255, 255, 255, 0.623);
-        color: var(--blue-900);
+        color: $primary;
       }
     }
   }
