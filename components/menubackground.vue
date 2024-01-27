@@ -1,7 +1,7 @@
 <template lang="pug">
 .menuNav    
   Transition
-    ul.flex.justify-content-center.surface-200(v-if="tools==='back'")
+    ul.flex.justify-content-center.bg-white.shadow-sm(v-if="tools==='back'")
         li.color: span
              Icon(name="bx:bxs-color-fill" )
              input(type="color" v-model ="color" )
@@ -12,7 +12,7 @@
         li: span(@click="removeback()"): Icon(name="material-symbols:delete")
        
   Transition
-    ul.flex.justify-content-center.surface-200(v-if="tools === 'props'")
+    ul.flex.justify-content-center.bg-white.shadow-sm(v-if="tools === 'props'")
       li(v-for="(item , index) in selectedPropColors")
         .coloranimat
             input(type="color" v-model ="selectedPropColors[index]" :style="{backgroundColor : item}" )
@@ -20,7 +20,7 @@
       li: span(@click="removeProp()"): Icon(name="material-symbols:delete")    
       
   Transition
-    ul.flex.justify-content-center.surface-200(v-if="tools === 'shapes'")
+    ul.flex.justify-content-center.bg-white.shadow-sm(v-if="tools === 'shapes'")
       
       li.coloranimat
           input(type="color" v-model ="selectedPropColor" :style="{backgroundColor : selectedPropColor}" )
@@ -47,12 +47,12 @@ const {
   selectedPropColor,
   selectedPropColors,
   selectedProp,
-  selectedPropBorder
+  selectedPropBorder,
 } = storeToRefs(canvasStore);
 const selected = ref();
 import { TimeLineStore } from "~~/stores/timeline";
-const timeLineStore = TimeLineStore()
-const activatedSlide = timeLineStore.activeSlide.id
+const timeLineStore = TimeLineStore();
+const activatedSlide = timeLineStore.activeSlide.id;
 
 let canvaswrapper: any;
 const flipx = ref(true);
@@ -176,7 +176,7 @@ watch(
 
 onMounted(() => {
   //@ts-ignore
-  console.log(`mycanvas-${activatedSlide}`)
+  console.log(`mycanvas-${activatedSlide}`);
   const mycanvas = document.getElementById(`mycanvas-${activatedSlide}`).fabric;
   fabricCanvas = mycanvas;
 

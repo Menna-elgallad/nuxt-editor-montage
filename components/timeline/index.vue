@@ -52,7 +52,7 @@ const colors = [
   "#ffeb3b",
   "#ffc107",
   "#ff9800",
-  "#ff5722"
+  "#ff5722",
 ];
 console.log(timeLineStore.slides);
 // function randomColor() {
@@ -86,7 +86,7 @@ function addSlide() {
     backgroundColorAlpha: 0,
     borderColor: "black",
     strokeWidth: 5,
-    hasControls: true
+    hasControls: true,
   });
 
   canvas.parentNode.style.setProperty("display", "none");
@@ -98,7 +98,7 @@ function addSlide() {
     layers: [],
     id: +timeLineStore.slides.length + 1,
     isActive: false,
-    width: 200
+    width: 200,
   });
 }
 
@@ -242,14 +242,11 @@ function activateSlide(slide: any) {
   // margin-top: 1rem;
   max-width: 100%;
   width: 100%;
-
+  z-index: 2000;
+  border: 1px solid #d9d9d9;
   height: 190px;
-  border-radius: 15px;
-  // height: 62%;
-  /* display: flex !important; */
   justify-content: center;
   overflow-x: hidden;
-  /* flex: 0.3; */
   padding: 0 0.3rem;
   background-color: white;
   .time {

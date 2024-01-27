@@ -83,11 +83,11 @@ const slides = [
 
 <template lang="pug">
 .overflow-hidden
-  .h-screen.overscroll-none.flex.gap-20.overflow-hidden.wrapper(class='w-[600%] pl-32' ref='container')
-    .slide.image(v-for='(slide, index) in slides'   :key='index' class='text-[60px]' ref='image' :class="{ '!translate-y-10': index % 2 !== 0 }")
-      .max-w-sm.p-3
-        h4.text-md.mb-10 {{ slide.name }}
-        h4.text-sm.text-primary.font-meduim {{ slide.content }}
+.h-screen.overscroll-none.flex.gap-20.overflow-hidden.wrapper(class='w-[600%] pl-32' ref='container')
+  .slide.image(v-for='(slide, index) in slides'   :key='index' class='text-[60px]' ref='image' :class="{ '!translate-y-10': index % 2 !== 0 }")
+    .max-w-sm.p-3
+      h4.text-md.mb-10 {{ slide.name }}
+      h4.text-sm.text-primary.font-meduim {{ slide.content }}
 
 </template>
 

@@ -1,17 +1,17 @@
 <template lang="pug">
-.tools.flex.flex-row-reverse
-  .mycontainer.rounded-2xl.bg-primary
-    ul.text-0
-      li.mt-2.py-3.toollogo(v-for="(item,index) in names" :key="index" @click="toggle(  item.name ,index ) " :class="{active : activeindex===index}" )
-        Icon.text-xl.icontools.text-white(:name="item.icon")
-        div(class="hoverDataMenu text-sm font-semibold") {{item.name}}
-  .toolItems( ref="tools") 
+.tools.flex.flex-row
+  .mycontainer.bg-white(:class="{'opened' : show}")
+    ul.text-0.py-3
+      li.mt-4.mb-4.toollogo(v-for="(item,index) in names" :key="index" @click="toggle(  item.name ,index ) " :class="{active : activeindex===index}" )
+        Icon.text-2xl.icontools.text-black(:name="item.icon")
+        div.menu-text.text-xxs(  :class="{'active active-text' : activeindex===index}") {{item.name}}
+  .toolItems( ref="tools" v-if="show") 
     .close( class="flex "): span(@click="close()" style="pointer:cursor")
-      Icon.text-xl.text-blue-700(name="ion:chevron-forward")    
+      Icon.text-xl(name="iconamoon:close")    
     .toolcontent
       background(v-if="content==='Background'")
       Text(v-if="content==='Text'")
-      animated(v-if="content==='Elements'" @select-props="selectprops()")
+      Scenes(v-if="content==='Scene'" @select-props="selectprops()")
       images(v-if="content==='Images'" )
       shapes(v-if="content==='Shapes'" )
       videos(v-if="content==='Videos'" )
@@ -28,26 +28,26 @@ const props = defineProps({
 const tools = ref();
 const activeindex = ref(null);
 const show = ref(false);
-const content = ref("Background");
+const content = ref("");
 
 const emit = defineEmits(["selectProps"]);
 
 function toggle(item, index) {
   if (show.value === false && !content.value) {
-    gsap.to(".toolItems", {
-      xPercent: -1,
-    });
+    // gsap.to(".toolItems", {
+    //   xPercent: -1,
+    // });
+    show.value = !show.value;
   }
-  console.log(item);
-  show.value = !show.value;
   content.value = item;
   activeindex.value = index;
+  // console.log(item);
 }
 function close() {
-  gsap.to(".toolItems", {
-    xPercent: 100,
-    duration: 1,
-  });
+  // gsap.to(".toolItems", {
+  //   xPercent: -100,
+  //   duration: 1,
+  // });
   show.value = false;
   content.value = "";
 }
@@ -57,38 +57,49 @@ function selectprops() {
 }
 
 const names = [
-  { name: "Scenes", icon: "zondicons:film" },
-  { name: "Characters", icon: "bi:people-fill" },
-  { name: "Text", icon: "mdi:format-text" },
-  { name: "Background", icon: "material-symbols:background-grid-small" },
-  { name: "Elements", icon: "gis:folder-maps" },
-  { name: "Shapes", icon: "bx:bxs-shapes" },
-  { name: "Images", icon: "ion:images" },
-  { name: "Videos", icon: "fluent:video-32-filled" },
-  { name: "Voiceovers", icon: "pepicons-pop:music-note-double" },
-  { name: "Script", icon: "gg:transcript" },
+  { name: "Scene", icon: "mdi-light:grid" },
+  // { name: "Characters", icon: "bi:people-fill" },
+  { name: "Text", icon: "iconoir:text" },
+  // { name: "Background", icon: "material-symbols:background-grid-small" },
+  // { name: "Elements", icon: "gis:folder-maps" },
+  { name: "Shapes", icon: "ph:shapes-light" },
+  { name: "Images", icon: "system-uicons:picture" },
+  // { name: "Videos", icon: "fluent:video-32-filled" },
+  // { name: "Voiceovers", icon: "pepicons-pop:music-note-double" },
+  { name: "Script", icon: "material-symbols-light:text-ad-outline" },
 ];
 </script>
 
 <style lang="scss" scoped>
 .mycontainer {
-  width: 70px;
+  width: 80px;
+  height: fit-content;
+  border-radius: 42px;
+  border: 1px solid #d9d9d9;
+  position: absolute;
+  top: 40%;
+  left: 10px;
+  transform: translateY(-40%);
+  transition: border-radius 0.5s ease;
 
-  // background: linear-gradient(
-  //   180deg,
-  //   rgba(13, 60, 97, 1) 0%,
-  //   rgba(18, 66, 105, 1) 54%,
-  //   rgba(52, 89, 119, 1) 100%
-  // );
-  transform: translateY(-25px);
-  z-index: 5;
+  z-index: 1001;
+  &.opened {
+    left: 0;
+    border-radius: 0;
+    height: 68vh;
+    transform: translateY(0);
+    top: unset;
 
+    // top: 501px;
+  }
   ul {
     position: relative;
 
     li {
-      display: grid;
-      place-content: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
       cursor: pointer;
       position: relative;
       z-index: 100;
@@ -96,9 +107,18 @@ const names = [
       border-radius: 1.2rem;
 
       &.active {
-        background-color: rgb(255 255 255);
+        color: $primary !important;
+
         svg {
           color: $primary !important;
+        }
+      }
+
+      .menu-text {
+        opacity: 0;
+        transition: all 0.5s ease;
+        &.active-text {
+          opacity: 1 !important;
         }
       }
 
@@ -116,18 +136,17 @@ const names = [
 
   .toolItems {
     color: black;
-    position: relative;
-    z-index: 1;
+    position: absolute;
+    z-index: 1000;
     // transform: translateX(100%);
     overflow-x: hidden;
     padding: 2rem 1.4rem;
-    height: 100%;
-
+    left: 80px;
     background-color: white;
     width: 370px;
-    border-radius: 1.2rem;
-    height: 85vh;
-    box-shadow: 0 0 8px 2px #cccccc41;
+    border: 1px solid #d9d9d9;
+    height: 68vh;
+
     /* width */
     &::-webkit-scrollbar {
       width: 4px;
@@ -141,7 +160,7 @@ const names = [
 
     // /* Handle */
     &::-webkit-scrollbar-thumb {
-      background: #8888885b;
+      background: #68b;
       border-radius: 50px;
     }
 
@@ -158,31 +177,30 @@ const names = [
 
 .close {
   span {
-    padding: 0.2rem;
-    background-color: #f3f3f3;
-    border-radius: 50%;
     cursor: pointer;
   }
 }
 .hoverDataMenu {
   display: none;
   position: absolute;
-  right: 75px;
+  left: 75px;
   background: #646464;
   padding: 0.7rem;
   color: white;
   border-radius: 1rem;
   transition: all 1s ease;
+  z-index: 1001;
   &::before {
     content: "";
     border-style: solid;
     border-width: 10px 15px 10px 15px;
     border-style: solid;
     border-width: 10px 15px 10px 10px;
-    border-color: transparent transparent transparent #646464;
+    border-color: transparent #646464 transparent transparent;
     position: absolute;
-    right: -22px;
+    left: -22px;
     top: 10px;
+    z-index: 1001;
   }
 }
 .toollogo {

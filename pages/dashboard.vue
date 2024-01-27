@@ -2,15 +2,16 @@
 .contents  
   //- animationBack.showMenuProp
   menubackground.showMenuBack(v-if="didMounted" :tools="topTools" :key="topTools")
-  .main.flex.gap-2.justify-content-between  
-    .dashboard(@click="releaseControls()" )
-      .canvasElement(@click="focus" )
-        canvas#mycanvas-1(ref="canvasRef" )
-      .timeline-index 
+  .flex.flex-column.justify-between(class="h-[88vh]")
+    .main.flex.gap-2.justify-content-between  
+      sidetools(v-if="didMounted" @click="releaseControls()")   
+      .dashboard(@click="releaseControls()" )
+        .canvasElement(@click="focus" )
+          canvas#mycanvas-1(ref="canvasRef" )
+        button.run-btn.pi(@click="runTimeLine(!timeLineStore.cursor.run)"): Icon.text-2xl( :name="timeLineStore.cursor.run ? 'ci:pause' : 'ph:play-bold' ")
+    .timeline-index 
 
-          button.run-btn.pi(@click="runTimeLine(!timeLineStore.cursor.run)" :class="[timeLineStore.cursor.run ? 'pi-pause' : 'pi-play']")
-          timeline(@follow-cursor="followCursor" @hide-seekbar="hideSeekbar" @seek="seek" class="p-2")
-    sidetools(v-if="didMounted" @click="releaseControls()")   
+        timeline(@follow-cursor="followCursor" @hide-seekbar="hideSeekbar" @seek="seek" class="p-2")
     
         
 </template>
@@ -211,7 +212,7 @@ function releaseControls() {
   // display: flex;
   // flex-direction: column;
   // justify-content: space-evenly;
-  height: 89vh;
+  // height: 89vh;
   // align-items: center;
   display: flex;
   flex-direction: column;
@@ -259,6 +260,6 @@ function releaseControls() {
   justify-content: space-between;
   display: flex;
   flex-direction: column;
-  flex: 1;
+  // flex: 1;
 }
 </style>

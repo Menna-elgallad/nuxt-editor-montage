@@ -1,35 +1,23 @@
 <template lang="pug">
 .mycontainer-fluid.bg-primary
-    .nav.flex.justify-between.items-center
-        ul.left-part.flex.gap-2.items-center 
-            li
-              .content
-                  Icon(name="fluent:list-16-filled" class="iconli")
-                  span.ml-2.text-lg mootions
+    .nav.py-2 
+        ul.left-part.flex.justify-between.items-center
+            li          
+                  Nuxt-Link(to="/"): img(src="/logo-light.svg")
+
+            li {{ name }}
             
-            li: Icon.text-xl.myicon(name="bi:question-circle" class="iconli" )   
-            li
-                
-                Icon.text-xl.myicon(name="ooui:undo-ltr" class="iconli") 
-                Icon.text-xl.myicon(name="ooui:undo-rtl" class="ml-2 iconli")
-            
-            li.span.font-bold {{ name }}
-        ul.right-part.flex.gap-2.items-center    
-                li: span.borderright.font-bold {{status}} 
-                li: Mybutton(name="noto-v1:crown" label="UPGRADE"  classname="pink_grd" btnclass="left"  )
-                
-                li: span.iconss.mysurface-400.text-50
-                    i(class="pi pi-play"  )
-                li: span.iconss.mysurface-400.text-50
-                    i(class="pi pi-video" )
-                li: span.iconss.surface-0.text-500
-                    i(class="pi pi-share-alt"  )
-                li: Mybutton(name="iconoir:download" label="Download"  classname="surface-0 text-color" btnclass="right"    )
+            li.flex.items-center.gap-3
+                div
+                  Icon.text-xl.myicon(name="ci:arrow-undo-up-left") 
+                  Icon.text-xl.myicon.opacity-50(name="ci:arrow-undo-up-right" class="ml-2 ")
+                .rounded-full.bg-pink-500.flex.justify-center.items-center(class='w-[40px] h-[40px]') K 
+                .btn.text-primary.bg-white.w-fit.ml-2 Share
 
 </template>
 
 <script setup>
-const name = ref("untitled");
+const name = ref("Untitled");
 const status = ref("saved");
 const items = [
   {
@@ -66,15 +54,7 @@ const items = [
 .mysurface-400 {
   background-color: #5251518c;
 }
-.left-part {
-  li:not(:last-child) {
-    border-right: 1px solid #cccccc93;
-    padding: 0 1rem;
-    .myicon {
-      margin-right: 0.5rem;
-    }
-  }
-}
+
 .borderright {
   border-right: 1px solid #cccccc93;
   padding-right: 0.5rem;

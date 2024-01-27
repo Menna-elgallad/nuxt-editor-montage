@@ -21,7 +21,7 @@
             img(src="/landing/frontShapes4.svg" ) 
 
         .text.max-w-4xl.mx-auto.pt-20.text-center
-             h1(class="text-primary font-bold  text-6xl mb-4"  data-nuxt="zoom-out" data-nuxt-delay="100" v-animate-inview="'nuxt-animate'" )  Mootions Has It All
+                h1(class="text-primary font-bold  text-6xl mb-4"  data-nuxt="zoom-out" data-nuxt-delay="100" v-animate-inview="'nuxt-animate'" )  Mootions Has It All
         
         .grid(class="lg:grid-cols-4 gap-5  ")
             div(class=" "  data-nuxt="slide-left" data-nuxt-delay="100" v-animate-inview="'nuxt-animate'") 
@@ -58,7 +58,7 @@
             p.text-xl.font-light: i Creating amazing videos has never been easier. 
         Carousel            
         .max-w-4xl.mx-auto.pt-3.text-center.container   
-              .btn.bg-primary.text-white.px-16.w-fit.m-auto(class="py-3 !rounded-[2rem] shadow-primary shadow-md") Explore More
+                .btn.bg-primary.text-white.px-16.w-fit.m-auto(class="py-3 !rounded-[2rem] shadow-primary shadow-md") Explore More
     section 
         .bg-primary.mt-20
             .text.max-w-4xl.mx-auto.pt-20.text-center.container.mb-16
@@ -69,8 +69,8 @@
         div(class="bg-zinc-800 rounded-[60px] text-white min-h-[400px] absolute left-1/2 translate-x-[-50%]  w-[90%] bottom-[-20px] z-10 px-5 py-20")
                 .flex.justify-content-between.flex-wrap   
                     div
-                        //- img(src="/logo-light.svg") 
-                        h1.text-xl.font-bold.mb-3 mootions
+                        img(src="/logo-light.svg") 
+                        //- h1.text-xl.font-bold.mb-3 mootions
                         p.max-w-xs.font-light A platform designed for anyone who wants to make stunning videos effortlessly.   
                         .icones.text-md.flex.gap-2.mt-3 
                             Icon(name="ant-design:instagram-outlined")        
@@ -79,20 +79,20 @@
                     div
                         .grid(class="grid-cols-2 gap-16")
                             ul
-                              li.mb-3 Use Cases
-                              li.font-extralight  Youtube Intro
-                              li.font-extralight  Presentations
-                              li.font-extralight   Instagram Stories
-                              li.font-extralight  Social Media Videos
-                              li.font-extralight Promo Videos
-                              li.font-extralight  Sales Pitch
+                                li.mb-3 Use Cases
+                                li.font-extralight  Youtube Intro
+                                li.font-extralight  Presentations
+                                li.font-extralight   Instagram Stories
+                                li.font-extralight  Social Media Videos
+                                li.font-extralight Promo Videos
+                                li.font-extralight  Sales Pitch
 
                             ul
-                              li.mb-3 Company
-                              li.font-extralight  About
-                              li.font-extralight  FAQs
-                              li.font-extralight  Careers
-                              li.font-extralight  Contact Us
+                                li.mb-3 Company
+                                li.font-extralight  About
+                                li.font-extralight  FAQs
+                                li.font-extralight  Careers
+                                li.font-extralight  Contact Us
     section.relative.z-1.p-10 
         p.container.mx-auto.text-xs.mt-1 ⓒ2023 Mootions, All rights reserved.    
 
