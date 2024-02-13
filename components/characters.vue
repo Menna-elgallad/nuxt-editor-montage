@@ -218,26 +218,6 @@ function addjson(animation) {
     canvasStore.$patch({ selectedID: Math.random() });
     const animationData = fabricImage.animationData;
 
-    // const sadShirt =  anima8.layers.filter((e)=> e.cl==='shirt')
-    // const sadShirt2 =  anima8.layers.filter((e)=> e.nm==='detailshirt')
-    // console.log("sad", sadShirt)
-    // let indexSad = 0 ;
-    // let indexSad2 = 0 ;
-    // for (let i = 0; i < fabricImage.animationData.layers.length; i++ ){
-    //   if (fabricImage.animationData.layers[i].cl === "shirt" && indexSad < sadShirt.length){
-    //     animationData.layers[i] = sadShirt[indexSad]
-    //     indexSad++
-    //   }
-    // }
-    // for (let i = 0; i < fabricImage.animationData.layers.length; i++ ){
-    //   if (fabricImage.animationData.layers[i].nm === "detailshirt" && indexSad2 < sadShirt2.length){
-    //     animationData.layers[i] = sadShirt2[indexSad2]
-    //     indexSad2++
-    //   }
-    // }
-    // fabricImage.setAnimationData(animationData);
-    // fabricImage.play();
-
     let hair;
     let shirt;
     let skin;

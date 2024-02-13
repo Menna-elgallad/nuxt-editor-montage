@@ -25,10 +25,12 @@
         "@lottiefiles/lottie-player": "^1.7.1",
         "@neeravp/vue-3-animate-in-view": "^1.0.2",
         "@pinia/nuxt": "^0.4.7",
+        "@skjnldsv/vue-plyr": "^7.4.0",
         "fabric": "^5.0.0",
         "gsap": "^3.11.5",
         "lottie-web": "^5.10.2",
         "nuxt-graphql-client": "^0.2.25",
+        "vue-final-modal": "^4.5.3",
         "vue3-colorpicker": "^2.1.2",
         "vue3-lottie": "^2.5.0"
     },

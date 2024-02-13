@@ -13,15 +13,15 @@
        
   Transition
     ul.flex.justify-content-center.bg-white.shadow-sm(v-if="tools === 'props'")
-      li(v-for="(item , index) in selectedPropColors")
+      li(v-for="(item , index) in  selectedPropColors")
         .coloranimat
-            input(type="color" v-model ="selectedPropColors[index]" :style="{backgroundColor : item}" )
+            input(type="color" v-model ="selectedPropColors[index][Object.keys(item)[0]]" @input="changeColor(item , index)" :style="{backgroundColor : Object.values(item)[0]}" )
           
       li: span(@click="removeProp()"): Icon(name="material-symbols:delete")    
       
   Transition
     ul.flex.justify-content-center.bg-white.shadow-sm(v-if="tools === 'shapes'")
-      
+
       li.coloranimat
           input(type="color" v-model ="selectedPropColor" :style="{backgroundColor : selectedPropColor}" )
       li.color: span
@@ -50,6 +50,7 @@ const {
   selectedPropBorder,
 } = storeToRefs(canvasStore);
 const selected = ref();
+const layerKeys = ref([]);
 import { TimeLineStore } from "~~/stores/timeline";
 const timeLineStore = TimeLineStore();
 const activatedSlide = timeLineStore.activeSlide.id;
@@ -65,7 +66,7 @@ function hexToRgba(hex) {
   const g = (bigint >> 8) & 255;
   const b = bigint & 255;
   const a = 1;
-  console.log([r / 255, g / 255, b / 255, a]);
+
   return [r / 255, g / 255, b / 255, a];
 }
 watch(selectedPropBorder, () => {
@@ -110,47 +111,51 @@ watch(selectedPropColor, () => {
     fabricCanvas.renderAll();
   }
 });
+function changeColor(item: Object, index: number) {
+  const classColor = Object.keys(item)[0];
+  const color = item[classColor];
+  const selectedAnimation = fabricCanvas.getActiveObject();
+  const animationData = selectedAnimation.animationData;
+  if (animationData) {
+    for (let i = 0; i < animationData.layers.length; i++) {
+      if (animationData.layers[i].cl === classColor) {
+        animationData.layers[i].shapes[0].it[1]?.c?.k &&
+          (animationData.layers[i].shapes[0].it[1].c.k = hexToRgba(color));
+      }
+    }
+  }
+}
 
 watch(
   selectedPropColors,
-  () => {
-    console.log("colorsssss");
+  (curr) => {
     const selectedAnimation = fabricCanvas.getActiveObject();
-
-    console.log("colorr", selectedPropColors.value);
-
     const animationData = selectedAnimation.animationData;
 
     if (animationData) {
       let idx;
       for (let i = 0; i < animationData.layers.length; i++) {
         if (animationData.layers[i].cl === "hair") {
-          // console.log(i, selected.value);
           animationData.layers[i].shapes[0].it[1].c.k = hexToRgba(
             selectedPropColors.value[0]
           );
         } else if (animationData.layers[i].cl === "beard") {
-          // console.log(i, selected.value);
           animationData.layers[i].shapes[0].it[1].c.k = hexToRgba(
             selectedPropColors.value[0]
           );
         } else if (animationData.layers[i].cl === "shirt") {
-          // console.log(i, selected.value);
           animationData.layers[i].shapes[0].it[1].c.k = hexToRgba(
             selectedPropColors.value[1]
           );
         } else if (animationData.layers[i].cl === "skin") {
-          // console.log(i, selected.value);
           animationData.layers[i].shapes[0].it[1].c.k = hexToRgba(
             selectedPropColors.value[2]
           );
         } else if (animationData.layers[i].cl === "pants") {
-          // console.log(i, selected.value);
           animationData.layers[i].shapes[0].it[1].c.k = hexToRgba(
             selectedPropColors.value[3]
           );
         } else if (animationData.layers[i].cl === "light") {
-          // console.log(i, selected.value);
           animationData.layers[i].shapes[0].it[1].c.k = hexToRgba(
             selectedPropColors.value[4]
           );

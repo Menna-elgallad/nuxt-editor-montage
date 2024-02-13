@@ -1,13 +1,23 @@
-    .mycontainer-fluid {
-        .p-button {
-            background-color: white;
-            color: black;
-        }
+.mycontainer-fluid {
+    .p-button {
+        background-color: white;
+        color: black;
     }
-    .green {
-        
-          path {
-            stroke: palevioletred !important;
-          }
-        
-      }
+}
+.green {
+    
+        path {
+        stroke: palevioletred !important;
+        }
+    
+    }
+    .plyr__control--overlaid {
+    background-color: $primary !important;
+    }
+    .plyr--full-ui input[type=range] {
+    color: $primary !important;
+    }
+    .plyr--video .plyr__control:focus-visible, .plyr--video .plyr__control:hover, .plyr--video .plyr__control[aria-expanded=true] {
+        // color: $primary !important;
+        background-color: $primary !important;
+    }
