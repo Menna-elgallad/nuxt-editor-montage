@@ -22,7 +22,7 @@ import vid2 from "~/public/landing/videos/dessert.mp4";
 import vid3 from "~/public/landing/videos/mootions-trial-v2.mp4";
 import vid4 from "~/public/landing/videos/motion-graphics.mp4";
 import vid5 from "~/public/landing/videos/Introduce-yourself.mp4";
-import vid6 from "~/public/landing/videos/clothes.mp4";
+import vid6 from "~/public/landing/videos/sport-gym.mp4";
 import img1 from "~/public/landing/videos/clothes-thibnail.png";
 import img2 from "~/public/landing/videos/dessert-thibnail.jpg";
 import img3 from "~/public/landing/videos/mootions-trial-v2-thibnail.png";
