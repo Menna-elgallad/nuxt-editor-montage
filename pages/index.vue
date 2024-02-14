@@ -6,8 +6,8 @@
             h1(class="text-primary font-bold  text-6xl mb-4"  data-nuxt="zoom-out" data-nuxt-delay="100" v-animate-inview="'nuxt-animate'" ) Make Stunning Videos Easily in #[span(class=" font-normal marker bg-gradient-to-r to-[#FA618A] via-[#FA618A]  from-[#5156F6] inline-block text-transparent bg-clip-text") No Time]
             p.text-sm.mb-5( data-nuxt="fade" data-nuxt-delay="200" v-animate-inview="'nuxt-animate'") Effortless, no need for prior experience, using the power of Ai.
         .flex.justify-center.gap-x-10.gap-y-3.max-w-4xl.mx-auto.items-center.flex-wrap.mb-5(data-nuxt="fade" data-nuxt-delay="300" v-animate-inview="'nuxt-animate'")
-            .btn.bg-primary.text-white.px-16(class="py-3")  Create Video
-            .rounded-xl(class='p-0.5  bg-gradient-to-r from-[#FA618A]  to-[#5156F6]  ease-in-out duration-300 transition  hover:scale-[95%]  ')
+            NuxtLink(to="/dashboard").btn.bg-primary.text-white.px-16(class="py-3")  Create Video
+            NuxtLink(to="/dashboard").rounded-xl(class='p-0.5  bg-gradient-to-r from-[#FA618A]  to-[#5156F6]  ease-in-out duration-300 transition  hover:scale-[97%]  ')
                         .btn.rounded-lg.px-9.bg-white.text-xs.text-black(class="py-3.5 hover:!scale-100") Request Early Accesses
         .img.max-w-4xl.mx-auto(data-nuxt="slide-up-lg" data-nuxt-delay="400" v-animate-inview="'nuxt-animate'") 
             img(src="/landing/dashboard.png")
@@ -27,6 +27,7 @@
         .grid(class="lg:grid-cols-4 gap-5  ")
             div(class=" "  data-nuxt="slide-left" data-nuxt-delay="100" v-animate-inview="'nuxt-animate'") 
                 .gradient-container.p-4
+                    
                     h3.text-md.font-semibold.mb-2 Simple and Efficient
                     p.text-sm.mb-2 intuitive tools for quick and hassle-free video creation.
                     .img-app-large: img(src="/landing/m2.gif")
@@ -82,20 +83,20 @@
                     div
                         .grid(class="grid-cols-2 gap-16")
                             ul.text-xs
-                                li.mb-3 Use Cases
-                                li.font-extralight  Youtube Intro
-                                li.font-extralight  Presentations
-                                li.font-extralight   Instagram Stories
-                                li.font-extralight  Social Media Videos
-                                li.font-extralight Promo Videos
-                                li.font-extralight  Sales Pitch
+                                NuxtLink(to='#'): li.mb-3 Use Cases
+                                NuxtLink(to='#'): li.font-extralight  Youtube Intro
+                                NuxtLink(to='#'): li.font-extralight  Presentations
+                                NuxtLink(to='#'): li.font-extralight   Instagram Stories
+                                NuxtLink(to='#'): li.font-extralight  Social Media Videos
+                                NuxtLink(to='#'): li.font-extralight Promo Videos
+                                NuxtLink(to='#'): li.font-extralight  Sales Pitch
 
                             ul.text-xs
-                                li.mb-3 Company
-                                li.font-extralight  About
-                                li.font-extralight  FAQs
-                                li.font-extralight  Careers
-                                li.font-extralight  Contact Us
+                                NuxtLink(to='#'): li.mb-3 Company
+                                NuxtLink(to='#'): li.font-extralight  About
+                                NuxtLink(to='#'): li.font-extralight  FAQs
+                                NuxtLink(to='#'): li.font-extralight  Careers
+                                NuxtLink(to='#'): li.font-extralight  Contact Us
     section.relative.z-1.p-10 
         p.container.mx-auto.text-xs.mt-1 ⓒ2023 Mootions, All rights reserved.    
 
@@ -107,14 +108,6 @@
 
 </template>
 
-<script setup>
-import vide from "~/public/landing/videos/clothes.mp4";
-const show = ref(false);
-
-function confirm() {
-  show.value = false;
-}
-const src = "../assets/videos/clothes.mp4";
-</script>
+<script setup></script>
 
 <style></style>

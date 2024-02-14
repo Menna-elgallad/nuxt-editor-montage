@@ -54,29 +54,29 @@ const slides = [
       "Mootions made video creation a breeze! The AI features are game-changers for a non-techie like me.",
   },
   {
-    name: "Sarah L.",
+    name: "Khaled R.",
     content:
-      "Mootions made video creation a breeze! The AI features are game-changers for a non-techie like me.",
+      "It's impressive how Mootions understands the nuances of Arabic communication. The tailored visuals and culturally relevant elements make our campaigns stand out. ",
   },
   {
-    name: "Sarah L.",
+    name: "Ahmed M.",
     content:
-      "Mootions made video creation a breeze! The AI features are game-changers for a non-techie like me.",
+      "As a small business owner, Mootions has been a game-changer for our marketing videos.",
   },
   {
-    name: "Sarah L.",
+    name: "Jessica M.",
     content:
-      "Mootions made video creation a breeze! The AI features are game-changers for a non-techie like me.",
+      "The platform's accessibility and the magic of AI make it feel like it understands and supports your artistic aspirations.",
   },
   {
-    name: "Sarah L.",
+    name: "Marwan A.",
     content:
-      "Mootions made video creation a breeze! The AI features are game-changers for a non-techie like me.",
+      "Mootions made a huge difference for my business. Creating eye-catching videos has never been easier. It adds a touch of professionalism that my customers appreciate. If you're a small business owner, Mootions is a must-try!",
   },
   {
-    name: "Sarah L.",
+    name: "Salma M.",
     content:
-      "Mootions made video creation a breeze! The AI features are game-changers for a non-techie like me.",
+      "Absolutely loving Mootions ! It's like having a pro video editor in my pocket. Affordable and simple",
   },
 ];
 </script>

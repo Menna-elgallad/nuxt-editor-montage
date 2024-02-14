@@ -3,10 +3,9 @@ import { storeToRefs } from "pinia";
 import { TimeLineStore } from "~~/stores/timeline";
 export class AnimationManagerIn {
   timelineStore = TimeLineStore();
-  timeLineStore = TimeLineStore();
-  activatedSlide = timeLineStore.activeSlide.id;
+  activatedSlide = this.timelineStore.activeSlide.id;
   fabricCanvas: fabric.Canvas = document.getElementById(
-    `mycanvas-${activatedSlide}`
+    `mycanvas-${this.activatedSlide}`
   )?.fabric;
 
   constructor(animation) {
@@ -180,14 +179,17 @@ export class AnimationManagerIn {
 }
 
 export class AnimationManagerOut {
+  timelineStore = TimeLineStore();
+  activatedSlide = this.timelineStore.activeSlide.id;
   fabricCanvas: fabric.Canvas = document.getElementById(
-    `mycanvas-${activatedSlide}`
+    `mycanvas-${this.activatedSlide}`
   )?.fabric;
 
-  initialObject = {};
   constructor(animation) {
     this.animation = animation;
   }
+
+  initialObject = {};
   fade() {
     this.initialObject = {
       opacity: 1,

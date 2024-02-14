@@ -13,91 +13,91 @@
                 Icon( class="icon-hover" name="ic:outline-keyboard-arrow-left" @click="showAnimation=false")
                 h3(class=" m-2 ") Animate
             .flex.w-full.my-3   
-              button(class=" w-6 p-2" :class="{'bg-blue-900 text-0' : animationTab=='in'}" @click="animationTab = 'in'") In
-              button(class="w-6 p-2"  :class="{'bg-blue-900 text-0' : animationTab=='out'}" @click="animationTab = 'out'" ) Out
+              button(class="  p-2 rounded-xl" :class="{'bg-primary text-0 text-white' : animationTab=='in'}" @click="animationTab = 'in'") In
+              button(class=" p-2 rounded-xl"  :class="{'bg-primary text-0 text-white' : animationTab=='out'}" @click="animationTab = 'out'" ) Out
             transition(name="opacity"    mode="out-in"
         appear )
                 .rows(v-if=" animationTab==='in'")
                   .row
-                    .col-lg-3.flex.items-center.justify-center.flex-column(@click="[ animationNameIn = 'pop' ,  addAnimation() ]")
+                    .col-3.flex.items-center.justify-center.flex-column(@click="[ animationNameIn = 'pop' ,  addAnimation() ]")
                       .animation-icon-container: img.animationIcon(src="../assets/aniamtion-icons/zoom4.svg")
                       p.text-center.text-sm Pop                    
-                    .col-lg-3.text-center(@click="[ animationNameIn = 'fade' , addAnimation()  ]" )
+                    .col-3.text-center(@click="[ animationNameIn = 'fade' , addAnimation()  ]" )
                       .animation-icon-container: img.animationIcon(src="../assets/aniamtion-icons/fadeout.svg")
                       p.text-center.text-sm Fade                    
                   h4.text-blue-600.mt-3.mb-2 Slide
                   .row.text-center 
-                    .col-lg-3.flex.items-center.justify-center.flex-column(@click="[ animationNameIn = 'slideLeft' ,  addAnimation() ]")
+                    .col-3.flex.items-center.justify-center.flex-column(@click="[ animationNameIn = 'slideLeft' ,  addAnimation() ]")
                         .animation-icon-container: img.animationIcon(src="../assets/aniamtion-icons/slideout.svg")
                         p.text-center.text-sm Right
-                    .col-lg-3.flex.items-center.justify-center.flex-column(@click="[ animationNameIn = 'slideRight' ,  addAnimation() ]")
+                    .col-3.flex.items-center.justify-center.flex-column(@click="[ animationNameIn = 'slideRight' ,  addAnimation() ]")
                         .animation-icon-container: img.animationIcon(src="../assets/aniamtion-icons/slideout4.svg")
                         p.text-center.text-sm Left
-                    .col-lg-3.flex.items-center.justify-center.flex-column(@click="[ animationNameIn = 'slideBottom' ,  addAnimation() ]")
+                    .col-3.flex.items-center.justify-center.flex-column(@click="[ animationNameIn = 'slideBottom' ,  addAnimation() ]")
                         .animation-icon-container: img.animationIcon(src="../assets/aniamtion-icons/rightslide1.svg")
                         p.text-center.text-sm Top
-                    .col-lg-3.flex.items-center.justify-center.flex-column(@click="[ animationNameIn = 'slideTop' ,  addAnimation() ]")
+                    .col-3.flex.items-center.justify-center.flex-column(@click="[ animationNameIn = 'slideTop' ,  addAnimation() ]")
                         .animation-icon-container: img.animationIcon(src="../assets/aniamtion-icons/rightslide2.svg")
                         p.text-center.text-sm Down
                   h4.text-blue-600.mt-3.mb-2 Reveal
                   .row
-                        .col-lg-3.flex.items-center.justify-center.flex-column(@click="[ animationNameIn = 'revealLeft' ,  addAnimation() ]")
+                        .col-3.flex.items-center.justify-center.flex-column(@click="[ animationNameIn = 'revealLeft' ,  addAnimation() ]")
                             .animation-icon-container: img.animationIcon(src="../assets/aniamtion-icons/revealout.svg")
                             p.text-center.text-sm Right
                        
-                        .col-lg-3.flex.items-center.justify-center.flex-column(@click="[ animationNameIn = 'revealRight'  , addAnimation() ]")
+                        .col-3.flex.items-center.justify-center.flex-column(@click="[ animationNameIn = 'revealRight'  , addAnimation() ]")
                             .animation-icon-container: img.animationIcon(src="../assets/aniamtion-icons/revealout2.svg")
                             p.text-center.text-sm Left
                        
-                        .col-lg-3.flex.items-center.justify-center.flex-column(@click=" [animationNameIn = 'revealBottom' , addAnimation() ]")
+                        .col-3.flex.items-center.justify-center.flex-column(@click=" [animationNameIn = 'revealBottom' , addAnimation() ]")
                             .animation-icon-container: img.animationIcon(src="../assets/aniamtion-icons/reveal1.svg")
                             p.text-center.text-sm Top
                        
-                        .col-lg-3.flex.items-center.justify-center.flex-column(@click="[ animationNameIn = 'revealTop' ,  addAnimation() ]")
+                        .col-3.flex.items-center.justify-center.flex-column(@click="[ animationNameIn = 'revealTop' ,  addAnimation() ]")
                             .animation-icon-container: img.animationIcon(src="../assets/aniamtion-icons/reveal2.svg")
                             p.text-center.text-sm Down
                   
-                        .col-lg-3.flex.items-center.justify-center.flex-column(@click="[ animationNameIn = 'swear' ,  addAnimation() ]")
+                        .col-3.flex.items-center.justify-center.flex-column(@click="[ animationNameIn = 'swear' ,  addAnimation() ]")
                             .animation-icon-container: img.animationIcon(src="../assets/aniamtion-icons/smear1.svg")
                             p.text-center.text-sm Swear
                 
                 .rows(v-else-if=" animationTab==='out'")
                   .row
-                    .col-lg-3.flex.items-center.justify-center.flex-column(@click=" [animationNameOut = 'fade', addAnimation() ] " )
+                    .col-3.flex.items-center.justify-center.flex-column(@click=" [animationNameOut = 'fade', addAnimation() ] " )
                       .animation-icon-container:  img.animationIcon(src="../assets/aniamtion-icons/fadeout.svg")
                       p.text-center.text-sm Fade
-                    .col-lg-3.flex.items-center.justify-center.flex-column(@click="[ animationNameOut = 'pop' , addAnimation()]")
+                    .col-3.flex.items-center.justify-center.flex-column(@click="[ animationNameOut = 'pop' , addAnimation()]")
                       .animation-icon-container:  img.animationIcon(src="../assets/aniamtion-icons/zoom4.svg")
                       p.text-center.text-sm Pop
                   h4.text-blue-600.mt-3.mb-2 Slide
                   .row
-                      .col-lg-3.flex.items-center.justify-center.flex-column(@click="[ animationNameOut = 'slideLeft' , addAnimation()]")
+                      .col-3.flex.items-center.justify-center.flex-column(@click="[ animationNameOut = 'slideLeft' , addAnimation()]")
                         .animation-icon-container:  img.animationIcon(src="../assets/aniamtion-icons/slideout.svg")
                         p.text-center.text-sm Right
-                      .col-lg-3.flex.items-center.justify-center.flex-column(@click="[ animationNameOut = 'slideRight' , addAnimation()]")
+                      .col-3.flex.items-center.justify-center.flex-column(@click="[ animationNameOut = 'slideRight' , addAnimation()]")
                         .animation-icon-container:  img.animationIcon(src="../assets/aniamtion-icons/slideout4.svg")
                         p.text-center.text-sm Left
-                      .col-lg-3.flex.items-center.justify-center.flex-column(@click="[ animationNameOut = 'slideBottom' , addAnimation()]")
+                      .col-3.flex.items-center.justify-center.flex-column(@click="[ animationNameOut = 'slideBottom' , addAnimation()]")
                         .animation-icon-container:  img.animationIcon(src="../assets/aniamtion-icons/rightslide1.svg")
                         p.text-center.text-sm Top
-                      .col-lg-3.flex.items-center.justify-center.flex-column(@click="[ animationNameOut = 'slideTop' , addAnimation()]")
+                      .col-3.flex.items-center.justify-center.flex-column(@click="[ animationNameOut = 'slideTop' , addAnimation()]")
                         .animation-icon-container:  img.animationIcon(src="../assets/aniamtion-icons/rightslide2.svg")
                         p.text-center.text-sm Down
                   h4.text-blue-600.mt-3.mb-2 Reveal 
                   .row
-                    .col-lg-3.flex.items-center.justify-center.flex-column(@click="[ animationNameOut = 'revealLeft' , addAnimation()]")
+                    .col-3.flex.items-center.justify-center.flex-column(@click="[ animationNameOut = 'revealLeft' , addAnimation()]")
                       .animation-icon-container:  img.animationIcon(src="../assets/aniamtion-icons/revealout.svg")
                       p.text-center.text-sm Right
-                    .col-lg-3.flex.items-center.justify-center.flex-column(@click="[ animationNameOut = 'revealRight' , addAnimation()]")
+                    .col-3.flex.items-center.justify-center.flex-column(@click="[ animationNameOut = 'revealRight' , addAnimation()]")
                       .animation-icon-container:  img.animationIcon(src="../assets/aniamtion-icons/revealout2.svg")
                       p.text-center.text-sm Left
-                    .col-lg-3.flex.items-center.justify-center.flex-column(@click="[ animationNameOut = 'revealBottom' , addAnimation()]")
+                    .col-3.flex.items-center.justify-center.flex-column(@click="[ animationNameOut = 'revealBottom' , addAnimation()]")
                       .animation-icon-container:  img.animationIcon(src="../assets/aniamtion-icons/reveal1.svg")
                       p.text-center.text-sm Top
-                    .col-lg-3.flex.items-center.justify-center.flex-column(@click="[ animationNameOut = 'revealTop' , addAnimation()]")
+                    .col-3.flex.items-center.justify-center.flex-column(@click="[ animationNameOut = 'revealTop' , addAnimation()]")
                       .animation-icon-container:  img.animationIcon(src="../assets/aniamtion-icons/reveal2.svg")
                       p.text-center.text-sm Down
-                    .col-lg-3.flex.items-center.justify-center.flex-column(@click="[ animationNameOut = 'swear' , addAnimation()]")
+                    .col-3.flex.items-center.justify-center.flex-column(@click="[ animationNameOut = 'swear' , addAnimation()]")
                       .animation-icon-container:  img.animationIcon(src="../assets/aniamtion-icons/smear1.svg")
                       p.text-center.text-sm Swear
         .row(v-else)
@@ -142,9 +142,8 @@ const layerStore = useLayer();
 import { TimeLineStore } from "~~/stores/timeline";
 const timelineStore = TimeLineStore();
 const { canasWrapper, color } = storeToRefs(canvasStore);
-const timeLineStore = TimeLineStore();
-const { activeSlide } = storeToRefs(timeLineStore);
-const activatedSlide = timeLineStore.activeSlide.id;
+const { activeSlide } = storeToRefs(timelineStore);
+const activatedSlide = timelineStore.activeSlide.id;
 const emit = defineEmits(["selectProps"]);
 var tmpCanvasEl = fabric.util.createCanvasElement();
 let fabricCanvas: fabric.Canvas;
@@ -196,9 +195,9 @@ watch(animationNameOut, (curr) => {
 
 function addjson(animation) {
   fabricCanvas = document.getElementById(
-    `mycanvas-${timeLineStore.activeSlide.id}`
+    `mycanvas-${timelineStore.activeSlide.id}`
   ).fabric;
-  console.log(`mycanvas-${timeLineStore.activeSlide.id}`);
+  console.log(`mycanvas-${timelineStore.activeSlide.id}`);
   const fabricImage = new uselottie(undefined, {
     scaleX: 0.3,
     scaleY: 0.3,
@@ -293,15 +292,15 @@ function addAnimation() {
   let animateIn = new AnimationManagerIn(animatedItem?.element);
   let animateOut = new AnimationManagerOut(animatedItem?.element);
 
-  timeLineStore.$patch({
+  timelineStore.$patch({
     slides: [
-      ...timeLineStore.slides.slice(0, activeSlide.value.id - 1),
-      ...timeLineStore.slides.slice(activeSlide.value.id - 1 + 1),
+      ...timelineStore.slides.slice(0, activeSlide.value.id - 1),
+      ...timelineStore.slides.slice(activeSlide.value.id - 1 + 1),
 
       {
-        ...timeLineStore.slides[activeSlide.value.id - 1],
+        ...timelineStore.slides[activeSlide.value.id - 1],
         layers: [
-          ...timeLineStore.slides[activeSlide.value.id - 1].layers.slice(
+          ...timelineStore.slides[activeSlide.value.id - 1].layers.slice(
             0,
             animatedItemIndex
           ),
@@ -316,7 +315,7 @@ function addAnimation() {
             scaleX: animatedItem?.element.scaleX,
             scaleY: animatedItem?.element.scaleY,
           },
-          ...timeLineStore.slides[activeSlide.value.id - 1].layers.slice(
+          ...timelineStore.slides[activeSlide.value.id - 1].layers.slice(
             animatedItemIndex + 1
           ),
         ],

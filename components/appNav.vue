@@ -8,8 +8,8 @@
                 NuxtLink(:to="item.link") {{item.name}} 
               
           .buttons.flex.gap-2.nav-buttons 
-                  .btn.bg-primary.text-white Login
-                  .btn.bg-gray-200 Sign Up
+              NuxtLink(to="/dashboard").btn.bg-primary.text-white Login
+              NuxtLink(to="/dashboard").btn.bg-gray-200 Sign Up
           .menu-btn(@click="active = !active" :class="{'active' : active}" )
               span.bar
               span.bar
@@ -19,13 +19,12 @@
     .header__nav.container
         nav.nav( :class="{'active' : active}")
             
-            //- img.mt-1(src="/Logo.png" style="filter : grayscale(100%) invert(100%) contrast(15.6);" )
             .menu-list.flex.flex-column.gap-8
                 li.menu-list_item(v-for="(item , index) in menu" data-nuxt="slide-up-lg" :data-nuxt-delay="(index+1)*100" v-animate-inview="'nuxt-animate'")
                     NuxtLink.menu-link.text-2xl.text-primary(:to='item.link' :class="{'active' : active}" ) {{item.name}}
             .buttons.flex.gap-2.nav-buttons.mb-5 
-                .btn.bg-primary.text-white Login
-                .btn.bg-gray-200 Sign Up     
+                NuxtLink(to="/dashboard").btn.bg-primary.text-white Login
+                NuxtLink(to="/dashboard").btn.bg-gray-200 Sign Up     
 
 </template>
 
@@ -35,7 +34,7 @@ const active = ref(false);
 const menu = [
   {
     name: "Home",
-    link: "",
+    link: "/",
   },
   {
     name: "Create",
@@ -43,16 +42,27 @@ const menu = [
   },
   {
     name: "Pricing",
-    link: "",
+    link: "/pricing",
   },
   {
     name: "Featuers",
-    link: "",
+    link: "/features",
   },
 ];
 </script>
 
 <style lang="scss" scoped>
+ul {
+  a {
+    transition: all 0.3s ease-in-out;
+    border-bottom: 1px solid transparent;
+    &:hover {
+      color: #c846e2;
+      border-bottom-color: #c846e2;
+    }
+  }
+}
+
 .appNav {
   backdrop-filter: blur(1.25rem);
   background-color: rgba(255, 255, 255, 0.2);
