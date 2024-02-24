@@ -1,23 +1,25 @@
 <template lang="pug">
-.container.mt-3
-    .BasicRepo( v-for="folder in folders" @click="activeFolder =folder" v-if="!activeFolder" class="  pb-1 relative") 
+div
+    .button-icon(v-if="activeFolder" @click="activeFolder=''") 
+        Icon.text-md(name="material-symbols:close-rounded")    
+    .BasicRepo.mt-3( v-for="folder in folders" @click="activeFolder =folder" v-if="!activeFolder" class="  pb-1 relative") 
             .myhead
                 
                 img(:src="`/folders/${folder}.png`")
                 span(class="  py-2 px-[15px] absolute down-up ")
                     Icon.text-primary(name="typcn:arrow-sorted-down" class=" text-md" style="transform : rotate(-52deg);" v-if="!showbasics")
                     Icon.text-primary(name="typcn:arrow-sorted-up" class=" text-md" style="transform : rotate(-52deg);" v-else)
-           
+
     ClientOnly
-      .row(v-if="activeFolder==='emoji'" style="margin-left: -50px") 
-        .col-lg-6: lottie-player(autoplay loop style="width:200px" :src="anima1" @click="addjson(anima1)" disableShadowDom)
-        .col-lg-6: lottie-player(autoplay loop style="width:200px" :src="anima2" @click="addjson(anima2)" disableShadowDom )
-        .col-lg-6: lottie-player(autoplay loop style="width:200px" :src="anima4" @click="addjson(anima4)" disableShadowDom )
-        .col-lg-6: lottie-player(autoplay loop style="width:200px" :src="anima5" @click="addjson(anima5)" disableShadowDom )
-        .col-lg-6: lottie-player(autoplay loop style="width:200px" :src="anima6" @click="addjson(anima6)" disableShadowDom )
-        .col-lg-6: lottie-player(autoplay loop style="width:200px" :src="anima7" @click="addjson(anima7)" disableShadowDom )
-        .col-lg-6: lottie-player(autoplay loop style="width:200px" :src="anima8" @click="addjson(anima8)" disableShadowDom )
-      characters(v-if="activeFolder==='edu'")
+      .grid.container(  class=" grid-cols-2 gap-3" v-if="activeFolder==='emoji'" ) 
+        lottie-player(autoplay loop  :src="anima1" @click="addjson(anima1)" disableShadowDom)
+        lottie-player(autoplay loop  :src="anima2" @click="addjson(anima2)" disableShadowDom )
+        lottie-player(autoplay loop  :src="anima4" @click="addjson(anima4)" disableShadowDom )
+        lottie-player(autoplay loop  :src="anima5" @click="addjson(anima5)" disableShadowDom )
+        lottie-player(autoplay loop  :src="anima6" @click="addjson(anima6)" disableShadowDom )
+        lottie-player(autoplay loop  :src="anima7" @click="addjson(anima7)" disableShadowDom )
+        lottie-player(autoplay loop  :src="anima8" @click="addjson(anima8)" disableShadowDom )
+      
       
       
     
@@ -47,9 +49,17 @@ const mycolors = ["red", "green", "blue"];
 const canvasStore = useCanvas();
 const layerStore = useLayer();
 const { canasWrapper, color } = storeToRefs(canvasStore);
-const emit = defineEmits(["selectProps"]);
+const emit = defineEmits(["selectProps", "hideClose"]);
 const folders = ["finance", "emoji", "leisure", "urban", "workRemote", "edu"];
 const activeFolder = ref("");
+
+watch(activeFolder, (curr) => {
+  if (curr) {
+    emit("hideClose", true);
+  } else {
+    emit("hideClose", false);
+  }
+});
 
 let fabricCanvas: fabric.Canvas;
 let canvaswrapper: any;

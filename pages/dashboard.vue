@@ -1,6 +1,6 @@
 <template lang="pug">
-.contents  
-  //- animationBack.showMenuProp
+.contents.relative  
+  img.w-fit(src="/svg/ai.svg" class=" absolute right-10 top-[70%] z-10 hover-icon-up ")
   menubackground.showMenuBack(v-if="didMounted" :tools="topTools" :key="topTools")
   .flex.flex-column.justify-between(class="h-[88vh]")
     .main.flex.gap-2.justify-content-between  

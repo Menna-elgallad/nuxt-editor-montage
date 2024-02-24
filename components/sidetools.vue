@@ -3,28 +3,36 @@
   .mycontainer.bg-white(:class="{'opened' : show}")
     ul.text-0.py-3
       li.mt-4.mb-4.toollogo(v-for="(item,index) in names" :key="index" @click="toggle(  item.name ,index ) " :class="{active : activeindex===index}" )
-        Icon.text-2xl.icontools.text-black(:name="item.icon")
+        img(class="w-[32px]"  :src="item.icon")
         div.menu-text.text-xxs(  :class="{'active active-text' : activeindex===index}") {{item.name}}
   .toolItems( ref="tools" v-if="show") 
-    .close( class="flex "): span(@click="close()" style="pointer:cursor")
-      Icon.text-xl(name="iconamoon:close")    
+    .close( class="flex " v-if="!hideClose"): span(@click="close()" style="pointer:cursor")
+      Icon.text-sm(name="material-symbols:arrow-back-ios-new-rounded")    
     .toolcontent
       background(v-if="content==='Background'")
       Text(v-if="content==='Text'")
-      Scenes(v-if="content==='Scene'" @select-props="selectprops()")
-      images(v-if="content==='Images'" )
-      shapes(v-if="content==='Shapes'" )
+      Scenes(v-if="content==='Scene'" @select-props="selectprops()" @hide-close="val=> hideClose = val")
+      Images(v-if="content==='Images'" )
+      Shapes(v-if="content==='Shapes'" )
       videos(v-if="content==='Videos'" )
       characters(v-if="content==='Characters'")
             
 </template>
 
 <script setup>
+import ai from "~/public/svg/ai.svg";
+import charachter from "~/public/svg/character.svg";
+import photo from "~/public/svg/photo.svg";
+import scenes from "~/public/svg/scenes.svg";
+import script from "~/public/svg/script.png";
+import text from "~/public/svg/text.svg";
+import shapes from "~/public/svg/shapes.svg";
 import gsap from "gsap";
 const props = defineProps({
   selectedElement: Object,
   canvas: Object,
 });
+const hideClose = ref(false);
 const tools = ref();
 const activeindex = ref(null);
 const show = ref(false);
@@ -34,14 +42,11 @@ const emit = defineEmits(["selectProps"]);
 
 function toggle(item, index) {
   if (show.value === false && !content.value) {
-    // gsap.to(".toolItems", {
-    //   xPercent: -1,
-    // });
     show.value = !show.value;
   }
   content.value = item;
   activeindex.value = index;
-  // console.log(item);
+  hideClose.value = false;
 }
 function close() {
   // gsap.to(".toolItems", {
@@ -57,16 +62,16 @@ function selectprops() {
 }
 
 const names = [
-  { name: "Scene", icon: "mdi-light:grid" },
-  // { name: "Characters", icon: "bi:people-fill" },
-  { name: "Text", icon: "iconoir:text" },
+  { name: "Scene", icon: scenes },
+  { name: "Characters", icon: charachter },
+  { name: "Text", icon: text },
   // { name: "Background", icon: "material-symbols:background-grid-small" },
   // { name: "Elements", icon: "gis:folder-maps" },
-  { name: "Shapes", icon: "ph:shapes-light" },
-  { name: "Images", icon: "system-uicons:picture" },
+  { name: "Shapes", icon: shapes },
+  { name: "Images", icon: photo },
   // { name: "Videos", icon: "fluent:video-32-filled" },
   // { name: "Voiceovers", icon: "pepicons-pop:music-note-double" },
-  { name: "Script", icon: "material-symbols-light:text-ad-outline" },
+  { name: "Script", icon: script },
 ];
 </script>
 
